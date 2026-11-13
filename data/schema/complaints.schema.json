@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SYNTHETIC Civic-Lens complaint",
+  "type": "object",
+  "required": ["complaint_id", "complaint_text", "language", "category", "urgency", "department", "location", "latitude", "longitude", "duration", "resolution_time", "status", "duplicate_group", "issue_cluster", "is_synthetic"],
+  "properties": {
+    "complaint_id": {"type": "string"},
+    "complaint_text": {"type": "string"},
+    "language": {"enum": ["en", "urdu", "roman_urdu", "mixed"]},
+    "category": {"type": "string"},
+    "urgency": {"enum": ["Low", "Medium", "High", "Critical"]},
+    "department": {"type": "string"},
+    "location": {"type": "string"},
+    "latitude": {"type": "number"},
+    "longitude": {"type": "number"},
+    "duration": {"type": "integer"},
+    "resolution_time": {"type": "integer"},
+    "status": {"type": "string"},
+    "duplicate_group": {"type": "string"},
+    "issue_cluster": {"type": "string"},
+    "is_synthetic": {"const": true}
+  },
+  "additionalProperties": false
+}

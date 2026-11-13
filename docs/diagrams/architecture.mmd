@@ -1,0 +1,5 @@
+flowchart LR
+  Browser --> Express
+  Express --> PostgreSQL_PostGIS
+  Express --> FastAPI
+  Express -. configured webhooks .-> n8n

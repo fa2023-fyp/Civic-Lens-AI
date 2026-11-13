@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-civic_lens}
+      POSTGRES_USER: ${POSTGRES_USER:-civic_lens}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-locally}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/src/db/migrations/001_initial.sql:/docker-entrypoint-initdb.d/001_initial.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  ai-service:
+    build: ./ai-service
+    ports:
+      - "8000:8000"
+    environment:
+      AI_REVIEW_THRESHOLD: ${AI_REVIEW_THRESHOLD:-0.55}
+  backend:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-civic_lens}:${POSTGRES_PASSWORD:-change-me-locally}@postgres:5432/${POSTGRES_DB:-civic_lens}
+      JWT_SECRET: ${JWT_SECRET:-development-only-change-this-secret}
+      AI_SERVICE_URL: http://ai-service:8000
+      AI_REVIEW_THRESHOLD: ${AI_REVIEW_THRESHOLD:-0.55}
+      N8N_WEBHOOK_SECRET: ${N8N_WEBHOOK_SECRET:-development-webhook-secret}
+      SYNTHETIC_DATA_PATH: /data/synthetic/SYNTHETIC_complaints.csv
+    volumes:
+      - ./data:/data:ro
+    ports:
+      - "3000:3000"
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+  n8n:
+    image: n8nio/n8n:1.75.0
+    ports:
+      - "5678:5678"
+    environment:
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+volumes:
+  postgres_data:
+  n8n_data:

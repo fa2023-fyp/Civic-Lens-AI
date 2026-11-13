@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+node_modules/
+dist/
+coverage/
+data/splits/*.csv
+data/synthetic/*.csv
+ai-service/evaluation/reports/*
+!ai-service/evaluation/reports/.gitkeep
+ai-service/app/models/artifacts/*.joblib
+uploads/
+.pytest_cache/
