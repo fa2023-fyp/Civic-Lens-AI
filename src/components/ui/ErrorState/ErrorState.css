@@ -1,0 +1,29 @@
+.ui-error-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-8);
+  padding-inline: var(--space-4);
+  color: var(--status-danger);
+  text-align: center;
+}
+
+.ui-error-state h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--text-xl);
+}
+
+.ui-error-state p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.ui-error-state__reference code {
+  border-radius: var(--radius-1);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-2);
+  background: var(--grey-page-alt);
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+}

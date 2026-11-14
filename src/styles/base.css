@@ -48,7 +48,7 @@ a {
   text-decoration: none;
 }
 
-a:not(.button, .topbar__brand, .skip-link)::after {
+a:not(.button, .ui-button, .topbar__brand, .skip-link)::after {
   position: absolute;
   inset-block-end: -0.08em;
   inset-inline-start: 0;
@@ -61,12 +61,12 @@ a:not(.button, .topbar__brand, .skip-link)::after {
   transition: transform var(--dur-base) var(--ease-out);
 }
 
-a:not(.button, .topbar__brand, .skip-link):hover::after,
-a:not(.button, .topbar__brand, .skip-link):focus-visible::after {
+a:not(.button, .ui-button, .topbar__brand, .skip-link):hover::after,
+a:not(.button, .ui-button, .topbar__brand, .skip-link):focus-visible::after {
   transform: scaleX(1);
 }
 
-a:hover {
+a:not(.ui-button, .button):hover {
   color: var(--brand-strong);
 }
 

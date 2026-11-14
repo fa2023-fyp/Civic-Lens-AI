@@ -1,0 +1,18 @@
+.ui-spinner {
+  display: inline-block;
+  inline-size: var(--space-4);
+  aspect-ratio: 1;
+  border: var(--border-width) solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: var(--radius-pill);
+  animation: spin 0.8s linear infinite;
+}
+
+.ui-spinner--sm {
+  inline-size: var(--space-3);
+}
+
+.ui-spinner--lg {
+  inline-size: var(--space-8);
+  border-width: var(--focus-width);
+}

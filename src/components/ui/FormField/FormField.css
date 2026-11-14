@@ -1,0 +1,31 @@
+.ui-field {
+  display: grid;
+  gap: var(--space-2);
+  min-inline-size: 0;
+}
+
+.ui-field__label {
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.ui-field__required {
+  margin-inline-start: var(--space-1);
+  color: var(--status-danger);
+}
+
+.ui-field__description {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.ui-field__error {
+  color: var(--status-danger);
+}
+
+.ui-field.has-error .ui-input,
+.ui-field.has-error .ui-textarea,
+.ui-field.has-error .ui-select {
+  border-color: var(--status-danger);
+}

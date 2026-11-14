@@ -1,0 +1,23 @@
+.ui-tooltip-target {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+
+.ui-tooltip {
+  position: fixed;
+  z-index: var(--z-tooltip);
+  max-inline-size: min(80vw, 24rem);
+  border-radius: var(--radius-1);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  background: var(--ink-900);
+  color: var(--dark-text);
+  box-shadow: var(--shadow-md);
+  font-size: var(--text-xs);
+  pointer-events: none;
+}
+
+.ui-tooltip-target:focus-visible {
+  outline: var(--focus-width) solid var(--brand);
+  outline-offset: var(--focus-offset);
+}

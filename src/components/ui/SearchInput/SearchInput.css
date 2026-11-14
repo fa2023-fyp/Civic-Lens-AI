@@ -1,0 +1,9 @@
+.ui-search-input__clear {
+  inline-size: var(--space-8);
+  border: 0;
+  box-shadow: none;
+}
+
+.ui-search-input__clear:hover {
+  box-shadow: none;
+}

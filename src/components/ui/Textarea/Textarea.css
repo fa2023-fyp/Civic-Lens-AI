@@ -1,0 +1,33 @@
+.ui-textarea {
+  inline-size: 100%;
+  min-block-size: var(--space-32);
+  resize: vertical;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-3);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.ui-textarea:focus {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-focus-glow);
+}
+
+.ui-textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.ui-textarea__count {
+  justify-self: end;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ui-textarea__count.is-warning {
+  color: var(--status-warning);
+}

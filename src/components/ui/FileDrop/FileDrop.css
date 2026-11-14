@@ -1,0 +1,99 @@
+.ui-file-drop {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.ui-file-drop__zone {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  border: var(--border-width) dashed var(--border);
+  border-radius: var(--radius-3);
+  padding-block: var(--space-8);
+  padding-inline: var(--space-4);
+  background: var(--surface);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.ui-file-drop__zone p {
+  margin: 0;
+  color: var(--text);
+}
+
+.ui-file-drop.is-dragging .ui-file-drop__zone {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.ui-file-drop__zone:focus-within {
+  outline: var(--focus-width) solid var(--brand);
+  outline-offset: var(--focus-offset);
+}
+
+.ui-file-drop__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.ui-file-drop__list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-file-drop__item {
+  display: flex;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--space-3);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  padding: var(--space-2);
+  background: var(--surface);
+}
+
+.ui-file-drop__thumbnail {
+  inline-size: var(--space-12);
+  block-size: var(--space-12);
+  border-radius: var(--radius-1);
+  object-fit: cover;
+}
+
+.ui-file-drop__file {
+  display: grid;
+  min-inline-size: 0;
+  flex: 1;
+  gap: var(--space-1);
+}
+
+.ui-file-drop__name {
+  overflow: hidden;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ui-file-drop__progress {
+  display: block;
+  overflow: hidden;
+  block-size: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--grey-page-alt);
+}
+
+.ui-file-drop__progress span {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  transform-origin: left center;
+  background: var(--brand);
+}
+
+[dir='rtl'] .ui-file-drop__progress span {
+  transform-origin: right center;
+}

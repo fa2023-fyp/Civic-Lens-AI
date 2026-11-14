@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useI18n } from '../../i18n/I18nContext.jsx';
-import { useDemo } from '../../context/DemoContext.jsx';
-import { Toast } from '../ui/Toast.jsx';
 import './AppShell.css';
 
 export function AppShell({ children }) {
   const { t } = useI18n();
-  const { state, clearToast } = useDemo();
+  const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -16,12 +14,6 @@ export function AppShell({ children }) {
     window.addEventListener('scroll', updateScroll, { passive: true });
     return () => window.removeEventListener('scroll', updateScroll);
   }, []);
-
-  useEffect(() => {
-    if (!state.toast) return undefined;
-    const timeout = window.setTimeout(clearToast, 3200);
-    return () => window.clearTimeout(timeout);
-  }, [state.toast, clearToast]);
 
   return (
     <>
@@ -38,12 +30,13 @@ export function AppShell({ children }) {
           </span>
           {t('app.name')}
         </Link>
-        <span className="topbar__label">{t('preview.tokensKicker')}</span>
+        <span className="topbar__label">
+          {t(pathname === '/dev/ui' ? 'gallery.kicker' : 'preview.tokensKicker')}
+        </span>
       </header>
       <main id="main-content" className="app-main">
         {children}
       </main>
-      <Toast message={state.toast} />
     </>
   );
 }

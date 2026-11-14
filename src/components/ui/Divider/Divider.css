@@ -1,0 +1,30 @@
+.ui-divider {
+  inline-size: 100%;
+  margin: 0;
+  border: 0;
+  border-block-start: var(--border-width) solid var(--border);
+}
+
+.ui-divider.is-vertical {
+  inline-size: 0;
+  block-size: auto;
+  align-self: stretch;
+  border-block-start: 0;
+  border-inline-start: var(--border-width) solid var(--border);
+}
+
+.ui-divider-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.ui-divider-label::before,
+.ui-divider-label::after {
+  block-size: var(--border-width);
+  flex: 1;
+  background: var(--border);
+  content: '';
+}

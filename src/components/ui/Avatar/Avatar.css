@@ -1,0 +1,29 @@
+.ui-avatar {
+  display: inline-grid;
+  overflow: hidden;
+  inline-size: var(--space-12);
+  aspect-ratio: 1;
+  place-items: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}
+
+.ui-avatar--sm {
+  inline-size: var(--space-8);
+  font-size: var(--text-xs);
+}
+
+.ui-avatar--lg {
+  inline-size: var(--space-16);
+  font-size: var(--text-lg);
+}
+
+.ui-avatar img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}

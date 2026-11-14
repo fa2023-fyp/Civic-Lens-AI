@@ -1,0 +1,51 @@
+.ui-chip {
+  display: inline-flex;
+  min-block-size: var(--space-8);
+  align-items: center;
+  gap: var(--space-2);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-3);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.ui-chip--brand {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+
+.ui-chip--info {
+  background: var(--info-tint);
+  color: var(--status-info);
+}
+
+.ui-chip--success {
+  background: var(--success-tint);
+  color: var(--status-success);
+}
+
+.ui-chip--warning {
+  background: var(--warning-tint);
+  color: var(--status-warning);
+}
+
+.ui-chip--danger {
+  background: var(--danger-tint);
+  color: var(--status-danger);
+}
+
+.ui-chip--ai {
+  background: var(--ai-tint);
+  color: var(--ai);
+}
+
+.ui-chip__remove {
+  inline-size: var(--space-6);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}

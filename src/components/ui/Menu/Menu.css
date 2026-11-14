@@ -1,0 +1,35 @@
+.ui-menu {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2);
+}
+
+.ui-menu__items {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.ui-menu__item {
+  display: flex;
+  min-block-size: var(--space-10);
+  align-items: center;
+  gap: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-1);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+}
+
+.ui-menu__item:hover:not(:disabled),
+.ui-menu__item:focus-visible {
+  background: var(--grey-page-alt);
+}
+
+.ui-menu__item:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}

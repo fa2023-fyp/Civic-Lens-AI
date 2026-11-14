@@ -1,6 +1,6 @@
 import { useI18n } from '../../i18n/I18nContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
-import { useDemo } from '../../context/DemoContext.jsx';
+import { useToast } from '../../components/ui/ToastProvider/ToastProvider.jsx';
 import { RevealObserver } from '../../components/layout/RevealObserver.jsx';
 import { AnimatedNumber } from '../../components/ui/AnimatedNumber.jsx';
 import {
@@ -31,7 +31,7 @@ function ColorSwatches({ title, tokens }) {
 export default function TokenPreview() {
   const { t, language, direction, changeLanguage, changeDirection } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const { toast } = useDemo();
+  const { toast } = useToast();
   const swatches = Object.entries(COLOR_SWATCHES);
 
   function toggleDirection() {

@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-Open the displayed local URL. `/` redirects to the temporary token preview at `/dev/tokens`.
+Open the displayed local URL. `/` redirects to the temporary token preview at `/dev/tokens`. The development-only component gallery is at `/dev/ui`.
 
 ```powershell
 npm run lint
@@ -32,6 +32,7 @@ npm run preview
 - No-flash system-aware theme initialization with a persistent theme toggle.
 - Accessible landmarks, skip link, focus ring, reduced-motion handling, live toast region, and lazy token-preview route.
 - Mock service boundary, project-context documentation, prompt checklist, and requested source-folder skeleton.
+- Reusable, token-based low-level UI components with keyboard interactions and a bilingual development gallery at `/dev/ui`.
 
 ## Prototype guardrails
 

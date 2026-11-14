@@ -1,0 +1,25 @@
+.ui-icon-button {
+  display: inline-grid;
+  inline-size: var(--space-12);
+  aspect-ratio: 1;
+  place-items: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  background: var(--surface);
+  color: var(--text);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.ui-icon-button:hover:not(:disabled) {
+  transform: translateY(calc(-1 * var(--button-lift)));
+  box-shadow: var(--shadow-md);
+}
+
+.ui-icon-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.ui-icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}

@@ -1,0 +1,23 @@
+.ui-brand-loader {
+  display: grid;
+  min-block-size: calc(100vh - var(--notice-size));
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-4);
+  color: var(--text-muted);
+}
+
+.ui-brand-loader__mark {
+  inline-size: var(--space-16);
+  fill: none;
+  stroke: var(--brand);
+  stroke-linecap: round;
+  stroke-width: 4;
+  animation: pulse 1.4s var(--ease-in-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-brand-loader__mark {
+    animation: none;
+  }
+}

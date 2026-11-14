@@ -1,0 +1,13 @@
+.ui-kbd {
+  display: inline-block;
+  min-inline-size: var(--space-6);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-1);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-2);
+  background: var(--grey-page-alt);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  text-align: center;
+}

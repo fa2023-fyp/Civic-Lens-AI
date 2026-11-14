@@ -1,0 +1,27 @@
+.ui-otp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ui-otp__digit {
+  inline-size: var(--space-12);
+  block-size: var(--space-16);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.ui-otp__digit:focus {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-focus-glow);
+}
+
+.ui-otp__digit:disabled {
+  opacity: 0.58;
+}

@@ -1,0 +1,27 @@
+.ui-skeleton {
+  display: block;
+  max-inline-size: 100%;
+  background: var(--grey-page-alt);
+}
+
+.ui-skeleton--rounded {
+  border-radius: var(--radius-1);
+}
+
+.ui-skeleton--circle {
+  border-radius: var(--radius-pill);
+}
+
+.ui-skeleton--rect {
+  border-radius: var(--radius-2);
+}
+
+[data-theme='dark'] .ui-skeleton {
+  background: var(--dark-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-skeleton.anim-shimmer::after {
+    display: none;
+  }
+}

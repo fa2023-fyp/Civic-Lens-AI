@@ -1,0 +1,10 @@
+.ui-skeleton-chart {
+  display: flex;
+  block-size: var(--space-32);
+  align-items: end;
+  gap: var(--space-3);
+}
+
+.ui-skeleton-chart .ui-skeleton {
+  flex: 1;
+}

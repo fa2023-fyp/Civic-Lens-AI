@@ -1,0 +1,11 @@
+.ui-popover {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  max-inline-size: min(90vw, 28rem);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  padding: var(--space-3);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+}

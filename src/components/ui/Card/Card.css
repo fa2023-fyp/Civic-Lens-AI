@@ -1,0 +1,47 @@
+.ui-card {
+  min-inline-size: 0;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-3);
+  padding: var(--space-6);
+}
+
+.ui-card--flat {
+  border-color: transparent;
+  background: transparent;
+}
+
+.ui-card--raised {
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.ui-card--outlined {
+  background: var(--surface);
+}
+
+.ui-card--dark {
+  border-color: var(--dark-border);
+  background: var(--ink-900);
+  color: var(--dark-text);
+}
+
+.ui-card--dark :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--dark-text);
+}
+
+.ui-card--dark p {
+  color: var(--dark-text-muted);
+}
+
+.ui-card.has-hover-lift {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.ui-card.has-hover-lift:hover {
+  transform: translateY(calc(-1 * var(--card-lift)));
+  box-shadow: var(--shadow-lg);
+}
+
+.ui-card.has-hover-lift:hover .icon {
+  color: var(--brand);
+}

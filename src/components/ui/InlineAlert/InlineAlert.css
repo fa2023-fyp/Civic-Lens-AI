@@ -1,0 +1,37 @@
+.ui-inline-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  border: var(--border-width) solid var(--border);
+  border-inline-start-width: var(--space-1);
+  border-radius: var(--radius-2);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.ui-inline-alert > div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.ui-inline-alert--info {
+  border-inline-start-color: var(--status-info);
+  background: var(--info-tint);
+}
+
+.ui-inline-alert--success {
+  border-inline-start-color: var(--status-success);
+  background: var(--success-tint);
+}
+
+.ui-inline-alert--warning {
+  border-inline-start-color: var(--status-warning);
+  background: var(--warning-tint);
+}
+
+.ui-inline-alert--danger {
+  border-inline-start-color: var(--status-danger);
+  background: var(--danger-tint);
+}

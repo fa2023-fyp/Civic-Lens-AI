@@ -1,0 +1,29 @@
+.ui-empty-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-8);
+  padding-inline: var(--space-4);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.ui-empty-state__illustration {
+  inline-size: min(100%, var(--space-32));
+  fill: none;
+  stroke: var(--brand);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.ui-empty-state h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--text-xl);
+}
+
+.ui-empty-state p {
+  max-inline-size: 44ch;
+  margin: 0;
+}

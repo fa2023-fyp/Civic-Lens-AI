@@ -59,6 +59,7 @@
   --info-tint-light: #eff6ff;
   --brand-soft-dark: #102b21;
   --ai-tint-dark: #24234f;
+  --overlay-scrim: rgb(11 18 16 / 64%);
   --success-tint-dark: #102719;
   --warning-tint-dark: #32240d;
   --danger-tint-dark: #351919;
