@@ -45,6 +45,17 @@ import { useCountUp } from '../../hooks/useCountUp.js';
 import { useCountdown } from '../../hooks/useCountdown.js';
 import { useReveal } from '../../hooks/useReveal.js';
 import { RevealObserver } from '../../components/layout/RevealObserver.jsx';
+import {
+  FeatureCard,
+  PillarCard,
+  RecognitionCard,
+  Reveal,
+  SectionHeader,
+  ServiceCard,
+  StatGrid,
+  StatStrip,
+  stagger,
+} from '../../components/marketing/index.js';
 import './UIGallery.css';
 
 function GallerySection({ title, children, className = '' }) {
@@ -76,6 +87,66 @@ export default function UIGallery() {
   });
   const { ref: revealRef, isVisible } = useReveal();
   const countdown = useCountdown(countdownTarget);
+  const demoDataLabel = t('preview.demoBadge');
+  const marketingStats = [
+    { value: 1248, suffix: '+', caption: t('marketingGallery.statReports') },
+    { value: 8, caption: t('marketingGallery.statRelated') },
+    { value: 91, suffix: '%', caption: t('marketingGallery.statConfidence') },
+    { value: 3, caption: t('marketingGallery.statDays') },
+  ];
+  const marketingGridStats = [
+    { value: 12, caption: t('marketingGallery.gridOne') },
+    { value: 24, caption: t('marketingGallery.gridTwo') },
+    { value: 36, caption: t('marketingGallery.gridThree') },
+    { value: 48, caption: t('marketingGallery.gridFour') },
+    { value: 60, caption: t('marketingGallery.gridFive') },
+    { value: 72, caption: t('marketingGallery.gridSix') },
+  ];
+  const marketingCards = [
+    {
+      component: FeatureCard,
+      icon: 'sparkles',
+      title: t('marketingGallery.featureTitle'),
+      text: t('marketingGallery.featureText'),
+      label: t('marketingGallery.featureLabel'),
+      href: '#marketing-stats',
+      linkText: t('marketingGallery.cardLink'),
+    },
+    {
+      component: PillarCard,
+      icon: 'shield-check',
+      title: t('marketingGallery.pillarTitle'),
+      text: t('marketingGallery.pillarText'),
+      label: t('marketingGallery.pillarLabel'),
+      href: '#marketing-stats',
+      linkText: t('marketingGallery.cardLink'),
+    },
+    {
+      component: ServiceCard,
+      icon: 'building',
+      title: t('marketingGallery.serviceTitle'),
+      text: t('marketingGallery.serviceText'),
+      label: t('marketingGallery.serviceLabel'),
+      href: '#marketing-stats',
+      linkText: t('marketingGallery.cardLink'),
+    },
+    {
+      component: RecognitionCard,
+      icon: 'check-circle',
+      title: t('marketingGallery.recognitionTitle'),
+      text: t('marketingGallery.recognitionText'),
+      label: t('marketingGallery.recognitionLabel'),
+      href: '#marketing-stats',
+      linkText: t('marketingGallery.cardLink'),
+    },
+  ];
+  const revealVariants = [
+    { variant: 'fade-up', label: t('marketingGallery.revealFadeUp') },
+    { variant: 'fade-in', label: t('marketingGallery.revealFadeIn') },
+    { variant: 'slide-start', label: t('marketingGallery.revealSlideStart') },
+    { variant: 'slide-end', label: t('marketingGallery.revealSlideEnd') },
+    { variant: 'scale', label: t('marketingGallery.revealScale') },
+  ];
 
   function showToast(message, type) {
     toast(message, type);
@@ -419,6 +490,73 @@ export default function UIGallery() {
               <p>{countdown.isComplete ? 'Complete' : 'Time remaining'}</p>
             </div>
           </div>
+        </GallerySection>
+
+        <GallerySection title={t('marketingGallery.sectionTitle')}>
+          <SectionHeader
+            kicker={t('marketingGallery.sectionKicker')}
+            headline={t('marketingGallery.sectionHeadline')}
+            lead={t('marketingGallery.sectionLead')}
+            align="center"
+            headingAs="h3"
+          />
+
+          <div className="marketing-reveal-examples">
+            {stagger(revealVariants, (item, index, delay) => (
+              <Reveal
+                key={`${item.variant}-${index}`}
+                variant={item.variant}
+                delay={delay}
+                className="marketing-reveal-example"
+              >
+                {item.label}
+              </Reveal>
+            ))}
+          </div>
+
+          <SectionHeader
+            kicker={t('marketingGallery.statsKicker')}
+            headline={t('marketingGallery.statsHeadline')}
+            lead={t('marketingGallery.statsLead')}
+            headingAs="h3"
+          />
+          <StatStrip items={marketingStats} demoDataLabel={demoDataLabel} />
+          <StatGrid
+            id="marketing-stats"
+            items={marketingGridStats}
+            demoDataLabel={demoDataLabel}
+          />
+
+          <SectionHeader
+            kicker={t('marketingGallery.cardsKicker')}
+            headline={t('marketingGallery.cardsHeadline')}
+            lead={t('marketingGallery.cardsLead')}
+            headingAs="h3"
+          />
+          <div className="marketing-card-grid">
+            {stagger(marketingCards, (item, index, delay) => {
+              const { component: MarketingCard, ...props } = item;
+              return <MarketingCard key={index} {...props} delay={delay} />;
+            })}
+          </div>
+
+          <section className="marketing-dark-showcase">
+            <SectionHeader
+              kicker={t('marketingGallery.darkKicker')}
+              headline={t('marketingGallery.darkHeadline')}
+              lead={t('marketingGallery.darkLead')}
+              align="center"
+              onDark
+              headingAs="h3"
+            />
+            <StatStrip items={marketingStats} demoDataLabel={demoDataLabel} onDark />
+            <div className="marketing-card-grid">
+              {stagger(marketingCards, (item, index, delay) => {
+                const { component: MarketingCard, ...props } = item;
+                return <MarketingCard key={index} {...props} delay={delay} onDark />;
+              })}
+            </div>
+          </section>
         </GallerySection>
 
         <GallerySection title={t('gallery.emptyState')}>
