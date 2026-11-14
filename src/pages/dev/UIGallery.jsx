@@ -41,6 +41,14 @@ import { TypingDots } from '../../components/ui/TypingDots/TypingDots.jsx';
 import { InlineLoader } from '../../components/ui/InlineLoader/InlineLoader.jsx';
 import { EmptyState } from '../../components/ui/EmptyState/EmptyState.jsx';
 import { ErrorState } from '../../components/ui/ErrorState/ErrorState.jsx';
+import { Accordion } from '../../components/ui/Accordion/Accordion.jsx';
+import { Breadcrumb } from '../../components/ui/Breadcrumb/Breadcrumb.jsx';
+import { KeyValueList } from '../../components/ui/KeyValueList/KeyValueList.jsx';
+import { KPITile } from '../../components/ui/KPITile/KPITile.jsx';
+import { Pagination } from '../../components/ui/Pagination/Pagination.jsx';
+import { Stepper } from '../../components/ui/Stepper/Stepper.jsx';
+import { Tabs } from '../../components/ui/Tabs/Tabs.jsx';
+import { Timeline } from '../../components/ui/Timeline/Timeline.jsx';
 import { useCountUp } from '../../hooks/useCountUp.js';
 import { useCountdown } from '../../hooks/useCountdown.js';
 import { useReveal } from '../../hooks/useReveal.js';
@@ -87,6 +95,7 @@ export default function UIGallery() {
   const [complaint, setComplaint] = useState('');
   const [search, setSearch] = useState('');
   const [otp, setOtp] = useState('');
+  const [demoPage, setDemoPage] = useState(2);
   const [countdownTarget] = useState(() => Date.now() + 60 * 60 * 1000);
   const { ref: countUpRef, formattedValue } = useCountUp(1248.5, {
     decimals: 1,
@@ -687,6 +696,153 @@ export default function UIGallery() {
               t('marketingShowcase.marqueeFour'),
             ]}
           />
+        </GallerySection>
+
+        <GallerySection title={t('dataDisplayGallery.title')}>
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.tabsTitle')}</h3>
+            <Tabs
+              label={t('dataDisplayGallery.tabsLabel')}
+              tabs={[
+                {
+                  id: 'overview',
+                  label: t('dataDisplayGallery.tabsOverview'),
+                  content: <p>{t('dataDisplayGallery.tabsOverviewBody')}</p>,
+                },
+                {
+                  id: 'timeline',
+                  label: t('dataDisplayGallery.tabsTimeline'),
+                  content: <p>{t('dataDisplayGallery.tabsTimelineBody')}</p>,
+                },
+                {
+                  id: 'details',
+                  label: t('dataDisplayGallery.tabsDetails'),
+                  content: <p>{t('dataDisplayGallery.tabsDetailsBody')}</p>,
+                },
+              ]}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.accordionTitle')}</h3>
+            <Accordion
+              label={t('dataDisplayGallery.accordionLabel')}
+              items={[
+                {
+                  id: 'accordion-first',
+                  title: t('dataDisplayGallery.accordionQuestionOne'),
+                  content: <p>{t('dataDisplayGallery.accordionAnswerOne')}</p>,
+                },
+                {
+                  id: 'accordion-second',
+                  title: t('dataDisplayGallery.accordionQuestionTwo'),
+                  content: <p>{t('dataDisplayGallery.accordionAnswerTwo')}</p>,
+                },
+              ]}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.stepperTitle')}</h3>
+            <Stepper
+              label={t('dataDisplayGallery.stepperLabel')}
+              activeStep={2}
+              steps={[
+                { id: 'step-intake', title: t('dataDisplayGallery.stepOne') },
+                { id: 'step-analysis', title: t('dataDisplayGallery.stepTwo') },
+                { id: 'step-review', title: t('dataDisplayGallery.stepThree') },
+                { id: 'step-outcome', title: t('dataDisplayGallery.stepFour') },
+              ]}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.paginationTitle')}</h3>
+            <Pagination
+              page={demoPage}
+              pageCount={5}
+              onPageChange={setDemoPage}
+              label={t('dataDisplayGallery.paginationLabel')}
+              previousLabel={t('dataDisplayGallery.previousPage')}
+              nextLabel={t('dataDisplayGallery.nextPage')}
+              getPageLabel={(page) => t('dataDisplayGallery.pageLabel', { page })}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.breadcrumbTitle')}</h3>
+            <Breadcrumb
+              label={t('dataDisplayGallery.breadcrumbLabel')}
+              items={[
+                { label: t('dataDisplayGallery.breadcrumbHome'), href: '#main-content' },
+                { label: t('dataDisplayGallery.breadcrumbSection'), href: '#marketing-steps' },
+                { label: t('dataDisplayGallery.breadcrumbCurrent') },
+              ]}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.kpiTimelineTitle')}</h3>
+            <div className="ui-gallery__cards" dir="rtl">
+              <KPITile
+                label={t('dataDisplayGallery.kpiLabel')}
+                value="1,248"
+                delta={t('dataDisplayGallery.kpiDelta')}
+                deltaTone="positive"
+                sparkline={[8, 10, 9, 12, 14, 16, 15]}
+                sparklineLabel={t('dataDisplayGallery.sparklineLabel')}
+                demoDataLabel={t('preview.demoBadge')}
+                onDark
+              />
+              <Timeline
+                label={t('dataDisplayGallery.timelineLabel')}
+                onDark
+                items={[
+                  {
+                    id: 'timeline-submitted',
+                    title: t('dataDisplayGallery.timelineFirstTitle'),
+                    description: t('dataDisplayGallery.timelineFirstText'),
+                  },
+                  {
+                    id: 'timeline-recommendation',
+                    title: t('dataDisplayGallery.timelineSecondTitle'),
+                    description: t('dataDisplayGallery.timelineSecondText'),
+                  },
+                  {
+                    id: 'timeline-review',
+                    title: t('dataDisplayGallery.timelineThirdTitle'),
+                    description: t('dataDisplayGallery.timelineThirdText'),
+                  },
+                ]}
+              />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataDisplayGallery.keyValueTitle')}</h3>
+            <KeyValueList
+              label={t('dataDisplayGallery.keyValueLabel')}
+              columns={2}
+              items={[
+                {
+                  label: t('dataDisplayGallery.keyOne'),
+                  value: t('dataDisplayGallery.valueOne'),
+                },
+                {
+                  label: t('dataDisplayGallery.keyTwo'),
+                  value: t('dataDisplayGallery.valueTwo'),
+                },
+                {
+                  label: t('dataDisplayGallery.keyThree'),
+                  value: t('dataDisplayGallery.valueThree'),
+                },
+                {
+                  label: t('dataDisplayGallery.keyFour'),
+                  value: t('dataDisplayGallery.valueFour'),
+                },
+              ]}
+            />
+          </div>
         </GallerySection>
 
         <GallerySection title={t('gallery.emptyState')}>

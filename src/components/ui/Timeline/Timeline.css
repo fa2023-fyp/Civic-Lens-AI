@@ -1,0 +1,99 @@
+.ui-timeline__reveal {
+  min-inline-size: 0;
+}
+
+.ui-timeline {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-timeline::before {
+  position: absolute;
+  inset-block: var(--space-4);
+  inset-inline-start: var(--space-3);
+  inline-size: 2px;
+  transform: scaleY(0);
+  transform-origin: top center;
+  background: var(--brand-soft);
+  content: '';
+  transition: transform 650ms var(--ease-out);
+}
+
+.ui-timeline__reveal.is-visible .ui-timeline::before {
+  transform: scaleY(1);
+}
+
+.ui-timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--space-6) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.ui-timeline__marker {
+  z-index: 1;
+  inline-size: var(--space-6);
+  block-size: var(--space-6);
+  margin-block-start: var(--space-4);
+  border: 3px solid var(--surface);
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+  box-shadow: 0 0 0 var(--border-width) var(--brand);
+}
+
+.ui-timeline__entry {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ui-timeline__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.ui-timeline__heading h3,
+.ui-timeline__entry p {
+  margin: 0;
+}
+
+.ui-timeline__heading h3 {
+  font-size: var(--text-base);
+}
+
+.ui-timeline__heading time {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.ui-timeline__entry p {
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.ui-timeline__reveal--dark .ui-timeline::before {
+  background: rgb(110 231 183 / 35%);
+}
+
+.ui-timeline__reveal--dark .ui-timeline__marker {
+  border-color: var(--ink-900);
+}
+
+.ui-timeline__reveal--dark .ui-timeline__heading time,
+.ui-timeline__reveal--dark .ui-timeline__entry p {
+  color: var(--dark-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-timeline::before {
+    transform: none;
+    transition-duration: 150ms;
+  }
+}

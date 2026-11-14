@@ -1,0 +1,75 @@
+.ui-kpi-tile {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.ui-kpi-tile__label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.ui-kpi-tile__value {
+  color: var(--text);
+  font-size: var(--text-4xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ui-kpi-tile__delta {
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.ui-kpi-tile__delta--positive {
+  color: var(--status-success);
+}
+
+.ui-kpi-tile__delta--negative {
+  color: var(--status-danger);
+}
+
+.ui-kpi-tile__delta--neutral {
+  color: var(--text-muted);
+}
+
+.ui-kpi-tile__sparkline {
+  inline-size: 100%;
+  block-size: var(--space-8);
+  overflow: visible;
+  color: var(--brand);
+}
+
+.ui-kpi-tile__sparkline polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.ui-kpi-tile--dark .ui-kpi-tile__label,
+.ui-kpi-tile--dark .ui-kpi-tile__delta--neutral {
+  color: var(--dark-text-muted);
+}
+
+.ui-kpi-tile--dark .ui-kpi-tile__value {
+  color: var(--dark-text);
+}
+
+.ui-kpi-tile--dark .ui-kpi-tile__delta--positive {
+  color: #86efac;
+}
+
+.ui-kpi-tile--dark .ui-kpi-tile__delta--negative {
+  color: #fda4af;
+}
+
+.ui-kpi-tile--dark .ui-kpi-tile__sparkline {
+  color: #6ee7b7;
+}

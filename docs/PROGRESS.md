@@ -7,7 +7,7 @@
 - [x] Prompt 2
 - [x] Prompt 3
 - [x] Prompt 4
-- [ ] Prompt 5
+- [x] Prompt 5
 - [ ] Prompt 6
 - [ ] Prompt 7
 - [ ] Prompt 8

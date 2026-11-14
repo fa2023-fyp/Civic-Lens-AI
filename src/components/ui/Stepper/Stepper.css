@@ -1,0 +1,82 @@
+.ui-stepper {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-stepper--horizontal {
+  flex-direction: row;
+  align-items: start;
+}
+
+.ui-stepper--vertical {
+  flex-direction: column;
+}
+
+.ui-stepper__step {
+  position: relative;
+  display: flex;
+  min-inline-size: 0;
+  flex: 1;
+  align-items: flex-start;
+  gap: var(--space-3);
+  color: var(--text-muted);
+}
+
+.ui-stepper--horizontal .ui-stepper__step:not(:last-child)::after {
+  position: absolute;
+  inset-block-start: var(--space-5);
+  inset-inline-start: calc(var(--space-10) + var(--space-2));
+  inline-size: calc(100% - var(--space-8));
+  block-size: 1px;
+  background: var(--border);
+  content: '';
+}
+
+.ui-stepper__marker {
+  z-index: 1;
+  display: grid;
+  inline-size: var(--space-10);
+  block-size: var(--space-10);
+  flex: none;
+  place-items: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.ui-stepper__step.is-current .ui-stepper__marker,
+.ui-stepper__step.is-complete .ui-stepper__marker {
+  border-color: #047857;
+  background: #047857;
+  color: #fff;
+}
+
+.ui-stepper__copy {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--space-1);
+  padding-block-start: var(--space-1);
+}
+
+.ui-stepper__title {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.ui-stepper__description {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-stepper__marker {
+    transition-duration: 150ms;
+  }
+}
