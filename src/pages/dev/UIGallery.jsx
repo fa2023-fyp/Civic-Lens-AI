@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useI18n } from '../../i18n/I18nContext.jsx';
 import { useToast } from '../../components/ui/ToastProvider/ToastProvider.jsx';
 import { iconNames, Icon } from '../../components/ui/Icon/Icon.jsx';
@@ -41,6 +41,8 @@ import { TypingDots } from '../../components/ui/TypingDots/TypingDots.jsx';
 import { InlineLoader } from '../../components/ui/InlineLoader/InlineLoader.jsx';
 import { EmptyState } from '../../components/ui/EmptyState/EmptyState.jsx';
 import { ErrorState } from '../../components/ui/ErrorState/ErrorState.jsx';
+import { DataTable } from '../../components/ui/DataTable/DataTable.jsx';
+import { SplitPane } from '../../components/ui/SplitPane/SplitPane.jsx';
 import { Accordion } from '../../components/ui/Accordion/Accordion.jsx';
 import { Breadcrumb } from '../../components/ui/Breadcrumb/Breadcrumb.jsx';
 import { KeyValueList } from '../../components/ui/KeyValueList/KeyValueList.jsx';
@@ -54,6 +56,7 @@ import { useCountdown } from '../../hooks/useCountdown.js';
 import { useReveal } from '../../hooks/useReveal.js';
 import { RevealObserver } from '../../components/layout/RevealObserver.jsx';
 import {
+  DemoDataBadge,
   FeatureCard,
   FAQ,
   CTABanner,
@@ -95,6 +98,45 @@ export default function UIGallery() {
   const [complaint, setComplaint] = useState('');
   const [search, setSearch] = useState('');
   const [otp, setOtp] = useState('');
+  const [selectedTableRows, setSelectedTableRows] = useState([]);
+  const tableColumns = useMemo(
+    () => [
+      { key: 'id', label: t('dataTableGallery.columnId') },
+      { key: 'category', label: t('dataTableGallery.columnCategory') },
+      { key: 'status', label: t('dataTableGallery.columnStatus') },
+      { key: 'priority', label: t('dataTableGallery.columnPriority') },
+    ],
+    [t],
+  );
+  const tableRows = useMemo(() => {
+    const statusKeys = ['statusReview', 'statusAssigned', 'statusSubmitted'];
+    const priorityKeys = ['priorityLow', 'priorityMedium', 'priorityHigh'];
+
+    return Array.from({ length: 200 }, (_, index) => ({
+      id: `DEMO-${String(index + 1).padStart(4, '0')}`,
+      category: index % 2 === 0 ? t('gallery.roads') : t('gallery.water'),
+      status: t(`dataTableGallery.${statusKeys[index % statusKeys.length]}`),
+      priority: t(`dataTableGallery.${priorityKeys[index % priorityKeys.length]}`),
+    }));
+  }, [t]);
+  const dataTableLabels = useMemo(
+    () => ({
+      columns: t('dataTableGallery.columnVisibility'),
+      selectColumn: t('dataTableGallery.selectColumn'),
+      selectAllRows: t('dataTableGallery.selectAllRows'),
+      selectRow: t('dataTableGallery.selectRow'),
+      selectedCount: (count) => t('dataTableGallery.selectedCount', { count }),
+      loading: t('dataTableGallery.loading'),
+      empty: t('dataTableGallery.empty'),
+      error: t('dataTableGallery.error'),
+      retry: t('dataTableGallery.retry'),
+      pagination: t('dataTableGallery.pagination'),
+      previousPage: t('dataTableGallery.previousPage'),
+      nextPage: t('dataTableGallery.nextPage'),
+      pageLabel: (page) => t('dataTableGallery.pageLabel', { page }),
+    }),
+    [t],
+  );
   const [demoPage, setDemoPage] = useState(2);
   const [countdownTarget] = useState(() => Date.now() + 60 * 60 * 1000);
   const { ref: countUpRef, formattedValue } = useCountUp(1248.5, {
@@ -841,6 +883,85 @@ export default function UIGallery() {
                   value: t('dataDisplayGallery.valueFour'),
                 },
               ]}
+            />
+          </div>
+        </GallerySection>
+
+        <GallerySection title={t('dataTableGallery.title')}>
+          <div className="ui-gallery__section">
+            <div className="ui-gallery__row">
+              <h3>{t('dataTableGallery.rowsTitle')}</h3>
+              <DemoDataBadge>{t('preview.demoBadge')}</DemoDataBadge>
+            </div>
+            <DataTable
+              label={t('dataTableGallery.rowsLabel')}
+              rows={tableRows}
+              columns={tableColumns}
+              labels={dataTableLabels}
+              selectable
+              selectedRowIds={selectedTableRows}
+              onSelectionChange={setSelectedTableRows}
+              getRowId={(row) => row.id}
+              getSelectRowLabel={(row) => t('dataTableGallery.selectSpecificRow', { id: row.id })}
+              maxHeight="30rem"
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataTableGallery.statesTitle')}</h3>
+            <div className="ui-gallery__cards">
+              <div className="ui-gallery__section">
+                <h3>{t('dataTableGallery.loadingTitle')}</h3>
+                <DataTable
+                  label={t('dataTableGallery.loadingTitle')}
+                  rows={[]}
+                  columns={tableColumns.slice(0, 2)}
+                  labels={dataTableLabels}
+                  loading
+                  skeletonRows={3}
+                />
+              </div>
+              <div className="ui-gallery__section">
+                <h3>{t('dataTableGallery.emptyTitle')}</h3>
+                <DataTable
+                  label={t('dataTableGallery.emptyTitle')}
+                  rows={[]}
+                  columns={tableColumns.slice(0, 2)}
+                  labels={dataTableLabels}
+                />
+              </div>
+              <div className="ui-gallery__section">
+                <h3>{t('dataTableGallery.errorTitle')}</h3>
+                <DataTable
+                  label={t('dataTableGallery.errorTitle')}
+                  rows={[]}
+                  columns={tableColumns.slice(0, 2)}
+                  labels={dataTableLabels}
+                  error
+                  errorMessage={t('dataTableGallery.errorDescription')}
+                  onRetry={() => showToast(t('dataTableGallery.retryMessage'), 'info')}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('dataTableGallery.splitPaneTitle')}</h3>
+            <SplitPane
+              label={t('dataTableGallery.splitPaneLabel')}
+              initialSize={48}
+              primary={
+                <Card variant="outlined">
+                  <h3>{t('dataTableGallery.primaryTitle')}</h3>
+                  <p>{t('dataTableGallery.primaryText')}</p>
+                </Card>
+              }
+              secondary={
+                <Card variant="outlined">
+                  <h3>{t('dataTableGallery.secondaryTitle')}</h3>
+                  <p>{t('dataTableGallery.secondaryText')}</p>
+                </Card>
+              }
             />
           </div>
         </GallerySection>
