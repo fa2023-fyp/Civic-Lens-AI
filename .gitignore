@@ -5,6 +5,10 @@ __pycache__/
 node_modules/
 dist/
 coverage/
+.vite/
+.eslintcache
+.DS_Store
+*.log
 data/splits/*.csv
 data/synthetic/*.csv
 ai-service/evaluation/reports/*

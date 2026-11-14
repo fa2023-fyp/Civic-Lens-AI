@@ -1,0 +1,60 @@
+.prototype-notice {
+  position: sticky;
+  z-index: var(--z-notice);
+  inset-block-start: 0;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-4);
+  background: var(--emerald-900);
+  color: var(--emerald-50);
+  text-align: center;
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.topbar {
+  position: sticky;
+  z-index: var(--z-header);
+  inset-block-start: var(--notice-size);
+  display: flex;
+  min-block-size: var(--space-16);
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: max(var(--space-4), calc((100% - 75rem) / 2));
+  background: transparent;
+  color: var(--text);
+}
+
+.topbar--scrolled {
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(var(--space-4));
+}
+
+.topbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.topbar__mark {
+  color: var(--brand);
+  font-size: var(--text-2xl);
+}
+
+.topbar__label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.app-main {
+  min-block-size: calc(100vh - var(--notice-size));
+}
+
+.route-view {
+  animation-duration: var(--dur-base);
+}

@@ -1,0 +1,25 @@
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+[lang='ur'] {
+  line-height: 1.9;
+}
+
+[lang='ur'] h1,
+[lang='ur'] .urdu-hero {
+  font-family: 'Noto Nastaliq Urdu', var(--font-urdu);
+  line-height: 2.15;
+}
+
+[dir='rtl'] .anim-draw-stroke {
+  transform-origin: right center;
+}
+
+[dir='rtl'] .anim-progress-indeterminate {
+  transform-origin: 100% 50%;
+}
+
+[dir='rtl'] a:not(.button, .topbar__brand, .skip-link)::after {
+  transform-origin: 100% 50%;
+}

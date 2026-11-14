@@ -1,0 +1,186 @@
+:root {
+  color-scheme: light;
+
+  --emerald-50: #ecfdf5;
+  --emerald-100: #d1fae5;
+  --emerald-500: #10b981;
+  --emerald-600: #059669;
+  --emerald-700: #047857;
+  --emerald-800: #065f46;
+  --emerald-900: #064e3b;
+
+  --ink-900: #0b1210;
+  --ink-800: #111c18;
+  --grey-page: #f6f8f7;
+  --grey-page-alt: #eef2f0;
+  --grey-border: #e2e8e5;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-light: #0f172a;
+  --text-muted-light: #475569;
+  --dark-text: #f8faf9;
+  --dark-text-muted: #bdc9c3;
+  --dark-border: #34443d;
+  --white: #ffffff;
+  --black: #000000;
+
+  --amber: #f59e0b;
+  --amber-text: #1f1300;
+  --indigo: #4f46e5;
+  --indigo-tint: #eef2ff;
+  --ai-dark: #a5b4fc;
+
+  --urgency-low: #2563eb;
+  --urgency-medium: #b45309;
+  --urgency-high: #c2410c;
+  --urgency-critical: #b91c1c;
+  --urgency-low-light: #2563eb;
+  --urgency-medium-light: #b45309;
+  --urgency-high-light: #c2410c;
+  --urgency-critical-light: #b91c1c;
+
+  --status-success: #15803d;
+  --status-warning: #b45309;
+  --status-danger: #b91c1c;
+  --status-info: #1d4ed8;
+  --status-success-light: #15803d;
+  --status-warning-light: #b45309;
+  --status-danger-light: #b91c1c;
+  --status-info-light: #1d4ed8;
+
+  --emerald-50-tint: #ecfdf5;
+  --success-tint: #f0fdf4;
+  --success-tint-light: #f0fdf4;
+  --warning-tint: #fffbeb;
+  --warning-tint-light: #fffbeb;
+  --danger-tint: #fef2f2;
+  --danger-tint-light: #fef2f2;
+  --info-tint: #eff6ff;
+  --info-tint-light: #eff6ff;
+  --brand-soft-dark: #102b21;
+  --ai-tint-dark: #24234f;
+  --success-tint-dark: #102719;
+  --warning-tint-dark: #32240d;
+  --danger-tint-dark: #351919;
+  --info-tint-dark: #172646;
+
+  --bg: var(--grey-page);
+  --surface: var(--white);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-muted);
+  --text-on-dark: var(--dark-text);
+  --border: var(--grey-border);
+  --brand: var(--emerald-700);
+  --brand-strong: var(--emerald-800);
+  --brand-soft: var(--emerald-50);
+  --brand-contrast: var(--white);
+  --cta: var(--amber);
+  --cta-text: var(--amber-text);
+  --ai: var(--indigo);
+  --ai-tint: var(--indigo-tint);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --container-gutter: 1.25rem;
+  --radius-1: 0.5rem;
+  --radius-2: 0.75rem;
+  --radius-3: 1rem;
+  --radius-4: 1.5rem;
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --sr-only-dimension: 1px;
+  --button-lift: 1px;
+  --card-lift: 4px;
+
+  --shadow-sm: 0 1px 2px rgb(11 18 16 / 6%);
+  --shadow-md: 0 4px 12px rgb(11 18 16 / 8%);
+  --shadow-lg: 0 12px 28px rgb(11 18 16 / 12%);
+  --shadow-xl: 0 24px 48px rgb(11 18 16 / 16%);
+  --shadow-focus-glow: 0 0 0 4px rgb(16 185 129 / 22%);
+
+  --z-base: 0;
+  --z-header: 20;
+  --z-notice: 30;
+  --z-dropdown: 40;
+  --z-overlay: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+  --z-tooltip: 80;
+
+  --font-sans: Inter, 'Noto Naskh Arabic', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-urdu: 'Noto Naskh Arabic', 'Noto Nastaliq Urdu', serif;
+  --text-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.84rem + 0.14vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.96rem + 0.16vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.04rem + 0.34vw, 1.375rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
+  --text-2xl: clamp(1.5rem, 1.28rem + 0.88vw, 2.25rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 3rem);
+  --text-4xl: clamp(2.25rem, 1.78rem + 1.9vw, 3.75rem);
+  --text-5xl: clamp(2.75rem, 2rem + 3vw, 5rem);
+  --text-6xl: clamp(3rem, 2rem + 4.5vw, 6rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1.2);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 600ms;
+  --notice-size: 2.5rem;
+  --slide-start-factor: -1;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: var(--ink-900);
+  --surface: var(--ink-800);
+  --text: var(--dark-text);
+  --text-primary: var(--dark-text);
+  --text-muted: var(--dark-text-muted);
+  --text-secondary: var(--dark-text-muted);
+  --border: var(--dark-border);
+  --brand: var(--emerald-500);
+  --brand-strong: var(--emerald-500);
+  --brand-soft: var(--brand-soft-dark);
+  --brand-contrast: var(--ink-900);
+  --cta: var(--amber);
+  --cta-text: var(--amber-text);
+  --ai: var(--ai-dark);
+  --ai-tint: var(--ai-tint-dark);
+  --success-tint: var(--success-tint-dark);
+  --warning-tint: var(--warning-tint-dark);
+  --danger-tint: var(--danger-tint-dark);
+  --info-tint: var(--info-tint-dark);
+  --urgency-low: #60a5fa;
+  --urgency-medium: #fbbf24;
+  --urgency-high: #fb923c;
+  --urgency-critical: #f87171;
+  --status-success: #4ade80;
+  --status-warning: #fbbf24;
+  --status-danger: #fca5a5;
+  --status-info: #60a5fa;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 20%);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 24%);
+  --shadow-lg: 0 12px 28px rgb(0 0 0 / 32%);
+  --shadow-xl: 0 24px 48px rgb(0 0 0 / 40%);
+  --shadow-focus-glow: 0 0 0 4px rgb(16 185 129 / 32%);
+}
+
+[dir='rtl'] {
+  --slide-start-factor: 1;
+}

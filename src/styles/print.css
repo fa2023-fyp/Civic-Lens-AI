@@ -1,0 +1,14 @@
+@media print {
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--black) !important;
+    animation: none !important;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}

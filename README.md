@@ -1,91 +1,44 @@
-# Civic-Lens AI
+# CivicLens AI — frontend foundation
 
-**AI-Powered Multilingual Civic Complaint Intelligence and Resolution System**
+CivicLens AI is an **AI intelligence and accountability layer** over existing civic complaint workflows, not another complaint website or a replacement for existing services. The experience is designed around:
 
-Civic-Lens AI is an AI intelligence and accountability layer over complaint workflows. It is **not a better complaint portal** and is not intended to replace existing services such as the Pakistan Citizen's Portal. It assists the workflow:
+`Understand → Extract → Classify → Prioritise → Route → Detect related issues → Monitor SLA → Escalate → Verify resolution → Audit AI decisions`
 
-`Understand → Extract → Classify → Prioritize → Route → Detect Related Issues → Monitor SLA → Escalate → Verify Resolution → Audit AI Decisions`
+This phase is frontend-only. React 18, Vite, React Router 6, plain JavaScript/JSX, CSS custom-property design tokens, and a replaceable mock-service boundary live at the repository root. No backend service is required.
 
-AI outputs are recommendations and estimates, not certainty. Authorized staff retain decision-making authority. An officer's resolution submission does not close a case; the citizen must confirm it or reject it.
-
-## Architecture
-
-```mermaid
-flowchart LR
-  Citizen[Citizen / Officer UI] --> FE[React + Vite]
-  FE --> API[Express API · JWT / RBAC]
-  API --> DB[(PostgreSQL + PostGIS)]
-  API --> AI[FastAPI AI service]
-  API --> N8N[n8n automation]
-  AI --> Base[Transparent research baselines]
-  DB --> Audit[Append-only AI decisions]
-```
-
-## Quick start
-
-Requirements: Docker Desktop with Compose, and (for local dataset/evaluation scripts) Python 3.10+.
-
-1. Copy `.env.example` to `.env` and replace the local secrets. Defaults exist for a local demonstration only.
-2. Install AI/evaluation dependencies in a virtual environment:
-   ```powershell
-   python -m venv .venv
-   .venv\Scripts\Activate.ps1
-   python -m pip install -r ai-service/requirements.txt
-   ```
-3. Generate synthetic data if you want to load demonstration records:
-   ```powershell
-   python data/scripts/generate_synthetic.py
-   python data/scripts/validate_dataset.py
-   ```
-4. Build and start the five local services:
-   ```powershell
-   docker compose up --build
-   ```
-5. Open the UI at <http://localhost:5173>, backend OpenAPI at <http://localhost:3000/docs>, AI OpenAPI at <http://localhost:8000/docs>, and n8n at <http://localhost:5678>.
-6. In another terminal, optionally seed demo accounts and synthetic complaints:
-   ```powershell
-   docker compose exec backend npm run seed
-   ```
-7. With services running and seeded database available, run the end-to-end intake smoke flow:
-   ```powershell
-   python scripts/smoke_test.py
-   ```
-
-Seeded local-only accounts use `citizen@example.local`, `officer@example.local`, `supervisor@example.local`, or `admin@example.local`, with password `LocalDemo-Only-ChangeMe!`. Change these before use beyond a disposable local environment. The backend offers citizen registration at `POST /api/auth/register`; privileged roles must be provisioned by an administrator.
-
-### Research scripts
-
-The generator creates `data/synthetic/SYNTHETIC_complaints.csv` (2,000 records, explicitly synthetic). Then run:
+## Run locally
 
 ```powershell
-python data/scripts/validate_dataset.py
-python data/scripts/make_splits.py
-python ai-service/training/train_classifier.py
-python ai-service/evaluation/evaluate_classification.py
-python ai-service/evaluation/evaluate_duplicates.py
-python -m pytest ai-service/tests
+npm install
+npm run dev
 ```
 
-Reports are generated under `ai-service/evaluation/reports/`; model registry metrics are written to `ai-service/app/models/model_registry.json`. Do not quote results until these scripts have been run and the generated reports inspected. Splits group all records by duplicate group to reduce leakage.
+Open the displayed local URL. `/` redirects to the temporary token preview at `/dev/tokens`.
 
-## Folder guide
+```powershell
+npm run lint
+npm run build
+npm run preview
+```
 
-- `frontend/`: React/Vite UI scaffold, English/Urdu direction switching, shared AI components.
-- `backend/`: Express API, PostGIS schema, JWT/RBAC, complaint lifecycle, evidence upload checks, AI audit records.
-- `ai-service/`: independent FastAPI research service with multilingual rule baselines and evaluation endpoints.
-- `data/`: clearly labeled generated data, schema, validation, and leakage-aware splitting.
-- `automation/n8n/`: importable local webhook examples; notification delivery requires operator configuration.
-- `docs/`: requirements, research framing, evaluation, privacy, and audit guidance.
+`VITE_USE_MOCK=true` is the default from `.env.example`. `VITE_API_BASE_URL` is intentionally blank until a real API is introduced. No user or complaint data is loaded by the current mock service.
 
-## Research status and limitations
+## Foundation in this phase
 
-- The runtime AI is a transparent keyword/rule baseline, **not** a trained or validated production model. Categories and language identification can be wrong.
-- There is no included representative Pakistani civic dataset. Synthetic records are for pipeline and code-path testing only; scores on them do not demonstrate real-world performance.
-- The duplicate and clustering methods are lexical baselines, not multilingual sentence embeddings. Cross-language semantic duplicate detection is not established.
-- Roman Urdu spelling variation, transliteration, code-switching, class imbalance, and underrepresented languages may create systematic errors.
-- SLA estimates are experimental transparent rules, not a historically trained predictor; seeded resolution times are synthetic.
-- There is no integration with government systems or external complaint portals.
-- AI and photos cannot prove that a physical repair occurred. Citizen confirmation is an accountability step, not automated proof.
-- The web UI is a functional route/component scaffold, not the final dashboard design. Supervisor/admin analytics and several advanced workflows remain limited.
+- Emerald, ink, neutral, AI, urgency, and status design tokens with light/dark semantic overrides.
+- Responsive spacing, typography, radius, shadow, layering, focus, and motion tokens.
+- Logical-property utilities and RTL-aware directional animations.
+- English/Urdu starter dictionaries, persisted language choice, RTL document direction, and a native-speaker review note.
+- No-flash system-aware theme initialization with a persistent theme toggle.
+- Accessible landmarks, skip link, focus ring, reduced-motion handling, live toast region, and lazy token-preview route.
+- Mock service boundary, project-context documentation, prompt checklist, and requested source-folder skeleton.
 
-See [docs/01-project-overview.md](docs/01-project-overview.md) and [docs/08-ethics-privacy-limitations.md](docs/08-ethics-privacy-limitations.md) for scope and limitations.
+## Prototype guardrails
+
+The persistent notice reads “Academic prototype — not an official government portal.” AI is described as recommending rather than deciding. Demo-looking numbers carry a “Demo data” label. Do not treat the sample content as research results, operational data, or a government integration.
+
+## Existing repository contents
+
+An earlier repository version includes backend and AI-service folders. They are preserved but are not dependencies of this root frontend, are not used by its Vite routes, and are outside the scope of this frontend-only phase.
+
+See [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md), [docs/PROGRESS.md](docs/PROGRESS.md), [docs/ROUTES.md](docs/ROUTES.md), and [docs/DATA_SHAPES.md](docs/DATA_SHAPES.md).

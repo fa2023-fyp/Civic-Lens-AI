@@ -1,0 +1,250 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(var(--space-6));
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    transform: translateY(calc(-1 * var(--space-6)));
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInStart {
+  from {
+    transform: translateX(calc(var(--slide-start-factor) * var(--space-6)));
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInEnd {
+  from {
+    transform: translateX(calc(var(--slide-start-factor) * -1 * var(--space-6)));
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(calc(var(--slide-start-factor) * 100%));
+  }
+  to {
+    transform: translateX(calc(var(--slide-start-factor) * -100%));
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.06);
+    opacity: 0.72;
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(calc(-1 * var(--space-3)));
+  }
+}
+
+@keyframes shake {
+  25%,
+  75% {
+    transform: translateX(calc(var(--slide-start-factor) * var(--space-1)));
+  }
+  50% {
+    transform: translateX(calc(var(--slide-start-factor) * -1 * var(--space-1)));
+  }
+}
+
+@keyframes drawStroke {
+  from {
+    transform: scaleX(0);
+    opacity: 0.3;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes typingDots {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(calc(-1 * var(--space-1)));
+    opacity: 1;
+  }
+}
+
+@keyframes progressIndeterminate {
+  from {
+    transform: translateX(calc(var(--slide-start-factor) * 100%)) scaleX(0.35);
+  }
+  to {
+    transform: translateX(calc(var(--slide-start-factor) * -100%)) scaleX(0.35);
+  }
+}
+
+.anim-fade-in {
+  animation: fadeIn var(--dur-base) var(--ease-out) both;
+}
+
+.anim-fade-up {
+  animation: fadeUp var(--dur-slow) var(--ease-out) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.anim-fade-down {
+  animation: fadeDown var(--dur-base) var(--ease-out) both;
+}
+
+.anim-slide-in-start {
+  animation: slideInStart var(--dur-base) var(--ease-out) both;
+}
+
+.anim-slide-in-end {
+  animation: slideInEnd var(--dur-base) var(--ease-out) both;
+}
+
+.anim-scale-in {
+  animation: scaleIn var(--dur-base) var(--ease-spring) both;
+}
+
+.anim-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.anim-shimmer::after {
+  position: absolute;
+  z-index: 1;
+  inset-block: 0;
+  inset-inline: 0;
+  transform: translateX(calc(var(--slide-start-factor) * 100%));
+  background: linear-gradient(90deg, transparent, var(--surface), transparent);
+  content: '';
+  animation: shimmer 1.6s var(--ease-in-out) infinite;
+}
+
+.anim-spin {
+  animation: spin 1s linear infinite;
+}
+
+.anim-pulse {
+  animation: pulse 1.8s var(--ease-in-out) infinite;
+}
+
+.anim-ping {
+  animation: ping 1.5s var(--ease-out) infinite;
+}
+
+.anim-float {
+  animation: float 4s var(--ease-in-out) infinite;
+}
+
+.anim-shake {
+  animation: shake var(--dur-slow) var(--ease-in-out) both;
+}
+
+.anim-draw-stroke {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: drawStroke var(--dur-slow) var(--ease-out) forwards;
+}
+
+.anim-typing-dots {
+  animation: typingDots 1.2s var(--ease-in-out) infinite;
+}
+
+.anim-progress-indeterminate {
+  transform-origin: 0 50%;
+  animation: progressIndeterminate 1.4s var(--ease-in-out) infinite;
+}
+
+.reveal {
+  transform: translateY(var(--space-6));
+  opacity: 0;
+  transition:
+    transform var(--dur-slow) var(--ease-out),
+    opacity var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.reveal.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .reveal {
+    transform: none;
+    opacity: 1;
+  }
+}
