@@ -47,13 +47,20 @@ import { useReveal } from '../../hooks/useReveal.js';
 import { RevealObserver } from '../../components/layout/RevealObserver.jsx';
 import {
   FeatureCard,
+  FAQ,
+  CTABanner,
+  FloatingOrbs,
+  ImageBand,
+  Marquee,
   PillarCard,
+  PhoneMockup,
   RecognitionCard,
   Reveal,
   SectionHeader,
   ServiceCard,
   StatGrid,
   StatStrip,
+  StepsRail,
   stagger,
 } from '../../components/marketing/index.js';
 import './UIGallery.css';
@@ -557,6 +564,129 @@ export default function UIGallery() {
               })}
             </div>
           </section>
+        </GallerySection>
+
+        <GallerySection title={t('marketingShowcase.sectionTitle')}>
+          <SectionHeader
+            kicker={t('marketingShowcase.stepsKicker')}
+            headline={t('marketingShowcase.stepsHeadline')}
+            lead={t('marketingShowcase.stepsLead')}
+            headingAs="h3"
+          />
+          <StepsRail
+            id="marketing-steps"
+            label={t('marketingShowcase.stepsLabel')}
+            steps={[
+              {
+                id: 'understand',
+                title: t('marketingShowcase.understandTitle'),
+                description: t('marketingShowcase.understandText'),
+              },
+              {
+                id: 'extract',
+                title: t('marketingShowcase.extractTitle'),
+                description: t('marketingShowcase.extractText'),
+              },
+              {
+                id: 'classify',
+                title: t('marketingShowcase.classifyTitle'),
+                description: t('marketingShowcase.classifyText'),
+              },
+              {
+                id: 'route',
+                title: t('marketingShowcase.routeTitle'),
+                description: t('marketingShowcase.routeText'),
+              },
+            ]}
+          />
+
+          <SectionHeader
+            kicker={t('marketingShowcase.faqKicker')}
+            headline={t('marketingShowcase.faqHeadline')}
+            lead={t('marketingShowcase.faqLead')}
+            headingAs="h3"
+          />
+          <FAQ
+            id="marketing-faq"
+            label={t('marketingShowcase.faqLabel')}
+            items={[
+              {
+                id: 'replacement',
+                question: t('marketingShowcase.faqQuestionOne'),
+                answer: t('marketingShowcase.faqAnswerOne'),
+              },
+              {
+                id: 'decisions',
+                question: t('marketingShowcase.faqQuestionTwo'),
+                answer: t('marketingShowcase.faqAnswerTwo'),
+              },
+              {
+                id: 'statistics',
+                question: t('marketingShowcase.faqQuestionThree'),
+                answer: t('marketingShowcase.faqAnswerThree'),
+              },
+            ]}
+            expandAllLabel={t('marketingShowcase.faqExpandAll')}
+            collapseAllLabel={t('marketingShowcase.faqCollapseAll')}
+          />
+          <FAQ
+            label={t('marketingShowcase.faqSingleLabel')}
+            oneOpen
+            items={[
+              {
+                id: 'single-decisions',
+                question: t('marketingShowcase.faqQuestionTwo'),
+                answer: t('marketingShowcase.faqAnswerTwo'),
+              },
+              {
+                id: 'single-statistics',
+                question: t('marketingShowcase.faqQuestionThree'),
+                answer: t('marketingShowcase.faqAnswerThree'),
+              },
+            ]}
+          />
+
+          <CTABanner
+            eyebrow={t('marketingShowcase.ctaEyebrow')}
+            headline={t('marketingShowcase.ctaHeadline')}
+            body={t('marketingShowcase.ctaBody')}
+            primaryLabel={t('marketingShowcase.ctaPrimary')}
+            primaryHref="#marketing-steps"
+            secondaryLabel={t('marketingShowcase.ctaSecondary')}
+            secondaryHref="#marketing-faq"
+          />
+
+          <ImageBand
+            kicker={t('marketingShowcase.imageKicker')}
+            headline={t('marketingShowcase.imageHeadline')}
+            body={t('marketingShowcase.imageBody')}
+          />
+
+          <div className="marketing-showcase-examples">
+            <PhoneMockup label={t('marketingShowcase.phoneLabel')}>
+              <div className="marketing-phone-example">
+                <h3>{t('marketingShowcase.phoneTitle')}</h3>
+                <p>{t('marketingShowcase.phoneBody')}</p>
+                <Chip tone="ai">{t('marketingShowcase.phoneChip')}</Chip>
+              </div>
+            </PhoneMockup>
+            <FloatingOrbs className="marketing-orbs-example">
+              <div className="marketing-orbs-example__copy">
+                <h3>{t('marketingShowcase.orbsTitle')}</h3>
+                <p>{t('marketingShowcase.orbsBody')}</p>
+              </div>
+            </FloatingOrbs>
+          </div>
+
+          <Marquee
+            label={t('marketingShowcase.marqueeLabel')}
+            items={[
+              t('marketingShowcase.marqueeOne'),
+              t('marketingShowcase.marqueeTwo'),
+              t('marketingShowcase.marqueeThree'),
+              t('marketingShowcase.marqueeFour'),
+            ]}
+          />
         </GallerySection>
 
         <GallerySection title={t('gallery.emptyState')}>

@@ -6,7 +6,7 @@
 - [x] Prompt 1 — Reusable low-level UI components
 - [x] Prompt 2
 - [x] Prompt 3
-- [ ] Prompt 4
+- [x] Prompt 4
 - [ ] Prompt 5
 - [ ] Prompt 6
 - [ ] Prompt 7
