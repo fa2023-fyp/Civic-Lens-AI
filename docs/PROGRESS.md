@@ -4,7 +4,7 @@
 
 - [x] Prompt 0 — Project skeleton and styling foundation
 - [x] Prompt 1 — Reusable low-level UI components
-- [ ] Prompt 2
+- [x] Prompt 2
 - [ ] Prompt 3
 - [ ] Prompt 4
 - [ ] Prompt 5

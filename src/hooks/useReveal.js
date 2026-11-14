@@ -1,12 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export function useReveal(rootRef) {
+export function useReveal(targetRef, { group = false, threshold = 0.15 } = {}) {
+  const internalRef = useRef(null);
+  const ref = targetRef ?? internalRef;
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
-    const root = rootRef?.current || document;
-    const targets = root.querySelectorAll('.reveal:not(.is-visible)');
+    const target = ref.current;
+    if (!target) return undefined;
 
+    const targets = group ? target.querySelectorAll('.reveal:not(.is-visible)') : [target];
     if (!('IntersectionObserver' in window)) {
-      targets.forEach((target) => target.classList.add('is-visible'));
+      setIsVisible(true);
+      targets.forEach((element) => element.classList.add('is-visible'));
       return undefined;
     }
 
@@ -14,14 +20,17 @@ export function useReveal(rootRef) {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
+          if (entry.target === target) setIsVisible(true);
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12 },
+      { threshold },
     );
 
-    targets.forEach((target) => observer.observe(target));
+    targets.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
-  }, [rootRef]);
+  }, [group, ref, threshold]);
+
+  return { ref, isVisible };
 }

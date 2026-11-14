@@ -41,6 +41,9 @@ import { TypingDots } from '../../components/ui/TypingDots/TypingDots.jsx';
 import { InlineLoader } from '../../components/ui/InlineLoader/InlineLoader.jsx';
 import { EmptyState } from '../../components/ui/EmptyState/EmptyState.jsx';
 import { ErrorState } from '../../components/ui/ErrorState/ErrorState.jsx';
+import { useCountUp } from '../../hooks/useCountUp.js';
+import { useCountdown } from '../../hooks/useCountdown.js';
+import { useReveal } from '../../hooks/useReveal.js';
 import { RevealObserver } from '../../components/layout/RevealObserver.jsx';
 import './UIGallery.css';
 
@@ -66,6 +69,13 @@ export default function UIGallery() {
   const [complaint, setComplaint] = useState('');
   const [search, setSearch] = useState('');
   const [otp, setOtp] = useState('');
+  const [countdownTarget] = useState(() => Date.now() + 60 * 60 * 1000);
+  const { ref: countUpRef, formattedValue } = useCountUp(1248.5, {
+    decimals: 1,
+    prefix: '$',
+  });
+  const { ref: revealRef, isVisible } = useReveal();
+  const countdown = useCountdown(countdownTarget);
 
   function showToast(message, type) {
     toast(message, type);
@@ -379,6 +389,34 @@ export default function UIGallery() {
             </div>
             <div className="ui-gallery__brand-loader">
               <BrandLoader label={t('gallery.loaderLabel')} />
+            </div>
+          </div>
+        </GallerySection>
+
+        <GallerySection title="Hooks">
+          <div className="ui-gallery__hook-grid">
+            <div className="ui-gallery__hook-example">
+              <h3>useCountUp</h3>
+              <strong ref={countUpRef} className="ui-gallery__hook-number tabular-nums">
+                {formattedValue}
+              </strong>
+              <p>Animates once when this counter first enters view.</p>
+            </div>
+            <div
+              ref={revealRef}
+              className={`ui-gallery__hook-example reveal${isVisible ? ' is-visible' : ''}`}
+            >
+              <h3>useReveal</h3>
+              <p>{isVisible ? 'This example is visible.' : 'Scroll this example into view.'}</p>
+            </div>
+            <div className="ui-gallery__hook-example">
+              <h3>useCountdown</h3>
+              <strong className="ui-gallery__hook-number tabular-nums">
+                {String(countdown.hours).padStart(2, '0')}:
+                {String(countdown.minutes).padStart(2, '0')}:
+                {String(countdown.seconds).padStart(2, '0')}
+              </strong>
+              <p>{countdown.isComplete ? 'Complete' : 'Time remaining'}</p>
             </div>
           </div>
         </GallerySection>

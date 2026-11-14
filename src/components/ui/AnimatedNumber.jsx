@@ -7,7 +7,12 @@ export function AnimatedNumber({ value, className }) {
   const formatted = new Intl.NumberFormat(language).format(count);
 
   return (
-    <strong ref={elementRef} className={className} aria-live="off">
+    <strong
+      ref={elementRef}
+      className={className}
+      style={{ fontVariantNumeric: 'tabular-nums' }}
+      aria-live="off"
+    >
       {formatted}
     </strong>
   );
