@@ -13,8 +13,8 @@
 - [x] Prompt 8
 - [x] Prompt 9
 - [x] Prompt 10
-- [ ] Prompt 11
-- [ ] Prompt 12
+- [x] Prompt 11
+- [x] Prompt 12
 - [ ] Prompt 13
 - [ ] Prompt 14
 - [ ] Prompt 15

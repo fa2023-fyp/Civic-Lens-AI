@@ -1,4 +1,5 @@
 import { mockApi } from './mock/index.js';
+import { AI_STUB_LABEL, analyzeComplaint } from './mock/analyze.js';
 
 const STORE_KEY = 'civiclens-mock-api-store';
 const DEMO_PASSWORD = 'Demo123!';
@@ -426,6 +427,8 @@ function persistStore(value) {
 }
 
 let store = readStore();
+let aiServiceDown = false;
+const analysisRetryTimers = new Map();
 if (typeof localStorage !== 'undefined' && !localStorage.getItem(STORE_KEY)) persistStore(store);
 
 function transact(mutator) {
@@ -624,7 +627,7 @@ function inferLanguage(text) {
   return 'en';
 }
 
-function createComplaintRecord(input = {}, context = input) {
+function createComplaintRecord(input = {}, context = input, initialStatus = 'Submitted') {
   const actor = getActor(context);
   requireRole(actor, ['citizen']);
   const originalText = String(input.originalText ?? input.text ?? '');
@@ -652,11 +655,18 @@ function createComplaintRecord(input = {}, context = input) {
       language: LANGUAGE_CODES.includes(input.language) ? input.language : inferLanguage(originalText),
       originalText,
       normalizedText: null,
-      status: 'Submitted',
+      status: initialStatus,
       locality,
       location,
+      aiAnalysis: null,
+      analysisRetry:
+        initialStatus === 'Pending Analysis'
+          ? { retryCount: 0, nextRetryAt: new Date(Date.now() + 1000).toISOString() }
+          : null,
       comments: [],
-      statusHistory: [{ status: 'Submitted', changedAt: now, actorId: actor.id }],
+      statusHistory: [
+        { status: initialStatus, changedAt: now, actorId: actor.id },
+      ],
       createdAt: now,
       updatedAt: now,
       isSynthetic: false,
@@ -664,6 +674,68 @@ function createComplaintRecord(input = {}, context = input) {
     draft.complaints.unshift(complaint);
     return complaint;
   });
+}
+
+function retryDelay(retryCount) {
+  return Math.min(30_000, 1000 * 2 ** Math.min(retryCount, 5));
+}
+
+function scheduleAnalysisRetry(complaintId, retryCount = 0) {
+  if (analysisRetryTimers.has(complaintId)) return;
+  const timer = globalThis.setTimeout(() => {
+    analysisRetryTimers.delete(complaintId);
+    const complaint = store.complaints.find((item) => item.id === complaintId);
+    if (!complaint || complaint.status !== 'Pending Analysis' || !complaint.analysisRetry) return;
+    if (aiServiceDown) {
+      const nextRetryCount = retryCount + 1;
+      transact((draft) => {
+        const pending = findComplaint(complaintId, draft);
+        pending.analysisRetry = {
+          retryCount: nextRetryCount,
+          nextRetryAt: new Date(Date.now() + retryDelay(nextRetryCount)).toISOString(),
+        };
+      });
+      scheduleAnalysisRetry(complaintId, nextRetryCount);
+      return;
+    }
+
+    const analysis = analyzeComplaint(complaint.originalText, {
+      complaints: store.complaints,
+      locality: complaint.locality,
+    });
+    transact((draft) => {
+      const pending = findComplaint(complaintId, draft);
+      pending.aiAnalysis = analysis;
+      pending.normalizedText = analysis.normalised_text;
+      pending.analysisRetry = null;
+      pending.status = analysis.needs_human_review ? 'Pending Human Review' : 'Assigned';
+      pending.updatedAt = new Date().toISOString();
+      if (!analysis.needs_human_review) {
+        const category = categorySeeds.find(
+          (item) => item.id === analysis.category.label,
+        );
+        const department = draft.departments.find(
+          (item) => item.id === category?.departmentId,
+        );
+        pending.departmentId = department?.id ?? pending.departmentId;
+        pending.assignedOfficerId = department?.officerIds[0] ?? null;
+      }
+      pending.statusHistory.push({
+        status: pending.status,
+        changedAt: pending.updatedAt,
+        actorId: null,
+        source: 'simulated_ai_retry',
+      });
+    });
+  }, retryDelay(retryCount));
+  analysisRetryTimers.set(complaintId, timer);
+}
+
+function createComplaint(input = {}, context = input) {
+  if (!aiServiceDown) return createComplaintRecord(input, context);
+  const complaint = createComplaintRecord(input, context, 'Pending Analysis');
+  scheduleAnalysisRetry(complaint.id);
+  return complaint;
 }
 
 function listComplaints(options = {}) {
@@ -908,6 +980,9 @@ function createAuthApi() {
 }
 
 function resetStore() {
+  analysisRetryTimers.forEach((timer) => globalThis.clearTimeout(timer));
+  analysisRetryTimers.clear();
+  aiServiceDown = false;
   const previousSession = store.activeSession;
   const nextStore = createSeedStore();
   if (
@@ -953,8 +1028,21 @@ const demoUsers = Object.freeze(
 );
 
 const auth = createAuthApi();
+const ai = Object.freeze({
+  label: AI_STUB_LABEL,
+  analyze: delayed('ai.analyze', (text, options = {}) => {
+    if (aiServiceDown) {
+      throw makeError('AI service down', 503, 'AI_SERVICE_DOWN');
+    }
+    return analyzeComplaint(text, { ...options, complaints: store.complaints });
+  }),
+  setServiceDown: delayed('ai.setServiceDown', (isDown) => {
+    aiServiceDown = Boolean(isDown);
+    return { serviceDown: aiServiceDown, label: AI_STUB_LABEL };
+  }),
+});
 const complaints = Object.freeze({
-  create: delayed('complaints.create', createComplaintRecord),
+  create: delayed('complaints.create', createComplaint),
   list: delayed('complaints.list', listComplaints),
   get: delayed('complaints.get', getComplaint),
   addComment: delayed('complaints.addComment', addComment),
@@ -982,6 +1070,7 @@ function injectError(operation, error) {
 
 export const apiConfig = Object.freeze({ mockEnabled: true, apiBaseUrl: '' });
 export const api = Object.freeze({
+  ai,
   auth,
   complaints,
   notifications,
@@ -1002,3 +1091,7 @@ export const api = Object.freeze({
   verifyResolution: delayed('verifyResolution', (input) => mockApi.verifyResolution(input)),
   getAuditTrail: delayed('getAuditTrail', (complaintId) => mockApi.getAuditTrail(complaintId)),
 });
+
+store.complaints
+  .filter((complaint) => complaint.status === 'Pending Analysis' && complaint.analysisRetry)
+  .forEach((complaint) => scheduleAnalysisRetry(complaint.id, complaint.analysisRetry.retryCount));
