@@ -169,6 +169,8 @@
       "citizenDashboard": "Citizen dashboard",
       "citizenComplaints": "My complaints",
       "newComplaint": "Submit a complaint",
+      "alerts": "Alerts",
+      "profile": "Profile",
       "citizenComplaintDetail": "Complaint details",
       "verifyResolution": "Verify a proposed resolution",
       "officerDashboard": "Officer dashboard",
@@ -222,6 +224,33 @@
       "sdg11": "SDG 11 · Sustainable Cities and Communities",
       "sdg16": "SDG 16 · Peace, Justice and Strong Institutions",
       "project": "Final Year Project · Lahore Garrison University"
+    }
+  },
+  "layouts": {
+    "auth": {
+      "kicker": "CIVIC INTELLIGENCE, WITH ACCOUNTABILITY",
+      "title": "Understand the issue. Support better decisions.",
+      "body": "CivicLens helps make civic reports easier to understand while people remain in control of every decision."
+    },
+    "citizen": {
+      "navigation": "Citizen navigation",
+      "submit": "Submit"
+    },
+    "staff": {
+      "navigation": "Staff navigation",
+      "breadcrumb": "Breadcrumb",
+      "collapseSidebar": "Collapse sidebar",
+      "expandSidebar": "Expand sidebar",
+      "openSidebar": "Open navigation",
+      "closeSidebar": "Close navigation",
+      "searchLabel": "Search records",
+      "notifications": "Notifications",
+      "notificationsEmpty": "Notifications will appear here when available.",
+      "profileMenu": "Profile menu for {{name}}",
+      "openShortcuts": "Keyboard shortcuts",
+      "shortcutsTitle": "Keyboard shortcuts",
+      "shortcutSearch": "Focus search",
+      "shortcutHelp": "Open keyboard shortcuts"
     }
   },
   "ui": {

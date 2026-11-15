@@ -170,6 +170,8 @@
       "citizenDashboard": "شہری ڈیش بورڈ",
       "citizenComplaints": "میری شکایات",
       "newComplaint": "شکایت جمع کریں",
+      "alerts": "اطلاعات",
+      "profile": "پروفائل",
       "citizenComplaintDetail": "شکایت کی تفصیل",
       "verifyResolution": "مجوزہ حل کی تصدیق",
       "officerDashboard": "افسر ڈیش بورڈ",
@@ -223,6 +225,33 @@
       "sdg11": "SDG 11 · پائیدار شہر اور آبادیاں",
       "sdg16": "SDG 16 · امن، انصاف اور مضبوط ادارے",
       "project": "فائنل ایئر پروجیکٹ · لاہور گیریژن یونیورسٹی"
+    }
+  },
+  "layouts": {
+    "auth": {
+      "kicker": "جوابدہی کے ساتھ شہری ذہانت",
+      "title": "مسئلے کو سمجھیں، بہتر فیصلوں میں مدد دیں۔",
+      "body": "سوک لینز شہری رپورٹس کو سمجھنے میں آسان بناتا ہے، جبکہ ہر فیصلے کا اختیار انسانوں کے پاس رہتا ہے۔"
+    },
+    "citizen": {
+      "navigation": "شہری نیویگیشن",
+      "submit": "جمع کریں"
+    },
+    "staff": {
+      "navigation": "عملے کی نیویگیشن",
+      "breadcrumb": "صفحے کا راستہ",
+      "collapseSidebar": "سائیڈ بار سکیڑیں",
+      "expandSidebar": "سائیڈ بار پھیلائیں",
+      "openSidebar": "نیویگیشن کھولیں",
+      "closeSidebar": "نیویگیشن بند کریں",
+      "searchLabel": "ریکارڈ تلاش کریں",
+      "notifications": "اطلاعات",
+      "notificationsEmpty": "اطلاعات دستیاب ہونے پر یہاں دکھائی جائیں گی۔",
+      "profileMenu": "{{name}} کا پروفائل مینو",
+      "openShortcuts": "کی بورڈ شارٹ کٹس",
+      "shortcutsTitle": "کی بورڈ شارٹ کٹس",
+      "shortcutSearch": "تلاش پر جائیں",
+      "shortcutHelp": "کی بورڈ شارٹ کٹس کھولیں"
     }
   },
   "ui": {

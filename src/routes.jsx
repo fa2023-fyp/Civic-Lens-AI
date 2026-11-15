@@ -3,7 +3,10 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from './components/guards/ErrorBoundary.jsx';
 import { RoleGuard } from './components/guards/RoleGuard.jsx';
 import { AppShell } from './components/layout/AppShell.jsx';
+import { AuthLayout } from './components/layout/AuthLayout.jsx';
+import { CitizenLayout } from './components/layout/CitizenLayout.jsx';
 import { PublicLayout } from './components/layout/PublicLayout.jsx';
+import { StaffLayout } from './components/layout/StaffLayout.jsx';
 import { BrandLoader } from './components/ui/BrandLoader/BrandLoader.jsx';
 import { TopLoadingBar } from './components/ui/TopLoadingBar/TopLoadingBar.jsx';
 import { useDocumentTitle } from './hooks/useDocumentTitle.js';
@@ -39,6 +42,8 @@ const routeEntries = [
   { path: '/citizen/complaints/new', titleKey: 'routes.pages.newComplaint', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p0', roles: ['citizen'] },
   { path: '/citizen/complaints/:complaintId', titleKey: 'routes.pages.citizenComplaintDetail', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
   { path: '/citizen/complaints/:complaintId/verify', titleKey: 'routes.pages.verifyResolution', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen/alerts', titleKey: 'routes.pages.alerts', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen/profile', titleKey: 'routes.pages.profile', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
   { path: '/officer/dashboard', titleKey: 'routes.pages.officerDashboard', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
   { path: '/officer/assignments', titleKey: 'routes.pages.assignments', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
   { path: '/officer/complaints/:complaintId', titleKey: 'routes.pages.officerComplaintDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
@@ -116,6 +121,11 @@ export function RouteView() {
   const markInitialLoadComplete = useCallback(() => setInitialLoadComplete(true), []);
   const markSuspensePending = useCallback((pending) => setSuspenseLoading(pending), []);
   const isPublicRoute = !/^\/(citizen|officer|supervisor|admin|dev)(\/|$)/.test(location.pathname);
+  const firstPathSegment = location.pathname.split('/')[1];
+  const isAuthRoute = /^\/(login|register|forgot-password|reset-password)(\/|$)/.test(
+    location.pathname,
+  );
+  const isStaffRoute = ['officer', 'supervisor', 'admin'].includes(firstPathSegment);
 
   useEffect(() => {
     if (previousPath.current === location.pathname) return undefined;
@@ -150,7 +160,13 @@ export function RouteView() {
   return (
     <>
       <ScrollRestoration />
-      {isPublicRoute ? (
+      {isAuthRoute ? (
+        <AuthLayout>{routeContent}</AuthLayout>
+      ) : firstPathSegment === 'citizen' ? (
+        <CitizenLayout>{routeContent}</CitizenLayout>
+      ) : isStaffRoute ? (
+        <StaffLayout role={firstPathSegment}>{routeContent}</StaffLayout>
+      ) : isPublicRoute ? (
         <PublicLayout>{routeContent}</PublicLayout>
       ) : (
         <AppShell>{routeContent}</AppShell>
