@@ -9,7 +9,11 @@
     "light": "روشن",
     "dark": "گہرا",
     "english": "English",
-    "urdu": "اردو"
+    "englishShort": "EN",
+    "urdu": "اردو",
+    "switchThemeToLight": "روشن تھیم منتخب کریں",
+    "switchThemeToDark": "گہری تھیم منتخب کریں",
+    "switchThemeToSystem": "سسٹم کی تھیم استعمال کریں"
   },
   "preview": {
     "kicker": "ڈیزائن نظام · بنیادی انداز",
@@ -71,7 +75,64 @@
     "close": "بند کریں",
     "cancel": "منسوخ کریں",
     "confirm": "تصدیق کریں",
-    "openMenu": "مینو کھولیں"
+    "openMenu": "مینو کھولیں",
+    "actions": {
+      "save": "محفوظ کریں",
+      "edit": "ترمیم کریں",
+      "delete": "حذف کریں",
+      "submit": "جمع کریں",
+      "back": "واپس",
+      "next": "اگلا",
+      "previous": "پچھلا",
+      "search": "تلاش کریں",
+      "clear": "صاف کریں",
+      "add": "شامل کریں",
+      "remove": "ہٹائیں",
+      "retry": "دوبارہ کوشش کریں",
+      "signIn": "سائن اِن",
+      "signOut": "سائن آؤٹ"
+    },
+    "validation": {
+      "required": "یہ خانہ پُر کرنا ضروری ہے۔",
+      "email": "درست ای میل پتہ درج کریں۔",
+      "phone": "درست فون نمبر درج کریں۔",
+      "minLength": "کم از کم {{count}} حروف درج کریں۔",
+      "maxLength": "{{count}} سے زیادہ حروف استعمال نہ کریں۔",
+      "invalid": "اس قدر کو دیکھ کر دوبارہ کوشش کریں۔"
+    },
+    "status": {
+      "pending": "زیرِ انتظار",
+      "submitted": "جمع شدہ",
+      "inProgress": "جاری",
+      "underReview": "جائزے میں",
+      "completed": "مکمل",
+      "rejected": "مسترد",
+      "failed": "ناکام",
+      "active": "فعال",
+      "inactive": "غیر فعال"
+    },
+    "navigation": {
+      "home": "صفحۂ اول",
+      "complaints": "شکایات",
+      "dashboard": "ڈیش بورڈ",
+      "settings": "ترتیبات",
+      "profile": "پروفائل",
+      "help": "مدد"
+    },
+    "errors": {
+      "network": "نیٹ ورک کی خرابی سے یہ درخواست رک گئی۔",
+      "notFound": "یہ صفحہ نہیں ملا۔",
+      "forbidden": "آپ کو یہ کام کرنے کی اجازت نہیں۔",
+      "server": "سروس عارضی طور پر دستیاب نہیں۔",
+      "tryAgain": "براہ کرم دوبارہ کوشش کریں۔",
+      "reference": "حوالہ نمبر: {{reference}}"
+    },
+    "duration": {
+      "day": "{{count}} din / {{urduNumber}} دن",
+      "days": "{{count}} din / {{urduNumber}} دن",
+      "daysUrdu": "{{count}} din / {{urduNumber}} دن",
+      "daysUrduNumeric": "{{count}} din"
+    }
   },
   "ui": {
     "required": "ضروری",
@@ -382,5 +443,9 @@
     "primaryText": "چوڑی اسکرین پر اس حصے کا سائز بدلا جا سکتا ہے۔",
     "secondaryTitle": "ثانوی پین",
     "secondaryText": "چھوٹی اسکرین پر دونوں حصے عمودی ترتیب میں آتے ہیں۔"
+  },
+  "i18nGallery": {
+    "controls": "زبان اور تھیم کے کنٹرول",
+    "durationExample": "تین دن کی مدت"
   }
 }

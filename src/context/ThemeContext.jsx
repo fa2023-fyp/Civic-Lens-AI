@@ -1,22 +1,85 @@
-import { createContext, useCallback, useContext, useMemo, useReducer } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { themeReducer } from './themeReducer.js';
 
 const ThemeContext = createContext(null);
+const themes = ['light', 'dark', 'system'];
+
+function getPreference(value) {
+  return themes.includes(value) ? value : 'light';
+}
+
+function resolveTheme(preference, systemDark) {
+  return preference === 'system' ? (systemDark ? 'dark' : 'light') : preference;
+}
+
+function applyTheme(preference, systemDark) {
+  const root = document.documentElement;
+  root.dataset.themePreference = preference;
+  root.dataset.theme = resolveTheme(preference, systemDark);
+}
 
 export function ThemeProvider({ children }) {
-  const [theme, dispatch] = useReducer(
-    themeReducer,
-    document.documentElement.dataset.theme || 'light',
+  const [preference, dispatch] = useReducer(themeReducer, null, () => {
+    const storedPreference = getPreference(
+      document.documentElement.dataset.themePreference ||
+        localStorage.getItem('civiclens-theme'),
+    );
+    applyTheme(storedPreference, window.matchMedia('(prefers-color-scheme: dark)').matches);
+    return storedPreference;
+  });
+  const [systemDark, setSystemDark] = useState(() =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches,
   );
+  const resolvedTheme = resolveTheme(preference, systemDark);
 
-  const toggleTheme = useCallback(() => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('civiclens-theme', next);
-    dispatch({ type: 'set-theme', theme: next });
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const updateSystemTheme = () => {
+      setSystemDark(mediaQuery.matches);
+      applyTheme(preference, mediaQuery.matches);
+    };
+    updateSystemTheme();
+
+    if (preference !== 'system') return undefined;
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', updateSystemTheme);
+    } else {
+      mediaQuery.addListener(updateSystemTheme);
+    }
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', updateSystemTheme);
+      } else {
+        mediaQuery.removeListener(updateSystemTheme);
+      }
+    };
+  }, [preference]);
+
+  const setTheme = useCallback((nextTheme) => {
+    if (!themes.includes(nextTheme)) {
+      throw new RangeError('Theme must be light, dark, or system.');
+    }
+    localStorage.setItem('civiclens-theme', nextTheme);
+    applyTheme(nextTheme, window.matchMedia('(prefers-color-scheme: dark)').matches);
+    dispatch({ type: 'set-theme', theme: nextTheme });
   }, []);
 
-  const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
+  const toggleTheme = useCallback(() => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  }, [resolvedTheme, setTheme]);
+
+  const value = useMemo(
+    () => ({ theme: resolvedTheme, resolvedTheme, preference, setTheme, toggleTheme }),
+    [resolvedTheme, preference, setTheme, toggleTheme],
+  );
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 

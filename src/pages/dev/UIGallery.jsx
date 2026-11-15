@@ -43,6 +43,8 @@ import { EmptyState } from '../../components/ui/EmptyState/EmptyState.jsx';
 import { ErrorState } from '../../components/ui/ErrorState/ErrorState.jsx';
 import { DataTable } from '../../components/ui/DataTable/DataTable.jsx';
 import { SplitPane } from '../../components/ui/SplitPane/SplitPane.jsx';
+import { ThemeToggle } from '../../components/ui/ThemeToggle/ThemeToggle.jsx';
+import { LanguageSwitch } from '../../components/ui/LanguageSwitch/LanguageSwitch.jsx';
 import { Accordion } from '../../components/ui/Accordion/Accordion.jsx';
 import { Breadcrumb } from '../../components/ui/Breadcrumb/Breadcrumb.jsx';
 import { KeyValueList } from '../../components/ui/KeyValueList/KeyValueList.jsx';
@@ -86,7 +88,7 @@ function GallerySection({ title, children, className = '' }) {
 }
 
 export default function UIGallery() {
-  const { t } = useI18n();
+  const { t, formatDuration } = useI18n();
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [reasonDialogOpen, setReasonDialogOpen] = useState(false);
@@ -221,6 +223,19 @@ export default function UIGallery() {
       </header>
 
       <div className="container ui-gallery__content">
+        <div
+          className="ui-gallery__preferences"
+          role="group"
+          aria-label={t('i18nGallery.controls')}
+        >
+          <ThemeToggle />
+          <LanguageSwitch />
+          <p className="ui-gallery__duration">
+            <span>{t('i18nGallery.durationExample')}</span>
+            <strong>{formatDuration(3)}</strong>
+          </p>
+        </div>
+
         <GallerySection title={t('gallery.actions')}>
           <div className="ui-gallery__row">
             <Button>{t('gallery.primary')}</Button>

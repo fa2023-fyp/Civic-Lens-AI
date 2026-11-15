@@ -25,6 +25,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html.font-urdu body {
+  font-family: var(--font-urdu);
+}
+
+html.font-latin body {
+  font-family: var(--font-sans);
+}
+
 button,
 input,
 select,

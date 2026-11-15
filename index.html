@@ -21,11 +21,25 @@
     <script>
       (() => {
         try {
+          const root = document.documentElement;
+          const storedLanguage = localStorage.getItem('civiclens-language');
+          const language = ['en', 'ur'].includes(storedLanguage) ? storedLanguage : 'en';
           const stored = localStorage.getItem('civiclens-theme');
+          const preference = ['light', 'dark', 'system'].includes(stored) ? stored : 'light';
           const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.dataset.theme = stored || (systemDark ? 'dark' : 'light');
+          root.lang = language;
+          root.dir = language === 'ur' ? 'rtl' : 'ltr';
+          root.classList.toggle('font-urdu', language === 'ur');
+          root.classList.toggle('font-latin', language === 'en');
+          root.dataset.themePreference = preference;
+          root.dataset.theme =
+            preference === 'system' ? (systemDark ? 'dark' : 'light') : preference;
         } catch {
           document.documentElement.dataset.theme = 'light';
+          document.documentElement.dataset.themePreference = 'light';
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+          document.documentElement.classList.add('font-latin');
         }
       })();
     </script>

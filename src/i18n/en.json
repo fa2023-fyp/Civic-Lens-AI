@@ -8,7 +8,11 @@
     "light": "Light",
     "dark": "Dark",
     "english": "English",
-    "urdu": "اردو"
+    "englishShort": "EN",
+    "urdu": "اردو",
+    "switchThemeToLight": "Switch to light theme",
+    "switchThemeToDark": "Switch to dark theme",
+    "switchThemeToSystem": "Use system theme"
   },
   "preview": {
     "kicker": "DESIGN SYSTEM · FOUNDATION",
@@ -70,7 +74,64 @@
     "close": "Close",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "actions": {
+      "save": "Save",
+      "edit": "Edit",
+      "delete": "Delete",
+      "submit": "Submit",
+      "back": "Back",
+      "next": "Next",
+      "previous": "Previous",
+      "search": "Search",
+      "clear": "Clear",
+      "add": "Add",
+      "remove": "Remove",
+      "retry": "Retry",
+      "signIn": "Sign in",
+      "signOut": "Sign out"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email": "Enter a valid email address.",
+      "phone": "Enter a valid phone number.",
+      "minLength": "Enter at least {{count}} characters.",
+      "maxLength": "Use no more than {{count}} characters.",
+      "invalid": "Check this value and try again."
+    },
+    "status": {
+      "pending": "Pending",
+      "submitted": "Submitted",
+      "inProgress": "In progress",
+      "underReview": "Under review",
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "failed": "Failed",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "navigation": {
+      "home": "Home",
+      "complaints": "Complaints",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "profile": "Profile",
+      "help": "Help"
+    },
+    "errors": {
+      "network": "A network error interrupted this request.",
+      "notFound": "This page could not be found.",
+      "forbidden": "You do not have permission to do that.",
+      "server": "The service is temporarily unavailable.",
+      "tryAgain": "Please try again.",
+      "reference": "Reference code: {{reference}}"
+    },
+    "duration": {
+      "day": "{{count}} day",
+      "days": "{{count}} days",
+      "daysUrdu": "{{count}} din / {{urduNumber}} دن",
+      "daysUrduNumeric": "{{count}} din"
+    }
   },
   "ui": {
     "required": "Required",
@@ -381,5 +442,9 @@
     "primaryText": "This panel can be resized on wider screens.",
     "secondaryTitle": "Secondary pane",
     "secondaryText": "On smaller screens, the panes stack vertically."
+  },
+  "i18nGallery": {
+    "controls": "Language and theme controls",
+    "durationExample": "Three-day duration"
   }
 }

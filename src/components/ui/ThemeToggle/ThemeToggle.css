@@ -1,0 +1,67 @@
+.ui-theme-toggle {
+  display: inline-grid;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  place-items: center;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out);
+}
+
+.ui-theme-toggle:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.ui-theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.ui-theme-toggle__icons {
+  position: relative;
+  display: grid;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  place-items: center;
+}
+
+.ui-theme-toggle__icons .icon {
+  position: absolute;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.ui-theme-toggle__sun {
+  transform: rotate(0) scale(1);
+  opacity: 1;
+}
+
+.ui-theme-toggle__moon {
+  transform: rotate(-45deg) scale(0.65);
+  opacity: 0;
+}
+
+.ui-theme-toggle.is-dark .ui-theme-toggle__sun {
+  transform: rotate(45deg) scale(0.65);
+  opacity: 0;
+}
+
+.ui-theme-toggle.is-dark .ui-theme-toggle__moon {
+  transform: rotate(0) scale(1);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-theme-toggle,
+  .ui-theme-toggle__icons .icon {
+    transition-duration: 150ms;
+  }
+}
