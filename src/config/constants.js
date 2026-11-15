@@ -1,5 +1,10 @@
 export const APP_NAME = 'CivicLens AI';
 
+export const EMERGENCY_NUMBERS = Object.freeze([
+  Object.freeze({ labelKey: 'publicLayout.emergency.police', number: '15' }),
+  Object.freeze({ labelKey: 'publicLayout.emergency.rescue', number: '1122' }),
+]);
+
 export const DESIGN_COLOR_TOKENS = [
   'emerald-50',
   'emerald-100',

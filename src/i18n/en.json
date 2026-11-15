@@ -161,6 +161,9 @@
       "home": "Public home",
       "login": "Sign in",
       "register": "Create an account",
+      "howItWorks": "How it works",
+      "aiTransparency": "AI transparency",
+      "help": "Help",
       "forgotPassword": "Forgot password",
       "resetPassword": "Reset password",
       "citizenDashboard": "Citizen dashboard",
@@ -195,6 +198,30 @@
       "title": "This page could not be displayed",
       "body": "An unexpected error occurred. Please try again later.",
       "reference": "Reference code:"
+    }
+  },
+  "publicLayout": {
+    "dismissBanner": "Dismiss prototype notice",
+    "primaryNavigation": "Main navigation",
+    "openNavigation": "Open navigation",
+    "drawerTitle": "Navigation",
+    "profileMenu": "Profile menu for {{name}}",
+    "nav": {
+      "howItWorks": "How it works",
+      "aiTransparency": "AI transparency"
+    },
+    "emergency": {
+      "police": "Police",
+      "rescue": "Rescue"
+    },
+    "footer": {
+      "description": "CivicLens AI explores how multilingual AI can support accountable civic workflows. People remain responsible for decisions.",
+      "quickLinks": "Quick links",
+      "emergency": "Emergency contacts",
+      "sdgLabel": "Related United Nations Sustainable Development Goals",
+      "sdg11": "SDG 11 · Sustainable Cities and Communities",
+      "sdg16": "SDG 16 · Peace, Justice and Strong Institutions",
+      "project": "Final Year Project · Lahore Garrison University"
     }
   },
   "ui": {

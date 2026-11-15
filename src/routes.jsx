@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from './components/guards/ErrorBoundary.jsx';
 import { RoleGuard } from './components/guards/RoleGuard.jsx';
 import { AppShell } from './components/layout/AppShell.jsx';
+import { PublicLayout } from './components/layout/PublicLayout.jsx';
 import { BrandLoader } from './components/ui/BrandLoader/BrandLoader.jsx';
 import { TopLoadingBar } from './components/ui/TopLoadingBar/TopLoadingBar.jsx';
 import { useDocumentTitle } from './hooks/useDocumentTitle.js';
@@ -27,6 +28,9 @@ const routeEntries = [
   { path: '/', titleKey: 'routes.pages.home', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/how-it-works', titleKey: 'routes.pages.howItWorks', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/ai-transparency', titleKey: 'routes.pages.aiTransparency', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/help', titleKey: 'routes.pages.help', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
   { path: '/forgot-password', titleKey: 'routes.pages.forgotPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
   { path: '/reset-password', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
   { path: '/reset-password/:token', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
@@ -111,6 +115,7 @@ export function RouteView() {
   const previousPath = useRef(location.pathname);
   const markInitialLoadComplete = useCallback(() => setInitialLoadComplete(true), []);
   const markSuspensePending = useCallback((pending) => setSuspenseLoading(pending), []);
+  const isPublicRoute = !/^\/(citizen|officer|supervisor|admin|dev)(\/|$)/.test(location.pathname);
 
   useEffect(() => {
     if (previousPath.current === location.pathname) return undefined;
@@ -120,28 +125,36 @@ export function RouteView() {
     return () => window.clearTimeout(timer);
   }, [location.pathname]);
 
+  const routeContent = (
+    <>
+      <TopLoadingBar active={routeLoading && !suspenseLoading} />
+      <ErrorBoundary key={location.pathname} fallback={RouteErrorFallback}>
+        <Suspense
+          fallback={
+            <RouteSuspenseFallback
+              initialLoadComplete={initialLoadComplete}
+              onPendingChange={markSuspensePending}
+            />
+          }
+        >
+          <LoadedRoute onLoaded={markInitialLoadComplete}>
+            <div key={location.pathname} className="route-view anim-fade-up">
+              <AppRoutes />
+            </div>
+          </LoadedRoute>
+        </Suspense>
+      </ErrorBoundary>
+    </>
+  );
+
   return (
     <>
       <ScrollRestoration />
-      <AppShell>
-        <TopLoadingBar active={routeLoading && !suspenseLoading} />
-        <ErrorBoundary key={location.pathname} fallback={RouteErrorFallback}>
-          <Suspense
-            fallback={
-              <RouteSuspenseFallback
-                initialLoadComplete={initialLoadComplete}
-                onPendingChange={markSuspensePending}
-              />
-            }
-          >
-            <LoadedRoute onLoaded={markInitialLoadComplete}>
-              <div key={location.pathname} className="route-view anim-fade-up">
-                <AppRoutes />
-              </div>
-            </LoadedRoute>
-          </Suspense>
-        </ErrorBoundary>
-      </AppShell>
+      {isPublicRoute ? (
+        <PublicLayout>{routeContent}</PublicLayout>
+      ) : (
+        <AppShell>{routeContent}</AppShell>
+      )}
     </>
   );
 }

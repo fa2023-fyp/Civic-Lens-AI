@@ -1,0 +1,9 @@
+.public-layout {
+  min-block-size: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.public-layout__main {
+  min-block-size: calc(100vh - var(--space-16));
+}

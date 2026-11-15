@@ -11,7 +11,7 @@
 - [x] Prompt 6
 - [x] Prompt 7
 - [x] Prompt 8
-- [ ] Prompt 9
+- [x] Prompt 9
 - [ ] Prompt 10
 - [ ] Prompt 11
 - [ ] Prompt 12

@@ -1,0 +1,207 @@
+.public-navbar {
+  position: sticky;
+  z-index: var(--z-header);
+  inset-block-start: 0;
+  background: transparent;
+  color: var(--text);
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    backdrop-filter var(--dur-base) var(--ease-out);
+}
+
+.public-navbar.is-scrolled {
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(var(--space-4));
+}
+
+.public-navbar__inner {
+  display: flex;
+  min-block-size: 4.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.public-navbar__brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.public-navbar__brand::after {
+  display: none;
+}
+
+.public-navbar__mark {
+  color: var(--brand);
+  font-size: var(--text-2xl);
+}
+
+.public-navbar__nav,
+.public-navbar__actions,
+.public-navbar__account-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.public-navbar__nav {
+  gap: var(--space-4);
+}
+
+.public-navbar__link,
+.public-navbar__account-links a {
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.public-navbar__actions .ui-language-switch,
+.public-navbar__actions .ui-theme-toggle {
+  flex: 0 0 auto;
+}
+
+.public-navbar__profile {
+  position: relative;
+}
+
+.public-navbar__profile summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-1);
+  padding: var(--space-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  list-style: none;
+}
+
+.public-navbar__profile summary::-webkit-details-marker {
+  display: none;
+}
+
+.public-navbar__profile-menu {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  display: grid;
+  min-inline-size: 12rem;
+  gap: var(--space-1);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  padding: var(--space-2);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.public-navbar__profile-menu a,
+.public-navbar__profile-menu button {
+  border: 0;
+  border-radius: var(--radius-1);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+}
+
+.public-navbar__profile-menu a:hover,
+.public-navbar__profile-menu button:hover {
+  background: var(--brand-soft);
+}
+
+.public-navbar__menu-toggle {
+  display: none;
+}
+
+.public-navbar__drawer.ui-drawer {
+  inline-size: 100%;
+  max-inline-size: 100%;
+}
+
+.public-navbar__drawer .ui-drawer__body {
+  padding: var(--space-4);
+}
+
+.public-navbar__drawer-content {
+  display: grid;
+  align-content: start;
+  gap: var(--space-6);
+  min-block-size: 100%;
+}
+
+.public-navbar__drawer-nav {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.public-navbar__drawer-link {
+  display: block;
+  border-block-end: var(--border-width) solid var(--border);
+  padding-block: var(--space-3);
+  color: var(--text);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  animation-delay: var(--delay, 0ms);
+}
+
+.public-navbar__drawer-content > .public-navbar__account-links,
+.public-navbar__drawer-content > .public-navbar__profile {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.public-navbar__drawer-content .public-navbar__account-links a {
+  padding-block: var(--space-2);
+  font-size: var(--text-base);
+}
+
+.public-navbar__drawer-content .public-navbar__profile-menu {
+  position: static;
+  box-shadow: none;
+}
+
+.public-navbar__drawer-preferences {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block-start: var(--space-2);
+}
+
+@media (max-width: 70rem) {
+  .public-navbar__nav,
+  .public-navbar__actions {
+    display: none;
+  }
+
+  .public-navbar__menu-toggle {
+    display: inline-grid;
+  }
+}
+
+@media (max-width: 30rem) {
+  .public-navbar__inner {
+    min-block-size: 4rem;
+  }
+
+  .public-navbar__brand {
+    font-size: var(--text-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-navbar {
+    transition-duration: 150ms;
+  }
+}
