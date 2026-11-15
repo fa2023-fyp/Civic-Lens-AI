@@ -133,6 +133,70 @@
       "daysUrduNumeric": "{{count}} din"
     }
   },
+  "auth": {
+    "sessionExpiredTitle": "Session expired",
+    "sessionExpiredBody": "Your session has expired. Any unsent form data remains on this page.",
+    "sessionExpiredHint": "Dismiss this message to continue editing. Sign in again before submitting.",
+    "keepPageOpen": "Keep this page open"
+  },
+  "routes": {
+    "placeholderKicker": "ROUTE PLACEHOLDER",
+    "placeholderBody": "This page marks a planned route. Its feature interface will be added in a later phase.",
+    "roleLabel": "Intended role",
+    "priorityLabel": "Priority",
+    "returnHome": "Return to home",
+    "roles": {
+      "public": "Public",
+      "citizen": "Citizen",
+      "officer": "Officer",
+      "supervisor": "Supervisor",
+      "admin": "Administrator"
+    },
+    "priorities": {
+      "p0": "P0 · Essential",
+      "p1": "P1 · High",
+      "p2": "P2 · Standard"
+    },
+    "pages": {
+      "home": "Public home",
+      "login": "Sign in",
+      "register": "Create an account",
+      "forgotPassword": "Forgot password",
+      "resetPassword": "Reset password",
+      "citizenDashboard": "Citizen dashboard",
+      "citizenComplaints": "My complaints",
+      "newComplaint": "Submit a complaint",
+      "citizenComplaintDetail": "Complaint details",
+      "verifyResolution": "Verify a proposed resolution",
+      "officerDashboard": "Officer dashboard",
+      "assignments": "My assignments",
+      "officerComplaintDetail": "Assigned complaint",
+      "submitResolution": "Submit a proposed resolution",
+      "supervisorDashboard": "Supervisor dashboard",
+      "reviewQueue": "Human review queue",
+      "escalations": "Escalations",
+      "supervisorComplaintDetail": "Complaint review",
+      "adminDashboard": "Administrator dashboard",
+      "analytics": "Service analytics",
+      "users": "User management",
+      "models": "AI model configuration",
+      "audit": "AI decision audit",
+      "settings": "System settings"
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "body": "Your account does not have permission to open this page."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "body": "This route does not exist. Check the address or return to the home page."
+    },
+    "error": {
+      "title": "This page could not be displayed",
+      "body": "An unexpected error occurred. Please try again later.",
+      "reference": "Reference code:"
+    }
+  },
   "ui": {
     "required": "Required",
     "characterCount": "{{count}} / {{max}} characters",

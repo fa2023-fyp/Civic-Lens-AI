@@ -1,0 +1,33 @@
+.route-status {
+  display: grid;
+  min-block-size: min(60vh, 42rem);
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-12);
+  text-align: center;
+}
+
+.route-status__code {
+  margin: 0;
+  color: var(--brand);
+  font-size: var(--text-5xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.route-status h1,
+.route-status p {
+  margin: 0;
+}
+
+.route-status > p:not(.route-status__code) {
+  max-inline-size: 55ch;
+  color: var(--text-muted);
+}
+
+.route-status__link {
+  margin-block-start: var(--space-2);
+  font-weight: 700;
+}

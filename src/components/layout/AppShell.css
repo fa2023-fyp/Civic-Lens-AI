@@ -55,6 +55,6 @@
   min-block-size: calc(100vh - var(--notice-size));
 }
 
-.route-view {
+.route-view.anim-fade-up {
   animation-duration: var(--dur-base);
 }

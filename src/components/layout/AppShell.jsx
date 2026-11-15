@@ -7,6 +7,12 @@ export function AppShell({ children }) {
   const { t } = useI18n();
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const sectionLabel =
+    pathname === '/dev/ui'
+      ? 'gallery.kicker'
+      : pathname === '/dev/tokens'
+        ? 'preview.tokensKicker'
+        : null;
 
   useEffect(() => {
     const updateScroll = () => setScrolled(window.scrollY > 16);
@@ -30,9 +36,7 @@ export function AppShell({ children }) {
           </span>
           {t('app.name')}
         </Link>
-        <span className="topbar__label">
-          {t(pathname === '/dev/ui' ? 'gallery.kicker' : 'preview.tokensKicker')}
-        </span>
+        {sectionLabel ? <span className="topbar__label">{t(sectionLabel)}</span> : null}
       </header>
       <main id="main-content" className="app-main">
         {children}

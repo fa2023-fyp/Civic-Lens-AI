@@ -134,6 +134,70 @@
       "daysUrduNumeric": "{{count}} din"
     }
   },
+  "auth": {
+    "sessionExpiredTitle": "سیشن ختم ہو گیا",
+    "sessionExpiredBody": "آپ کا سیشن ختم ہو گیا ہے۔ اس صفحے پر فارم کا بھیجا نہ گیا ڈیٹا موجود رہے گا۔",
+    "sessionExpiredHint": "ترمیم جاری رکھنے کے لیے یہ پیغام بند کریں۔ جمع کرنے سے پہلے دوبارہ سائن اِن کریں۔",
+    "keepPageOpen": "یہ صفحہ کھلا رکھیں"
+  },
+  "routes": {
+    "placeholderKicker": "راستے کا عارضی صفحہ",
+    "placeholderBody": "یہ منصوبہ بند راستہ ہے۔ اس کی مکمل سہولتیں اگلے مرحلے میں شامل ہوں گی۔",
+    "roleLabel": "متعلقہ کردار",
+    "priorityLabel": "ترجیح",
+    "returnHome": "صفحۂ اول پر جائیں",
+    "roles": {
+      "public": "عوام",
+      "citizen": "شہری",
+      "officer": "افسر",
+      "supervisor": "نگران",
+      "admin": "منتظم"
+    },
+    "priorities": {
+      "p0": "P0 · ضروری",
+      "p1": "P1 · زیادہ",
+      "p2": "P2 · معمول"
+    },
+    "pages": {
+      "home": "عوامی صفحۂ اول",
+      "login": "سائن اِن",
+      "register": "اکاؤنٹ بنائیں",
+      "forgotPassword": "پاس ورڈ بھول گئے",
+      "resetPassword": "پاس ورڈ تبدیل کریں",
+      "citizenDashboard": "شہری ڈیش بورڈ",
+      "citizenComplaints": "میری شکایات",
+      "newComplaint": "شکایت جمع کریں",
+      "citizenComplaintDetail": "شکایت کی تفصیل",
+      "verifyResolution": "مجوزہ حل کی تصدیق",
+      "officerDashboard": "افسر ڈیش بورڈ",
+      "assignments": "میری ذمہ داریاں",
+      "officerComplaintDetail": "تفویض شدہ شکایت",
+      "submitResolution": "مجوزہ حل جمع کریں",
+      "supervisorDashboard": "نگران ڈیش بورڈ",
+      "reviewQueue": "انسانی جائزے کی فہرست",
+      "escalations": "آگے بھیجے گئے معاملات",
+      "supervisorComplaintDetail": "شکایت کا جائزہ",
+      "adminDashboard": "منتظم ڈیش بورڈ",
+      "analytics": "خدمات کا تجزیہ",
+      "users": "صارفین کا انتظام",
+      "models": "اے آئی ماڈل کی ترتیب",
+      "audit": "اے آئی فیصلوں کا آڈٹ",
+      "settings": "سسٹم کی ترتیبات"
+    },
+    "forbidden": {
+      "title": "رسائی کی اجازت نہیں",
+      "body": "آپ کے اکاؤنٹ کو یہ صفحہ کھولنے کی اجازت نہیں۔"
+    },
+    "notFound": {
+      "title": "صفحہ نہیں ملا",
+      "body": "یہ راستہ موجود نہیں۔ پتہ دیکھیں یا صفحۂ اول پر واپس جائیں۔"
+    },
+    "error": {
+      "title": "یہ صفحہ نہیں دکھایا جا سکا",
+      "body": "غیر متوقع خرابی پیش آئی۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+      "reference": "حوالہ نمبر:"
+    }
+  },
   "ui": {
     "required": "ضروری",
     "characterCount": "{{count}} / {{max}} حروف",

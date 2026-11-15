@@ -1,19 +1,177 @@
-import { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { ErrorBoundary } from './components/guards/ErrorBoundary.jsx';
+import { RoleGuard } from './components/guards/RoleGuard.jsx';
+import { AppShell } from './components/layout/AppShell.jsx';
 import { BrandLoader } from './components/ui/BrandLoader/BrandLoader.jsx';
+import { TopLoadingBar } from './components/ui/TopLoadingBar/TopLoadingBar.jsx';
+import { useDocumentTitle } from './hooks/useDocumentTitle.js';
+import { useI18n } from './i18n/I18nContext.jsx';
+import RouteErrorFallback from './pages/shared/RouteErrorFallback.jsx';
 
+const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
+const ForbiddenPage = lazy(() =>
+  import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
+    default: module.ForbiddenPage,
+  })),
+);
+const NotFoundPage = lazy(() =>
+  import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
+    default: module.NotFoundPage,
+  })),
+);
 const TokenPreview = lazy(() => import('./pages/dev/TokenPreview.jsx'));
 const UIGallery = import.meta.env.DEV ? lazy(() => import('./pages/dev/UIGallery.jsx')) : null;
 
+const routeEntries = [
+  { path: '/', titleKey: 'routes.pages.home', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/forgot-password', titleKey: 'routes.pages.forgotPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/reset-password', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/reset-password/:token', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/citizen/dashboard', titleKey: 'routes.pages.citizenDashboard', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen/complaints', titleKey: 'routes.pages.citizenComplaints', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen/complaints/new', titleKey: 'routes.pages.newComplaint', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p0', roles: ['citizen'] },
+  { path: '/citizen/complaints/:complaintId', titleKey: 'routes.pages.citizenComplaintDetail', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen/complaints/:complaintId/verify', titleKey: 'routes.pages.verifyResolution', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/officer/dashboard', titleKey: 'routes.pages.officerDashboard', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
+  { path: '/officer/assignments', titleKey: 'routes.pages.assignments', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
+  { path: '/officer/complaints/:complaintId', titleKey: 'routes.pages.officerComplaintDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
+  { path: '/officer/complaints/:complaintId/resolve', titleKey: 'routes.pages.submitResolution', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
+  { path: '/supervisor/dashboard', titleKey: 'routes.pages.supervisorDashboard', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
+  { path: '/supervisor/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p2', roles: ['supervisor'] },
+  { path: '/supervisor/review-queue', titleKey: 'routes.pages.reviewQueue', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
+  { path: '/supervisor/escalations', titleKey: 'routes.pages.escalations', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
+  { path: '/supervisor/complaints/:complaintId', titleKey: 'routes.pages.supervisorComplaintDetail', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
+  { path: '/admin/dashboard', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p1', roles: ['admin'] },
+  { path: '/admin/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
+  { path: '/admin/users', titleKey: 'routes.pages.users', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
+  { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
+  { path: '/admin/audit', titleKey: 'routes.pages.audit', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p1', roles: ['admin'] },
+  { path: '/admin/settings', titleKey: 'routes.pages.settings', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
+];
+
+function LoadedRoute({ children, onLoaded }) {
+  useEffect(() => onLoaded(), [onLoaded]);
+  return children;
+}
+
+function RouteSuspenseFallback({ initialLoadComplete, onPendingChange }) {
+  useEffect(() => {
+    onPendingChange(true);
+    return () => onPendingChange(false);
+  }, [onPendingChange]);
+
+  return initialLoadComplete ? <TopLoadingBar active /> : <BrandLoader />;
+}
+
+function renderPlaceholder(entry) {
+  const page = (
+    <RoutePlaceholder
+      titleKey={entry.titleKey}
+      roleKey={entry.roleKey}
+      priorityKey={entry.priorityKey}
+    />
+  );
+  return entry.roles ? (
+    <RoleGuard roles={entry.roles} ownerId={entry.ownerId}>
+      {page}
+    </RoleGuard>
+  ) : (
+    page
+  );
+}
+
+function RouteDocumentTitle({ titleKey, children }) {
+  const { t } = useI18n();
+  useDocumentTitle(`${t(titleKey)} · ${t('app.name')}`);
+  return children;
+}
+
+function ScrollRestoration() {
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    if (location.hash) {
+      document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, [location.pathname, location.hash]);
+
+  return null;
+}
+
+export function RouteView() {
+  const location = useLocation();
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  const [routeLoading, setRouteLoading] = useState(false);
+  const [suspenseLoading, setSuspenseLoading] = useState(false);
+  const previousPath = useRef(location.pathname);
+  const markInitialLoadComplete = useCallback(() => setInitialLoadComplete(true), []);
+  const markSuspensePending = useCallback((pending) => setSuspenseLoading(pending), []);
+
+  useEffect(() => {
+    if (previousPath.current === location.pathname) return undefined;
+    previousPath.current = location.pathname;
+    setRouteLoading(true);
+    const timer = window.setTimeout(() => setRouteLoading(false), 350);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
+
+  return (
+    <>
+      <ScrollRestoration />
+      <AppShell>
+        <TopLoadingBar active={routeLoading && !suspenseLoading} />
+        <ErrorBoundary key={location.pathname} fallback={RouteErrorFallback}>
+          <Suspense
+            fallback={
+              <RouteSuspenseFallback
+                initialLoadComplete={initialLoadComplete}
+                onPendingChange={markSuspensePending}
+              />
+            }
+          >
+            <LoadedRoute onLoaded={markInitialLoadComplete}>
+              <div key={location.pathname} className="route-view anim-fade-up">
+                <AppRoutes />
+              </div>
+            </LoadedRoute>
+          </Suspense>
+        </ErrorBoundary>
+      </AppShell>
+    </>
+  );
+}
 export function AppRoutes() {
   return (
-    <Suspense fallback={<BrandLoader />}>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dev/tokens" replace />} />
-        <Route path="/dev/tokens" element={<TokenPreview />} />
-        {import.meta.env.DEV && UIGallery ? <Route path="/dev/ui" element={<UIGallery />} /> : null}
-        <Route path="*" element={<Navigate to="/dev/tokens" replace />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      {routeEntries.map((entry) => (
+        <Route key={entry.path} path={entry.path} element={renderPlaceholder(entry)} />
+      ))}
+      <Route path="/403" element={<ForbiddenPage />} />
+      <Route path="/404" element={<NotFoundPage />} />
+      <Route
+        path="/dev/tokens"
+        element={
+          <RouteDocumentTitle titleKey="preview.title">
+            <TokenPreview />
+          </RouteDocumentTitle>
+        }
+      />
+      {import.meta.env.DEV && UIGallery ? (
+        <Route
+          path="/dev/ui"
+          element={
+            <RouteDocumentTitle titleKey="gallery.title">
+              <UIGallery />
+            </RouteDocumentTitle>
+          }
+        />
+      ) : null}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
