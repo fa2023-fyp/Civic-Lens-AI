@@ -93,6 +93,31 @@
       "verifyBody": "Let the citizen confirm the proposed resolution and reopen when the outcome is still unacceptable.",
       "audit": "Audit",
       "auditBody": "Keep the decision trail append-only so every override is visible and explainable."
+    },
+    "analyzer": {
+      "kicker": "The intelligence layer",
+      "title": "From raw complaint to explainable civic action.",
+      "itemLanguage": "Multilingual language identification and normalisation",
+      "itemConfidence": "Explainable confidence and human-readable rationale",
+      "itemDuplicates": "Cross-language duplicate detection",
+      "itemSla": "SLA-risk estimates and service timing",
+      "itemGeo": "Geo-tagged evidence and hotspot views",
+      "itemAudit": "Append-only audit trail for every override",
+      "demoLabel": "Complaint text",
+      "exampleChips": "Example complaint text options",
+      "analyzeButton": "Analyse (demo)",
+      "caption": "Simulated demo, not a real model result.",
+      "typing": "AI is analysing",
+      "entities": "Entities",
+      "urgency": "Urgency",
+      "department": "Department",
+      "related": "Related complaints",
+      "confidence": "Confidence",
+      "languageMetric": "Language",
+      "categoryMetric": "Category",
+      "urgencyMetric": "Urgency",
+      "departmentMetric": "Department",
+      "explanation": "Explanation"
     }
   },
   "preview": {

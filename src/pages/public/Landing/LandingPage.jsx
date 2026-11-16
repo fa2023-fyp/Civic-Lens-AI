@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { FloatingOrbs } from '../../../components/marketing/Showcase.jsx';
 import { Button } from '../../../components/ui/Button/Button.jsx';
 import { Chip } from '../../../components/ui/Chip/Chip.jsx';
@@ -6,6 +6,8 @@ import { useI18n } from '../../../i18n/I18nContext.jsx';
 import { api } from '../../../services/api.js';
 import { landingContent } from './landing.content.js';
 import './LandingPage.css';
+
+const LandingAnalyzerSection = lazy(() => import('./LandingAnalyzerSection.jsx'));
 
 function useReducedMotion() {
   const mediaQuery = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -356,6 +358,9 @@ export default function LandingPage() {
       <RecognitionSection />
       <PillarsSection />
       <ServicesSection />
+      <Suspense fallback={<div className="landing-analyzer-loader" aria-live="polite" /> }>
+        <LandingAnalyzerSection />
+      </Suspense>
     </main>
   );
 }
