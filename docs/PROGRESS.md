@@ -47,6 +47,6 @@
 
 - [x] M1 — Shared PageHero and public placeholder route foundation
 - [x] M2 — Split landing sections into importable components and reuse them on /features
-- [ ] M3 — Build public page content
+- [x] M3 — Build public page content (/features and /technology)
 - [ ] M4 — Add navigation and page-specific interactions
 - [ ] M5 — Complete accessibility and responsive review

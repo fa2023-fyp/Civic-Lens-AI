@@ -223,9 +223,35 @@
       }
     },
     "technology": {
-      "kicker": "Behind the prototype",
-      "title": "AI recommendations, human decisions.",
-      "lead": "The prototype demonstrates a replaceable service layer and simulated analysis. It is not connected to a live government system or production AI model."
+      "kicker": "Technology",
+      "title": "The intelligence layer",
+      "lead": "See how multilingual analysis organises reports, explains recommendations, and keeps people responsible for decisions.",
+      "pipelineKicker": "From a report to an auditable decision",
+      "pipelineTitle": "10 connected stages support each complaint.",
+      "stages": {
+        "understand": "Understand",
+        "extract": "Extract",
+        "classify": "Classify",
+        "prioritise": "Prioritise",
+        "route": "Route",
+        "relatedIssues": "Detect related issues",
+        "monitorSla": "Monitor SLA",
+        "escalate": "Escalate",
+        "verify": "Verify resolution",
+        "audit": "Audit AI decisions"
+      },
+      "transparencyTitle": "How decisions are made and what the limits are",
+      "transparencyBody": "Learn how AI recommendations are reviewed, where human decisions apply, and what this academic prototype does not claim.",
+      "ctaKicker": "Explore the workflow",
+      "ctaTitle": "Put the intelligence layer in context.",
+      "ctaBody": "Start with a report or follow how a complaint moves through the process.",
+      "ctaPrimary": "Submit a complaint",
+      "ctaSecondary": "How it works"
+    },
+    "transparency": {
+      "kicker": "Transparency and limits",
+      "title": "How decisions are made and what the limits are",
+      "lead": "This page explains how recommendations are reviewed by people and describes the boundaries of this academic prototype."
     },
     "contact": {
       "kicker": "Project contact",

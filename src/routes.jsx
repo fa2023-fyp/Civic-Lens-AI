@@ -17,6 +17,7 @@ import LandingPage from './pages/public/Landing/LandingPage.jsx';
 const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
 const PublicInfoPage = lazy(() => import('./pages/public/PublicInfoPage.jsx'));
 const FeaturesPage = lazy(() => import('./pages/public/FeaturesPage.jsx'));
+const TechnologyPage = lazy(() => import('./pages/public/TechnologyPage.jsx'));
 const ForbiddenPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.ForbiddenPage,
@@ -35,6 +36,7 @@ const routeEntries = [
   { path: '/about', titleKey: 'publicPages.about.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'about' },
   { path: '/features', titleKey: 'publicPages.features.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'features' },
   { path: '/technology', titleKey: 'publicPages.technology.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'technology' },
+  { path: '/transparency', titleKey: 'publicPages.transparency.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'transparency' },
   { path: '/contact', titleKey: 'publicPages.contact.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'contact' },
   { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
@@ -96,6 +98,8 @@ function renderPlaceholder(entry) {
       <RouteDocumentTitle titleKey={entry.titleKey}>
         {entry.pageKey === 'features' ? (
           <FeaturesPage />
+        ) : entry.pageKey === 'technology' ? (
+          <TechnologyPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
