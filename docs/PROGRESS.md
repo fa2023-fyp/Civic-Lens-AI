@@ -19,7 +19,7 @@
 - [ ] Prompt 14
 - [ ] Prompt 15
 - [ ] Prompt 16
-- [ ] Prompt 17
+- [x] Prompt 17 — Mock API lifecycle and demo controls complete
 
 ## Decisions and deviations
 
