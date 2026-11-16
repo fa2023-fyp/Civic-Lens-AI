@@ -181,9 +181,32 @@
   "publicPages": {
     "breadcrumbs": "Breadcrumb",
     "about": {
-      "kicker": "About the project",
-      "title": "Civic understanding, with accountability.",
-      "lead": "CivicLens is an academic prototype exploring how multilingual AI can support existing civic workflows while people remain in control."
+      "kicker": "About",
+      "title": "About CivicLens",
+      "lead": "CivicLens is an academic Final Year Project prototype about multilingual civic complaints in Pakistan.",
+      "storyKicker": "Mission and problem",
+      "storyTitle": "Make civic reports easier to understand, while keeping people in control.",
+      "missionTitle": "Our mission",
+      "missionBody": "Explore how multilingual AI could help organise civic complaints and support accountable review without replacing human decisions.",
+      "problemTitle": "The problem we explore",
+      "problemBody": "Residents may describe civic issues in English, Urdu, Roman Urdu, or mixed writing. This prototype explores how those reports could be understood and structured for human review.",
+      "projectKicker": "Academic project",
+      "projectTitle": "About this project",
+      "fields": {
+        "projectType": "Project",
+        "institution": "Institution",
+        "team": "Team members",
+        "supervisor": "Supervisor",
+        "year": "Year"
+      },
+      "values": {
+        "projectType": "Final Year Project",
+        "institution": "Lahore Garrison University"
+      },
+      "replacePlaceholder": "[replace]",
+      "limitsTitle": "A prototype with clear limits",
+      "limitsBody": "CivicLens is not a live service or an official government portal. AI outputs are simulated recommendations; people remain responsible for decisions.",
+      "limitsLink": "How decisions are made and what the limits are"
     },
     "features": {
       "kicker": "Features",
@@ -254,9 +277,37 @@
       "lead": "This page explains how recommendations are reviewed by people and describes the boundaries of this academic prototype."
     },
     "contact": {
-      "kicker": "Project contact",
-      "title": "Connect with the CivicLens project team.",
-      "lead": "This page is a placeholder for project contact information. No public support channel is available through this academic prototype."
+      "kicker": "Contact",
+      "title": "Contact the CivicLens project team",
+      "lead": "Use this demo form to preview the contact flow. Messages are not sent anywhere.",
+      "contentLabel": "Contact form and project information",
+      "form": {
+        "title": "Demo contact form",
+        "description": "Complete the fields to preview inline validation and confirmation.",
+        "demoNotice": "Demo form: messages are not sent anywhere.",
+        "name": "Name",
+        "email": "E-mail",
+        "message": "Message",
+        "preferredLanguage": "Preferred language",
+        "chooseLanguage": "Choose a language",
+        "languages": {
+          "english": "English",
+          "urdu": "Urdu",
+          "romanUrdu": "Roman Urdu"
+        },
+        "submit": "Preview confirmation",
+        "success": "Your demo confirmation is shown below. No message was sent.",
+        "successToast": "Demo form complete. No message was sent.",
+        "errors": {
+          "name": "Enter a name with at least two characters.",
+          "email": "Enter a valid e-mail address.",
+          "message": "Enter a message with at least 10 characters.",
+          "preferredLanguage": "Choose a preferred language."
+        }
+      },
+      "sideTitle": "Emergency and project details",
+      "projectEmailLabel": "Project e-mail",
+      "projectEmailPlaceholder": "[replace with project e-mail]"
     }
   },
   "preview": {

@@ -16,6 +16,8 @@ import LandingPage from './pages/public/Landing/LandingPage.jsx';
 
 const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
 const PublicInfoPage = lazy(() => import('./pages/public/PublicInfoPage.jsx'));
+const AboutPage = lazy(() => import('./pages/public/AboutPage.jsx'));
+const ContactPage = lazy(() => import('./pages/public/ContactPage.jsx'));
 const FeaturesPage = lazy(() => import('./pages/public/FeaturesPage.jsx'));
 const TechnologyPage = lazy(() => import('./pages/public/TechnologyPage.jsx'));
 const ForbiddenPage = lazy(() =>
@@ -96,7 +98,11 @@ function renderPlaceholder(entry) {
   if (entry.pageKey) {
     return (
       <RouteDocumentTitle titleKey={entry.titleKey}>
-        {entry.pageKey === 'features' ? (
+        {entry.pageKey === 'about' ? (
+          <AboutPage />
+        ) : entry.pageKey === 'contact' ? (
+          <ContactPage />
+        ) : entry.pageKey === 'features' ? (
           <FeaturesPage />
         ) : entry.pageKey === 'technology' ? (
           <TechnologyPage />
