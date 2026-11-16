@@ -1,10 +1,10 @@
 import { FAQ } from '../../../components/marketing/FAQ.jsx';
+import { faqItems } from '../../../content/faq.js';
 import { useI18n } from '../../../i18n/I18nContext.jsx';
-import { landingContent } from './landing.content.js';
 
 export function LandingFAQSection() {
   const { t } = useI18n();
-  const items = landingContent.faq.map((item) => ({
+  const items = faqItems.map((item) => ({
     id: item.id,
     question: t(item.questionKey),
     answer: t(item.answerKey),

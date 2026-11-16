@@ -63,19 +63,35 @@
   white-space: nowrap;
 }
 
-.public-navbar__link[aria-current='location'] {
-  color: var(--brand-strong);
-  text-decoration: underline;
-  text-decoration-color: var(--brand);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.35em;
+.public-navbar__link {
+  position: relative;
+  padding-block: var(--space-2);
+  text-decoration: none;
 }
 
-.public-navbar__drawer-link[aria-current='location'] {
+.public-navbar__link::after,
+.public-navbar__drawer-link::after {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 2px;
+  background: var(--brand);
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.public-navbar__link:hover::after,
+.public-navbar__link:focus-visible::after,
+.public-navbar__link[aria-current='page']::after,
+.public-navbar__drawer-link[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+.public-navbar__link[aria-current='page'] {
   color: var(--brand-strong);
-  text-decoration: underline;
-  text-decoration-color: var(--brand);
-  text-underline-offset: 0.35em;
 }
 
 .public-navbar__actions .ui-language-switch,
@@ -162,6 +178,7 @@
 }
 
 .public-navbar__drawer-link {
+  position: relative;
   display: block;
   border-block-end: var(--border-width) solid var(--border);
   padding-block: var(--space-3);
@@ -169,6 +186,10 @@
   font-size: var(--text-lg);
   font-weight: 700;
   animation-delay: var(--delay, 0ms);
+}
+
+.public-navbar__drawer-link[aria-current='page'] {
+  color: var(--brand-strong);
 }
 
 .public-navbar__drawer-content > .public-navbar__account-links,
@@ -210,19 +231,20 @@
     min-block-size: 4rem;
   }
 
-  @media (max-width: 70rem) {
-    .public-navbar__drawer-link {
-      white-space: normal;
-    }
-  }
-
   .public-navbar__brand {
     font-size: var(--text-sm);
   }
 }
 
+html[dir='rtl'] .public-navbar__link::after,
+html[dir='rtl'] .public-navbar__drawer-link::after {
+  transform-origin: right center;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .public-navbar {
+  .public-navbar,
+  .public-navbar__link::after,
+  .public-navbar__drawer-link::after {
     transition-duration: 150ms;
   }
 }

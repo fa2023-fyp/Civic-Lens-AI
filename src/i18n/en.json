@@ -54,6 +54,13 @@
       "onTrack": "SLA on-track",
       "languages": "languages handled"
     },
+    "explore": {
+      "kicker": "Explore",
+      "title": "Explore CivicLens",
+      "features": "See the core capabilities.",
+      "technology": "Explore the intelligence layer.",
+      "howItWorks": "Follow the complaint journey."
+    },
     "recognition": {
       "kicker": "Built for accountable civic service",
       "title": "Human-centred outcomes, not automation by default.",
@@ -176,6 +183,13 @@
       "kicker": "Please note",
       "title": "CivicLens is not an emergency service.",
       "note": "For immediate danger or urgent help, contact the relevant emergency service directly."
+    },
+    "closingCta": {
+      "kicker": "Start with an issue",
+      "title": "A clearer report can support a better response.",
+      "body": "See how civic complaints can be understood and routed while people make final decisions.",
+      "submit": "Submit a complaint",
+      "features": "Explore features"
     }
   },
   "publicPages": {
@@ -275,6 +289,11 @@
       "kicker": "Transparency and limits",
       "title": "How decisions are made and what the limits are",
       "lead": "This page explains how recommendations are reviewed by people and describes the boundaries of this academic prototype."
+    },
+    "help": {
+      "kicker": "Help and guidance",
+      "title": "Frequently asked questions",
+      "lead": "Learn about language support, AI recommendations, resolution feedback, and the limits of this academic prototype."
     },
     "contact": {
       "kicker": "Contact",
@@ -517,6 +536,9 @@
     },
     "footer": {
       "description": "CivicLens AI explores how multilingual AI can support accountable civic workflows. People remain responsible for decisions.",
+      "product": "Product",
+      "projectHeading": "Project",
+      "support": "Support",
       "quickLinks": "Quick links",
       "emergency": "Emergency contacts",
       "sdgLabel": "Related United Nations Sustainable Development Goals",

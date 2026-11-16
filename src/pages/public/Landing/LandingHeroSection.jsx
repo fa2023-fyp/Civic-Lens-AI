@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FloatingOrbs } from '../../../components/marketing/Showcase.jsx';
 import { Button } from '../../../components/ui/Button/Button.jsx';
 import { Chip } from '../../../components/ui/Chip/Chip.jsx';
@@ -115,10 +116,10 @@ export function LandingHeroSection() {
         <h1 id="landing-title" className="landing-hero__headline">{t('landing.hero.headline')}</h1>
         <p className="landing-hero__lead">{t('landing.hero.lead')}</p>
         <div className="landing-hero__actions">
-          <Button as="a" href="/citizen/complaints/new" variant="cta" iconEnd="arrow-right">
+          <Button as={Link} to="/citizen/complaints/new" variant="cta" iconEnd="arrow-right">
             {t('landing.hero.primaryCta')}
           </Button>
-          <Button as="a" href="#how-it-works" variant="ghost" className="landing-hero__ghost-action">
+          <Button as={Link} to="/how-it-works" variant="ghost" className="landing-hero__ghost-action">
             {t('landing.hero.secondaryCta')}
           </Button>
         </div>

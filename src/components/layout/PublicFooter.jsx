@@ -4,11 +4,16 @@ import { useI18n } from '../../i18n/I18nContext.jsx';
 import { LanguageSwitch } from '../ui/LanguageSwitch/LanguageSwitch.jsx';
 import './PublicFooter.css';
 
-const quickLinks = [
-  { to: '/', labelKey: 'common.navigation.home' },
-  { to: '/how-it-works', labelKey: 'publicLayout.nav.howItWorks' },
-  { to: '/ai-transparency', labelKey: 'publicLayout.nav.aiTransparency' },
-  { to: '/help', labelKey: 'common.navigation.help' },
+const productLinks = [
+  { to: '/features', labelKey: 'publicPages.features.kicker' },
+  { to: '/technology', labelKey: 'publicPages.technology.kicker' },
+  { to: '/how-it-works', labelKey: 'routes.pages.howItWorks' },
+];
+
+const projectLinks = [
+  { to: '/about', labelKey: 'publicPages.about.kicker' },
+  { to: '/transparency', labelKey: 'routes.pages.aiTransparency' },
+  { to: '/contact', labelKey: 'publicPages.contact.kicker' },
 ];
 
 export function PublicFooter() {
@@ -17,15 +22,15 @@ export function PublicFooter() {
   return (
     <footer className="public-footer">
       <div className="container public-footer__main">
-        <section className="public-footer__about" aria-labelledby="public-footer-title">
-          <h2 id="public-footer-title">{t('app.name')}</h2>
+        <div className="public-footer__intro">
+          <h2>{t('app.name')}</h2>
           <p>{t('publicLayout.footer.description')}</p>
-        </section>
+        </div>
 
-        <nav className="public-footer__links" aria-label={t('publicLayout.footer.quickLinks')}>
-          <h2>{t('publicLayout.footer.quickLinks')}</h2>
+        <nav className="public-footer__links" aria-label={t('publicLayout.footer.product')}>
+          <h2>{t('publicLayout.footer.product')}</h2>
           <ul>
-            {quickLinks.map((item) => (
+            {productLinks.map((item) => (
               <li key={item.to}>
                 <Link to={item.to}>{t(item.labelKey)}</Link>
               </li>
@@ -33,9 +38,26 @@ export function PublicFooter() {
           </ul>
         </nav>
 
-        <section className="public-footer__emergency" aria-labelledby="public-footer-emergency">
-          <h2 id="public-footer-emergency">{t('publicLayout.footer.emergency')}</h2>
+        <nav className="public-footer__links" aria-label={t('publicLayout.footer.projectHeading')}>
+          <h2>{t('publicLayout.footer.projectHeading')}</h2>
           <ul>
+            {projectLinks.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to}>{t(item.labelKey)}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <section className="public-footer__support" aria-labelledby="public-footer-support">
+          <h2 id="public-footer-support">{t('publicLayout.footer.support')}</h2>
+          <ul className="public-footer__support-links">
+            <li>
+              <Link to="/help">{t('common.navigation.help')}</Link>
+            </li>
+          </ul>
+          <h3>{t('publicLayout.footer.emergency')}</h3>
+          <ul className="public-footer__emergency">
             {EMERGENCY_NUMBERS.map((item) => (
               <li key={item.number}>
                 <span>{t(item.labelKey)}</span>
@@ -46,17 +68,15 @@ export function PublicFooter() {
             ))}
           </ul>
         </section>
-
-        <section className="public-footer__sdgs" aria-label={t('publicLayout.footer.sdgLabel')}>
-          <span className="public-footer__sdg">{t('publicLayout.footer.sdg11')}</span>
-          <span className="public-footer__sdg">{t('publicLayout.footer.sdg16')}</span>
-          <LanguageSwitch />
-        </section>
       </div>
 
       <div className="public-footer__bottom">
-        <div className="container">
-          <p>{t('publicLayout.footer.project')}</p>
+        <div className="container public-footer__bottom-inner">
+          <div className="public-footer__disclaimer">
+            <p>{t('app.notice')}</p>
+            <p>{t('publicLayout.footer.project')}</p>
+          </div>
+          <LanguageSwitch />
         </div>
       </div>
     </footer>

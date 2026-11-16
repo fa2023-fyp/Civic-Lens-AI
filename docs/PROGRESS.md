@@ -49,4 +49,4 @@
 - [x] M2 — Split landing sections into importable components and reuse them on /features
 - [x] M3 — Build public page content (/features and /technology)
 - [x] M4 — Add page-specific interactions for About and Contact, including demo form feedback
-- [ ] M5 — Complete accessibility and responsive review
+- [x] M5 — Move public navigation to routes and reorganize landing content across pages

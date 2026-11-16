@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button/Button.jsx';
 import { Chip } from '../ui/Chip/Chip.jsx';
 import './marketing-showcase.css';
@@ -24,12 +25,12 @@ export function CTABanner({
       </div>
       <div className="marketing-cta-banner__actions">
         {primaryLabel && primaryHref ? (
-          <Button as="a" href={primaryHref} variant="cta" iconEnd="arrow-right">
+          <Button as={Link} to={primaryHref} variant="cta" iconEnd="arrow-right">
             {primaryLabel}
           </Button>
         ) : null}
         {secondaryLabel && secondaryHref ? (
-          <Button as="a" href={secondaryHref} variant="secondary">
+          <Button as={Link} to={secondaryHref} variant="secondary">
             {secondaryLabel}
           </Button>
         ) : null}
