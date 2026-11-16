@@ -23,6 +23,7 @@
 - [x] Prompt 18 — Landing page hero and stats shell
 - [x] Prompt 19 — Landing sections 3 to 6
 - [x] Prompt 20 — Dark intelligence layer section
+- [x] Prompt 21 — Landing sections 8 to 12
 
 ## Decisions and deviations
 

@@ -1,7 +1,9 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { FloatingOrbs } from '../../../components/marketing/Showcase.jsx';
+import { FAQ, ImageBand, PhoneMockup, StepsRail } from '../../../components/marketing/index.js';
 import { Button } from '../../../components/ui/Button/Button.jsx';
 import { Chip } from '../../../components/ui/Chip/Chip.jsx';
+import { EMERGENCY_NUMBERS } from '../../../config/constants.js';
 import { useI18n } from '../../../i18n/I18nContext.jsx';
 import { api } from '../../../services/api.js';
 import { landingContent } from './landing.content.js';
@@ -173,16 +175,18 @@ function StatStrip() {
   const { t } = useI18n();
 
   return (
-    <div className="landing-stats" aria-label={t('landing.stats.ariaLabel')}>
-      {landingContent.stats.map((stat) => (
-        <div key={stat.key} className="landing-stat">
-          <div className="landing-stat__value">
-            <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+    <section className="landing-stats-section" aria-label={t('landing.stats.ariaLabel')}>
+      <div className="landing-stats">
+        {landingContent.stats.map((stat) => (
+          <div key={stat.key} className="landing-stat">
+            <div className="landing-stat__value">
+              <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+            </div>
+            <p className="landing-stat__label">{t(stat.labelKey)}</p>
           </div>
-          <p className="landing-stat__label">{t(stat.labelKey)}</p>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -326,12 +330,142 @@ function ServicesSection() {
   );
 }
 
+function JourneySection() {
+  const { t } = useI18n();
+  const steps = landingContent.journey.map((step) => ({
+    id: step.id,
+    title: t(step.titleKey),
+    description: t(step.descriptionKey),
+  }));
+
+  return (
+    <section
+      id="journey"
+      className="landing-section landing-section--tint landing-anchor reveal-section"
+      style={{ '--i': 7 }}
+      aria-labelledby="landing-journey-title"
+    >
+      <div className="landing-section__inner">
+        <div className="landing-section__heading landing-section__heading--centered">
+          <p className="landing-section__kicker">{t('landing.journey.kicker')}</p>
+          <h2 id="landing-journey-title">{t('landing.journey.title')}</h2>
+        </div>
+        <StepsRail steps={steps} label={t('landing.journey.stepsLabel')} />
+      </div>
+    </section>
+  );
+}
+
+function PhoneSection() {
+  const { t } = useI18n();
+
+  return (
+    <section
+      className="landing-section reveal-section"
+      style={{ '--i': 9 }}
+      aria-labelledby="landing-phone-title"
+    >
+      <div className="landing-section__inner landing-phone">
+        <div className="landing-phone__copy">
+          <p className="landing-section__kicker">{t('landing.phone.kicker')}</p>
+          <h2 id="landing-phone-title">{t('landing.phone.title')}</h2>
+          <ul className="landing-phone__features">
+            {landingContent.phoneFeatures.map((feature) => (
+              <li key={feature}>{t(`landing.phone.${feature}`)}</li>
+            ))}
+          </ul>
+          <div className="landing-phone__qr-wrap">
+            <div className="landing-phone__qr" role="img" aria-label={t('landing.phone.qrPlaceholder')} />
+            <span>{t('landing.phone.qrCaption')}</span>
+          </div>
+        </div>
+
+        <PhoneMockup label={t('landing.phone.mockupLabel')} className="landing-phone__mockup">
+          <div className="landing-phone__screen-content">
+            <span className="landing-phone__brand">{t('app.name')}</span>
+            <h3>{t('landing.phone.screenTitle')}</h3>
+            <p>{t('landing.phone.screenPrompt')}</p>
+            <div className="landing-phone__field">
+              <span>{t('landing.phone.categoryLabel')}</span>
+              <strong>{t('landing.phone.categoryPlaceholder')}</strong>
+            </div>
+            <div className="landing-phone__field landing-phone__field--text">
+              <span>{t('landing.phone.descriptionLabel')}</span>
+              <strong>{t('landing.phone.descriptionPlaceholder')}</strong>
+            </div>
+            <div className="landing-phone__submit">{t('landing.phone.submitLabel')}</div>
+          </div>
+        </PhoneMockup>
+      </div>
+    </section>
+  );
+}
+
+function FAQSection() {
+  const { t } = useI18n();
+  const items = landingContent.faq.map((item) => ({
+    id: item.id,
+    question: t(item.questionKey),
+    answer: t(item.answerKey),
+  }));
+
+  return (
+    <section
+      id="faq"
+      className="landing-section landing-section--tint landing-anchor reveal-section"
+      style={{ '--i': 10 }}
+      aria-labelledby="landing-faq-title"
+    >
+      <div className="landing-section__inner">
+        <div className="landing-section__heading landing-section__heading--centered">
+          <p className="landing-section__kicker">{t('landing.faq.kicker')}</p>
+          <h2 id="landing-faq-title">{t('landing.faq.title')}</h2>
+        </div>
+        <FAQ
+          items={items}
+          label={t('landing.faq.label')}
+          oneOpen
+          className="landing-faq"
+        />
+      </div>
+    </section>
+  );
+}
+
+function EmergencyNoticeSection() {
+  const { t } = useI18n();
+
+  return (
+    <section
+      className="landing-emergency-section reveal-section"
+      style={{ '--i': 11 }}
+      aria-labelledby="landing-emergency-title"
+    >
+      <div className="landing-section__inner landing-emergency">
+        <div>
+          <p className="landing-section__kicker">{t('landing.emergency.kicker')}</p>
+          <h2 id="landing-emergency-title">{t('landing.emergency.title')}</h2>
+          <p>{t('landing.emergency.note')}</p>
+        </div>
+        <ul className="landing-emergency__numbers">
+          {EMERGENCY_NUMBERS.map((item) => (
+            <li key={item.number}>
+              <span>{t(item.labelKey)}</span>
+              <a href={`tel:${item.number}`}>{item.number}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 export default function LandingPage() {
   const { t } = useI18n();
 
   return (
     <main className="landing-page">
-      <section className="landing-hero" aria-labelledby="landing-title">
+      <section id="home" className="landing-hero" aria-labelledby="landing-title">
         <div className="landing-hero__copy">
           <p className="landing-hero__kicker">{t('landing.hero.kicker')}</p>
           <h1 id="landing-title" className="landing-hero__headline">{t('landing.hero.headline')}</h1>
@@ -358,9 +492,26 @@ export default function LandingPage() {
       <RecognitionSection />
       <PillarsSection />
       <ServicesSection />
-      <Suspense fallback={<div className="landing-analyzer-loader" aria-live="polite" /> }>
-        <LandingAnalyzerSection />
-      </Suspense>
+      <div id="intelligence" className="landing-anchor landing-intelligence-anchor">
+        <Suspense fallback={<div className="landing-analyzer-loader" aria-live="polite" />}>
+          <LandingAnalyzerSection />
+        </Suspense>
+      </div>
+      <JourneySection />
+      <div
+        id="image-band"
+        className="landing-anchor landing-image-band-wrapper reveal-section"
+        style={{ '--i': 8 }}
+      >
+        <ImageBand
+          kicker={t('landing.imageBand.kicker')}
+          headline={t('landing.imageBand.title')}
+          body={t('landing.imageBand.body')}
+        />
+      </div>
+      <PhoneSection />
+      <FAQSection />
+      <EmergencyNoticeSection />
     </main>
   );
 }

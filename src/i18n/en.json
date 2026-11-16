@@ -118,6 +118,64 @@
       "urgencyMetric": "Urgency",
       "departmentMetric": "Department",
       "explanation": "Explanation"
+    },
+    "journey": {
+      "kicker": "A clear path from report to learning",
+      "title": "A human-guided journey, step by step.",
+      "stepsLabel": "Four steps in the CivicLens complaint journey",
+      "report": "Report",
+      "reportBody": "Share the issue in your own words and language.",
+      "understand": "Understand and route",
+      "understandBody": "AI organises the details and recommends a team for human review.",
+      "resolve": "Resolve",
+      "resolveBody": "The responsible team works on the issue and submits a proposed fix.",
+      "verify": "Verify and improve",
+      "verifyBody": "The citizen confirms the outcome or reopens the complaint with feedback."
+    },
+    "imageBand": {
+      "kicker": "Every voice matters",
+      "title": "Every complaint deserves to be understood.",
+      "body": "CivicLens helps make each report clearer while keeping the citizen's original words and human decisions at the centre."
+    },
+    "phone": {
+      "kicker": "Made for everyday access",
+      "title": "Use it on your phone.",
+      "browser": "Works in any mobile browser.",
+      "homeScreen": "Add it to your home screen for quick access.",
+      "slowConnections": "Designed to stay usable on slow connections.",
+      "urduRtl": "Supports right-to-left Urdu.",
+      "qrPlaceholder": "Placeholder pattern, not a scannable QR code",
+      "qrCaption": "A QR link can be added here later.",
+      "mockupLabel": "Illustrative mobile complaint submission screen",
+      "screenTitle": "Report an issue",
+      "screenPrompt": "Tell us what happened in your own words.",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "AI can recommend one",
+      "descriptionLabel": "Describe the issue",
+      "descriptionPlaceholder": "Write in English, Urdu, or Roman Urdu…",
+      "submitLabel": "Continue"
+    },
+    "faq": {
+      "kicker": "Good to know",
+      "title": "Frequently asked questions",
+      "label": "Frequently asked questions about CivicLens",
+      "languages": "Which languages can I use?",
+      "languagesAnswer": "You can write in English, Urdu, Roman Urdu, or mix them. CivicLens is a prototype and its language support is simulated.",
+      "category": "Do I need to choose a complaint category?",
+      "categoryAnswer": "No. You can describe the issue in your own words. AI may recommend a category, and a human can review or correct that recommendation.",
+      "ai": "What does the AI do?",
+      "aiAnswer": "The prototype demonstrates how AI could identify language, organise details, estimate urgency, and recommend routing. It does not make final decisions.",
+      "decisions": "Who decides what happens to my complaint?",
+      "decisionsAnswer": "People review and make service decisions. AI recommendations include estimated confidence and can be corrected by authorised staff.",
+      "incorrectFix": "What if the reported fix is not right?",
+      "incorrectFixAnswer": "A citizen can reject a proposed resolution with a reason. The complaint reopens for further action; only citizen acceptance confirms resolution.",
+      "dataSafety": "How is my data kept safe?",
+      "dataSafetyAnswer": "This academic prototype uses mock data and is not a live government service. Do not enter sensitive personal information."
+    },
+    "emergency": {
+      "kicker": "Please note",
+      "title": "CivicLens is not an emergency service.",
+      "note": "For immediate danger or urgent help, contact the relevant emergency service directly."
     }
   },
   "preview": {
@@ -316,7 +374,10 @@
     "profileMenu": "Profile menu for {{name}}",
     "nav": {
       "howItWorks": "How it works",
-      "aiTransparency": "AI transparency"
+      "aiTransparency": "AI transparency",
+      "journey": "Journey",
+      "intelligence": "AI insights",
+      "faq": "FAQ"
     },
     "emergency": {
       "police": "Police",

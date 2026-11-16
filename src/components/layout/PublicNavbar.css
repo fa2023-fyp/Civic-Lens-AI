@@ -63,6 +63,21 @@
   white-space: nowrap;
 }
 
+.public-navbar__link[aria-current='location'] {
+  color: var(--brand-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--brand);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+}
+
+.public-navbar__drawer-link[aria-current='location'] {
+  color: var(--brand-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--brand);
+  text-underline-offset: 0.35em;
+}
+
 .public-navbar__actions .ui-language-switch,
 .public-navbar__actions .ui-theme-toggle {
   flex: 0 0 auto;
@@ -193,6 +208,12 @@
 @media (max-width: 30rem) {
   .public-navbar__inner {
     min-block-size: 4rem;
+  }
+
+  @media (max-width: 70rem) {
+    .public-navbar__drawer-link {
+      white-space: normal;
+    }
   }
 
   .public-navbar__brand {

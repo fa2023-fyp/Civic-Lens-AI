@@ -18,6 +18,12 @@ const navigationItems = [
   { to: '/help', labelKey: 'common.navigation.help' },
 ];
 
+const landingNavigationItems = [
+  { id: 'journey', labelKey: 'publicLayout.nav.journey' },
+  { id: 'intelligence', labelKey: 'publicLayout.nav.intelligence' },
+  { id: 'faq', labelKey: 'publicLayout.nav.faq' },
+];
+
 const dashboardKeys = {
   citizen: 'routes.pages.citizenDashboard',
   officer: 'routes.pages.officerDashboard',
@@ -25,7 +31,7 @@ const dashboardKeys = {
   admin: 'routes.pages.adminDashboard',
 };
 
-function NavigationLinks({ drawer = false, onNavigate }) {
+function NavigationLinks({ drawer = false, onNavigate, isLanding, activeSection }) {
   const { t } = useI18n();
 
   return (
@@ -33,17 +39,35 @@ function NavigationLinks({ drawer = false, onNavigate }) {
       className={drawer ? 'public-navbar__drawer-nav' : 'public-navbar__nav'}
       aria-label={t('publicLayout.primaryNavigation')}
     >
-      {navigationItems.map((item, index) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          className={drawer ? 'public-navbar__drawer-link anim-fade-up' : 'public-navbar__link'}
-          style={drawer ? { '--i': index, '--delay': `calc(${index} * 80ms)` } : undefined}
-          onClick={onNavigate}
-        >
-          {t(item.labelKey)}
-        </NavLink>
-      ))}
+      {(isLanding ? landingNavigationItems : navigationItems).map((item, index) => {
+        const className = drawer
+          ? 'public-navbar__drawer-link anim-fade-up'
+          : 'public-navbar__link';
+        const style = drawer ? { '--i': index, '--delay': `calc(${index} * 80ms)` } : undefined;
+
+        return isLanding ? (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            className={className}
+            style={style}
+            aria-current={activeSection === item.id ? 'location' : undefined}
+            onClick={onNavigate}
+          >
+            {t(item.labelKey)}
+          </a>
+        ) : (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={className}
+            style={style}
+            onClick={onNavigate}
+          >
+            {t(item.labelKey)}
+          </NavLink>
+        );
+      })}
     </nav>
   );
 }
@@ -98,6 +122,8 @@ export function PublicNavbar() {
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const isLanding = pathname === '/';
 
   useEffect(() => {
     const updateScroll = () => setScrolled(window.scrollY > 16);
@@ -109,6 +135,29 @@ export function PublicNavbar() {
   useEffect(() => {
     setDrawerOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!isLanding || !('IntersectionObserver' in window)) {
+      setActiveSection('');
+      return undefined;
+    }
+
+    const observedSections = landingNavigationItems
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visibleSections.length) setActiveSection(visibleSections[0].target.id);
+      },
+      { rootMargin: '-80px 0px -65% 0px', threshold: 0 },
+    );
+
+    observedSections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [isLanding]);
 
   function closeDrawer() {
     setDrawerOpen(false);
@@ -125,7 +174,7 @@ export function PublicNavbar() {
             <span>{t('app.name')}</span>
           </Link>
 
-          <NavigationLinks />
+          <NavigationLinks isLanding={isLanding} activeSection={activeSection} />
 
           <div className="public-navbar__actions">
             <AccountLinks />
@@ -154,7 +203,12 @@ export function PublicNavbar() {
         className="public-navbar__drawer"
       >
         <div id="public-navigation-drawer" className="public-navbar__drawer-content">
-          <NavigationLinks drawer onNavigate={closeDrawer} />
+          <NavigationLinks
+            drawer
+            isLanding={isLanding}
+            activeSection={activeSection}
+            onNavigate={closeDrawer}
+          />
           <Button
             as={Link}
             to="/citizen/complaints/new"
