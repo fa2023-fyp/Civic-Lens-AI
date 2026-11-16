@@ -15,6 +15,7 @@ import RouteErrorFallback from './pages/shared/RouteErrorFallback.jsx';
 import LandingPage from './pages/public/Landing/LandingPage.jsx';
 
 const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
+const PublicInfoPage = lazy(() => import('./pages/public/PublicInfoPage.jsx'));
 const ForbiddenPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.ForbiddenPage,
@@ -30,6 +31,10 @@ const UIGallery = import.meta.env.DEV ? lazy(() => import('./pages/dev/UIGallery
 
 const routeEntries = [
   { path: '/', titleKey: 'routes.pages.home', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/about', titleKey: 'publicPages.about.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'about' },
+  { path: '/features', titleKey: 'publicPages.features.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'features' },
+  { path: '/technology', titleKey: 'publicPages.technology.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'technology' },
+  { path: '/contact', titleKey: 'publicPages.contact.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'contact' },
   { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/how-it-works', titleKey: 'routes.pages.howItWorks', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
@@ -81,6 +86,14 @@ function renderPlaceholder(entry) {
     return (
       <RouteDocumentTitle titleKey={entry.titleKey}>
         <LandingPage />
+      </RouteDocumentTitle>
+    );
+  }
+
+  if (entry.pageKey) {
+    return (
+      <RouteDocumentTitle titleKey={entry.titleKey}>
+        <PublicInfoPage pageKey={entry.pageKey} />
       </RouteDocumentTitle>
     );
   }

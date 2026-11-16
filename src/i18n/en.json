@@ -178,6 +178,29 @@
       "note": "For immediate danger or urgent help, contact the relevant emergency service directly."
     }
   },
+  "publicPages": {
+    "breadcrumbs": "Breadcrumb",
+    "about": {
+      "kicker": "About the project",
+      "title": "Civic understanding, with accountability.",
+      "lead": "CivicLens is an academic prototype exploring how multilingual AI can support existing civic workflows while people remain in control."
+    },
+    "features": {
+      "kicker": "What CivicLens explores",
+      "title": "A clearer view of every civic report.",
+      "lead": "Explore language support, explainable recommendations, issue patterns, service timing, citizen verification, and accountable review."
+    },
+    "technology": {
+      "kicker": "Behind the prototype",
+      "title": "AI recommendations, human decisions.",
+      "lead": "The prototype demonstrates a replaceable service layer and simulated analysis. It is not connected to a live government system or production AI model."
+    },
+    "contact": {
+      "kicker": "Project contact",
+      "title": "Connect with the CivicLens project team.",
+      "lead": "This page is a placeholder for project contact information. No public support channel is available through this academic prototype."
+    }
+  },
   "preview": {
     "kicker": "DESIGN SYSTEM · FOUNDATION",
     "title": "A clearer lens on civic workflows.",

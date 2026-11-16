@@ -62,7 +62,7 @@ function highlightEntity(text, entities = []) {
   return parts;
 }
 
-export default function LandingAnalyzerSection() {
+export function LandingAnalyzerSection() {
   const { t } = useI18n();
   const [text, setText] = useState(SAMPLE_TEXT);
   const [activeExample, setActiveExample] = useState('roman');
@@ -210,3 +210,5 @@ export default function LandingAnalyzerSection() {
     </section>
   );
 }
+
+export default LandingAnalyzerSection;

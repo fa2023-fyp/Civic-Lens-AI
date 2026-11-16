@@ -42,3 +42,11 @@
 - Mock endpoints return empty or placeholder payloads; they are not a workflow implementation.
 - No production API, map, chart, or role-specific pages are included in this prompt phase.
 - The UI gallery is intentionally excluded from production routing and remains a developer preview.
+
+## Multipage conversion
+
+- [x] M1 — Shared PageHero and public placeholder route foundation
+- [x] M2 — Split landing sections into importable components
+- [ ] M3 — Build public page content
+- [ ] M4 — Add navigation and page-specific interactions
+- [ ] M5 — Complete accessibility and responsive review

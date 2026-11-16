@@ -6,3 +6,4 @@ export { StatCard, StatGrid, StatNumber, StatStrip } from './Stats.jsx';
 export { FAQ } from './FAQ.jsx';
 export { StepsRail, StepCard } from './StepsRail.jsx';
 export { CTABanner, FloatingOrbs, ImageBand, Marquee, PhoneMockup } from './Showcase.jsx';
+export { PageHero } from './PageHero.jsx';
