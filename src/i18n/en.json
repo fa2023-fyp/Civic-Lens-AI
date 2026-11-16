@@ -186,9 +186,41 @@
       "lead": "CivicLens is an academic prototype exploring how multilingual AI can support existing civic workflows while people remain in control."
     },
     "features": {
-      "kicker": "What CivicLens explores",
-      "title": "A clearer view of every civic report.",
-      "lead": "Explore language support, explainable recommendations, issue patterns, service timing, citizen verification, and accountable review."
+      "kicker": "Features",
+      "title": "What CivicLens does",
+      "lead": "An intelligence layer that supports complaint workflows with explainable analysis and accountable review.",
+      "workflow": {
+        "kicker": "From reporting to accountable resolution",
+        "title": "A typical complaint workflow. CivicLens adds an intelligence layer.",
+        "lead": "CivicLens is designed to add insight and accountability alongside familiar service steps.",
+        "scrollHint": "Scroll horizontally to follow every step.",
+        "typical": "Typical complaint workflow",
+        "intelligence": "CivicLens intelligence layer",
+        "steps": {
+          "report": "Submit",
+          "assign": "Assign",
+          "track": "Track",
+          "resolve": "Resolve",
+          "feedback": "Feedback",
+          "understand": "Understand",
+          "extract": "Extract",
+          "classify": "Classify",
+          "prioritise": "Prioritise",
+          "route": "Route",
+          "relatedIssues": "Detect related issues",
+          "monitorSla": "Monitor SLA",
+          "escalate": "Escalate",
+          "verify": "Verify resolution",
+          "audit": "Audit AI decisions"
+        }
+      },
+      "cta": {
+        "kicker": "Continue with CivicLens",
+        "title": "See how a report can support better service decisions.",
+        "body": "Start a complaint or learn more about the prototype's technology.",
+        "submit": "Submit a complaint",
+        "technology": "See the technology"
+      }
     },
     "technology": {
       "kicker": "Behind the prototype",

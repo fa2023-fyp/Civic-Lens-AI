@@ -1,0 +1,11 @@
+.features-page__cta {
+  max-inline-size: 1200px;
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-5);
+}
+
+@media (max-width: 40rem) {
+  .features-page__cta {
+    padding: var(--space-6) var(--space-4);
+  }
+}

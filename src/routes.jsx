@@ -16,6 +16,7 @@ import LandingPage from './pages/public/Landing/LandingPage.jsx';
 
 const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
 const PublicInfoPage = lazy(() => import('./pages/public/PublicInfoPage.jsx'));
+const FeaturesPage = lazy(() => import('./pages/public/FeaturesPage.jsx'));
 const ForbiddenPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.ForbiddenPage,
@@ -93,7 +94,11 @@ function renderPlaceholder(entry) {
   if (entry.pageKey) {
     return (
       <RouteDocumentTitle titleKey={entry.titleKey}>
-        <PublicInfoPage pageKey={entry.pageKey} />
+        {entry.pageKey === 'features' ? (
+          <FeaturesPage />
+        ) : (
+          <PublicInfoPage pageKey={entry.pageKey} />
+        )}
       </RouteDocumentTitle>
     );
   }
