@@ -5,6 +5,36 @@ export const landingContent = {
     { key: 'fields', value: 3, suffix: '', labelKey: 'landing.stats.fields' },
     { key: 'decisions', value: 100, suffix: '%', labelKey: 'landing.stats.decisions' },
   ],
+  snapshotFallback: [
+    { key: 'received', label: 'landing.snapshot.received', value: 1248 },
+    { key: 'verified', label: 'landing.snapshot.verified', value: 842 },
+    { key: 'unverified', label: 'landing.snapshot.unverified', value: 132 },
+    { key: 'reopened', label: 'landing.snapshot.reopened', value: 19, suffix: '%' },
+    { key: 'medianHours', label: 'landing.snapshot.medianHours', value: 18 },
+    { key: 'clusters', label: 'landing.snapshot.clusters', value: 8 },
+    { key: 'onTrack', label: 'landing.snapshot.onTrack', value: 76, suffix: '%' },
+    { key: 'languages', label: 'landing.snapshot.languages', value: 4 },
+  ],
+  recognition: [
+    { id: 'sdg11', titleKey: 'landing.recognition.sdg11', bodyKey: 'landing.recognition.sdg11Body' },
+    { id: 'sdg16', titleKey: 'landing.recognition.sdg16', bodyKey: 'landing.recognition.sdg16Body' },
+    { id: 'humanInLoop', titleKey: 'landing.recognition.humanInLoop', bodyKey: 'landing.recognition.humanInLoopBody' },
+    { id: 'inclusive', titleKey: 'landing.recognition.inclusive', bodyKey: 'landing.recognition.inclusiveBody' },
+  ],
+  pillars: [
+    { id: 'understand', titleKey: 'landing.pillars.understand', bodyKey: 'landing.pillars.understandBody' },
+    { id: 'prioritise', titleKey: 'landing.pillars.prioritise', bodyKey: 'landing.pillars.prioritiseBody' },
+    { id: 'connect', titleKey: 'landing.pillars.connect', bodyKey: 'landing.pillars.connectBody' },
+    { id: 'accountable', titleKey: 'landing.pillars.accountable', bodyKey: 'landing.pillars.accountableBody' },
+  ],
+  services: [
+    { id: 'report', titleKey: 'landing.services.report', bodyKey: 'landing.services.reportBody' },
+    { id: 'understand', titleKey: 'landing.services.understand', bodyKey: 'landing.services.understandBody' },
+    { id: 'route', titleKey: 'landing.services.route', bodyKey: 'landing.services.routeBody' },
+    { id: 'track', titleKey: 'landing.services.track', bodyKey: 'landing.services.trackBody' },
+    { id: 'verify', titleKey: 'landing.services.verify', bodyKey: 'landing.services.verifyBody' },
+    { id: 'audit', titleKey: 'landing.services.audit', bodyKey: 'landing.services.auditBody' },
+  ],
   examples: [
     {
       text: 'Street drainage is blocked near the main market and the water keeps rising.',

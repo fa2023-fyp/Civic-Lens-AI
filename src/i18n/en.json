@@ -15,6 +15,9 @@
     "switchThemeToSystem": "Use system theme"
   },
   "landing": {
+    "common": {
+      "demoData": "Demo data"
+    },
     "hero": {
       "kicker": "AI-assisted civic grievance platform",
       "headline": "Report a civic problem in your own language.",
@@ -37,6 +40,59 @@
       "stages": "stages from understanding to audit",
       "fields": "fields to file a complaint",
       "decisions": "of final decisions made by people"
+    },
+    "snapshot": {
+      "kicker": "CivicLens at a glance",
+      "title": "Operational clarity without losing accountability.",
+      "body": "A high-level snapshot of the complaint flow across language, urgency, resolution quality and service performance.",
+      "received": "complaints received",
+      "verified": "citizen-verified resolved",
+      "unverified": "resolved (unverified)",
+      "reopened": "reopened",
+      "medianHours": "median hours to resolution",
+      "clusters": "active issue clusters",
+      "onTrack": "SLA on-track",
+      "languages": "languages handled"
+    },
+    "recognition": {
+      "kicker": "Built for accountable civic service",
+      "title": "Human-centred outcomes, not automation by default.",
+      "sdg11": "SDG 11",
+      "sdg11Body": "Build inclusive, safe, resilient, and sustainable communities through practical service visibility.",
+      "sdg16": "SDG 16",
+      "sdg16Body": "Support transparent, accountable, and effective civic institutions without hidden decisions.",
+      "humanInLoop": "Human-in-the-loop AI",
+      "humanInLoopBody": "AI recommends and prioritises, while people decide, override, and verify the final outcome.",
+      "inclusive": "Inclusive and multilingual",
+      "inclusiveBody": "One complaint flow works across English, Urdu, Roman Urdu, and mixed-language reporting."
+    },
+    "pillars": {
+      "kicker": "Why it matters",
+      "title": "A system designed around public trust.",
+      "understand": "Understand",
+      "understandBody": "Read the original complaint in the citizen's own language and extract the real service issue.",
+      "prioritise": "Prioritise and route",
+      "prioritiseBody": "Surface urgency, duplicate risk, and the right department before work begins.",
+      "connect": "Connect the dots",
+      "connectBody": "Group related complaints so teams can see recurring problems and shared hotspots.",
+      "accountable": "Stay accountable",
+      "accountableBody": "Keep every recommendation, override, and decision in an audit trail that humans can review."
+    },
+    "services": {
+      "kicker": "Digital public services",
+      "title": "A full civic intelligence loop.",
+      "report": "Report",
+      "reportBody": "Capture the complaint in a citizen's own language with structured context and locality data.",
+      "understand": "Understand",
+      "understandBody": "Interpret urgency, category, issue type, and related patterns from the original text.",
+      "route": "Route",
+      "routeBody": "Assign the complaint to the right team and surface any need for supervisor review.",
+      "track": "Track",
+      "trackBody": "Monitor SLA state, status changes, and operational risk while the case is active.",
+      "verify": "Verify",
+      "verifyBody": "Let the citizen confirm the proposed resolution and reopen when the outcome is still unacceptable.",
+      "audit": "Audit",
+      "auditBody": "Keep the decision trail append-only so every override is visible and explainable."
     }
   },
   "preview": {
