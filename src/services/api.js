@@ -1,5 +1,9 @@
 import { mockApi } from './mock/index.js';
 import { AI_STUB_LABEL, analyzeComplaint } from './mock/analyze.js';
+import { createVirtualClock } from './mock/clock.js';
+import { createEventQueue } from './mock/events.js';
+import { createMockDomains } from './mock/domains.js';
+import { createDomainSeed } from './mock/seed.js';
 
 const STORE_KEY = 'civiclens-mock-api-store';
 const DEMO_PASSWORD = 'Demo123!';
@@ -328,7 +332,8 @@ function createSeedStore() {
   }));
   const complaints = Array.from({ length: 60 }, (_item, index) => {
     const textSeed = complaintTextSeeds[index % complaintTextSeeds.length];
-    const language = LANGUAGE_CODES[Math.floor(index / complaintTextSeeds.length) % LANGUAGE_CODES.length];
+    const language =
+      LANGUAGE_CODES[Math.floor(index / complaintTextSeeds.length) % LANGUAGE_CODES.length];
     const category = categories.find((item) => item.id === textSeed.categoryId);
     const department = departments.find((item) => item.id === category.departmentId);
     const reporter = users.filter((item) => item.role === 'citizen')[index % 3];
@@ -358,13 +363,25 @@ function createSeedStore() {
       statusHistory: [{ status, changedAt: recordTime, isSynthetic: true }],
       createdAt: recordTime,
       updatedAt: recordTime,
+      ...(status === 'Resolved'
+        ? { acceptedAt: recordTime, verifiedBy: reporter.id, verificationOutcome: 'accepted' }
+        : {}),
+      ...(status === 'Resolved (Unverified)'
+        ? {
+            resolvedUnverified: true,
+            verificationOutcome: 'unverified',
+            resolution: { unverified: true, verificationTimedOutAt: recordTime },
+          }
+        : {}),
       isSynthetic: true,
       dataLabel: SYNTHETIC_LABEL,
     };
   });
   const notifications = complaints.slice(0, 30).map((complaint, index) => {
     const recipientId =
-      index % 2 === 0 ? complaint.reporterId : complaint.assignedOfficerId ?? complaint.reporterId;
+      index % 2 === 0
+        ? complaint.reporterId
+        : (complaint.assignedOfficerId ?? complaint.reporterId);
 
     return {
       id: `SYN-NOT-${String(index + 1).padStart(3, '0')}`,
@@ -377,6 +394,7 @@ function createSeedStore() {
       dataLabel: SYNTHETIC_LABEL,
     };
   });
+  const domainSeed = createDomainSeed({ now, complaints, users, departments, categories });
 
   return {
     version: 1,
@@ -385,6 +403,7 @@ function createSeedStore() {
     categories,
     complaints,
     notifications,
+    ...domainSeed,
     verificationCodes: {},
     resetTokens: {},
     activeSession: null,
@@ -417,6 +436,33 @@ function readStore() {
   if (!validateStore(parsed)) {
     throw new TypeError('The persisted mock API store has an unsupported shape. Use api.reset().');
   }
+  const domainSeed = createDomainSeed({
+    now: Date.now(),
+    complaints: parsed.complaints,
+    users: parsed.users,
+    departments: parsed.departments,
+    categories: parsed.categories,
+  });
+  let migrated = false;
+  Object.entries(domainSeed).forEach(([key, value]) => {
+    if (parsed[key] === undefined) {
+      parsed[key] = value;
+      migrated = true;
+    }
+  });
+  parsed.complaints.forEach((complaint) => {
+    if (complaint.status === 'Resolved' && !complaint.acceptedAt) {
+      complaint.acceptedAt = complaint.updatedAt;
+      complaint.verifiedBy = complaint.reporterId;
+      complaint.verificationOutcome = 'accepted';
+      migrated = true;
+    } else if (complaint.status === 'Resolved (Unverified)' && !complaint.resolvedUnverified) {
+      complaint.resolvedUnverified = true;
+      complaint.verificationOutcome = 'unverified';
+      migrated = true;
+    }
+  });
+  if (migrated) persistStore(parsed);
   return parsed;
 }
 
@@ -429,6 +475,22 @@ function persistStore(value) {
 let store = readStore();
 let aiServiceDown = false;
 const analysisRetryTimers = new Map();
+const virtualClock = createVirtualClock();
+const eventQueue = createEventQueue({
+  now: () => virtualClock.now(),
+  initialEvents: store.auditEvents.slice(0, 12).map((event) => ({
+    type:
+      event.action === 'ai_override'
+        ? 'ai.override'
+        : event.action === 'status_changed'
+          ? 'complaint.status_changed'
+          : event.action === 'sla_checked'
+            ? 'sla.checked'
+            : 'complaint.reviewed',
+    payload: { complaintId: event.complaintId, actorId: event.actorId },
+    createdAt: event.createdAt,
+  })),
+});
 if (typeof localStorage !== 'undefined' && !localStorage.getItem(STORE_KEY)) persistStore(store);
 
 function transact(mutator) {
@@ -438,6 +500,20 @@ function transact(mutator) {
   store = draft;
   return result === undefined ? undefined : clone(result);
 }
+
+const domainApi = createMockDomains({
+  getStore: () => store,
+  transact,
+  getActor,
+  requireRole,
+  assertComplaintAccess,
+  findComplaint,
+  paginate,
+  makeError,
+  clock: virtualClock,
+  eventQueue,
+});
+virtualClock.subscribe(({ now }) => domainApi.advanceTime(now));
 
 function makeError(message, status, code, details = {}) {
   return Object.assign(new Error(message), {
@@ -512,7 +588,7 @@ function getActor(options) {
   const requestedToken =
     typeof options === 'string'
       ? options
-      : options?.token ?? options?.authToken ?? options?.session?.token ?? null;
+      : (options?.token ?? options?.authToken ?? options?.session?.token ?? null);
   const activeSession = store.activeSession;
   const session =
     requestedToken === null
@@ -525,7 +601,13 @@ function getActor(options) {
     throw makeError('Authentication is required for this operation.', 401, 'AUTH_REQUIRED');
   }
   const user = store.users.find((item) => item.id === session.userId);
-  if (!user) throw makeError('The authenticated user no longer exists.', 401, 'AUTH_REQUIRED');
+  if (!user || user.active === false) {
+    throw makeError(
+      'The authenticated user no longer exists or is inactive.',
+      401,
+      'AUTH_REQUIRED',
+    );
+  }
   return publicUser(user);
 }
 
@@ -632,15 +714,20 @@ function createComplaintRecord(input = {}, context = input, initialStatus = 'Sub
   requireRole(actor, ['citizen']);
   const originalText = String(input.originalText ?? input.text ?? '');
   if (originalText.trim().length < 10 || originalText.length > 2000) {
-    throw makeError('Complaint text must contain 10 to 2,000 characters.', 400, 'INVALID_COMPLAINT');
+    throw makeError(
+      'Complaint text must contain 10 to 2,000 characters.',
+      400,
+      'INVALID_COMPLAINT',
+    );
   }
-  const requestedCategory =
-    input.categoryId ?? input.category?.id ?? input.category ?? 'other';
+  const requestedCategory = input.categoryId ?? input.category?.id ?? input.category ?? 'other';
   const categoryId = String(requestedCategory).trim().toLowerCase().replace(/\s+/g, '-');
   const category = store.categories.find((item) => item.id === categoryId);
-  if (!category) throw makeError('The complaint category is not supported.', 400, 'INVALID_CATEGORY');
+  if (!category)
+    throw makeError('The complaint category is not supported.', 400, 'INVALID_CATEGORY');
   const department = store.departments.find((item) => item.id === category.departmentId);
-  const location = input.location && typeof input.location === 'object' ? clone(input.location) : null;
+  const location =
+    input.location && typeof input.location === 'object' ? clone(input.location) : null;
   const locality = input.locality ?? location?.locality ?? null;
   const now = new Date().toISOString();
 
@@ -652,7 +739,9 @@ function createComplaintRecord(input = {}, context = input, initialStatus = 'Sub
       departmentId: department.id,
       categoryId: category.id,
       category: category.name,
-      language: LANGUAGE_CODES.includes(input.language) ? input.language : inferLanguage(originalText),
+      language: LANGUAGE_CODES.includes(input.language)
+        ? input.language
+        : inferLanguage(originalText),
       originalText,
       normalizedText: null,
       status: initialStatus,
@@ -664,14 +753,23 @@ function createComplaintRecord(input = {}, context = input, initialStatus = 'Sub
           ? { retryCount: 0, nextRetryAt: new Date(Date.now() + 1000).toISOString() }
           : null,
       comments: [],
-      statusHistory: [
-        { status: initialStatus, changedAt: now, actorId: actor.id },
-      ],
+      statusHistory: [{ status: initialStatus, changedAt: now, actorId: actor.id }],
       createdAt: now,
       updatedAt: now,
       isSynthetic: false,
     };
     draft.complaints.unshift(complaint);
+    draft.slaTrackers.push({
+      id: `SLA-${complaint.id}`,
+      complaintId: complaint.id,
+      state: 'not_started',
+      startedAt: null,
+      warningAt: null,
+      dueAt: null,
+      breachedAt: null,
+      escalationLevel: 0,
+      isSynthetic: false,
+    });
     return complaint;
   });
 }
@@ -711,14 +809,24 @@ function scheduleAnalysisRetry(complaintId, retryCount = 0) {
       pending.status = analysis.needs_human_review ? 'Pending Human Review' : 'Assigned';
       pending.updatedAt = new Date().toISOString();
       if (!analysis.needs_human_review) {
-        const category = categorySeeds.find(
-          (item) => item.id === analysis.category.label,
-        );
-        const department = draft.departments.find(
-          (item) => item.id === category?.departmentId,
-        );
+        const category = categorySeeds.find((item) => item.id === analysis.category.label);
+        const department = draft.departments.find((item) => item.id === category?.departmentId);
         pending.departmentId = department?.id ?? pending.departmentId;
         pending.assignedOfficerId = department?.officerIds[0] ?? null;
+        const tracker = draft.slaTrackers.find((item) => item.complaintId === pending.id);
+        if (tracker && pending.assignedOfficerId) {
+          const policy = draft.slaPolicies.find(
+            (item) => item.departmentId === pending.departmentId,
+          );
+          const durationMs = Number(policy?.durationMs ?? 8 * 60 * 60 * 1000);
+          const startedAt = pending.updatedAt;
+          Object.assign(tracker, {
+            state: 'on_track',
+            startedAt,
+            warningAt: toIso(Date.parse(startedAt) + durationMs * 0.75),
+            dueAt: toIso(Date.parse(startedAt) + durationMs),
+          });
+        }
       }
       pending.statusHistory.push({
         status: pending.status,
@@ -820,7 +928,11 @@ function acceptComplaint(id, input = {}, context = input) {
     const complaint = findComplaint(id, draft);
     assertComplaintAccess(complaint, actor, { write: true });
     if (!['Resolution Submitted', 'Citizen Verification'].includes(complaint.status)) {
-      throw makeError('The complaint has no proposed resolution to accept.', 409, 'INVALID_TRANSITION');
+      throw makeError(
+        'The complaint has no proposed resolution to accept.',
+        409,
+        'INVALID_TRANSITION',
+      );
     }
     const now = new Date().toISOString();
     complaint.status = 'Resolved';
@@ -854,20 +966,35 @@ function markNotificationRead(id, options = {}) {
 
 function createAuthApi() {
   const login = delayed('auth.login', (credentials = {}) => {
-    const email = String(credentials.email ?? '').trim().toLocaleLowerCase();
+    const email = String(credentials.email ?? '')
+      .trim()
+      .toLocaleLowerCase();
     const user = store.users.find(
       (item) => item.email.toLocaleLowerCase() === email && item.password === credentials.password,
     );
-    if (!user) throw makeError('Invalid demo credentials.', 401, 'AUTH_INVALID_CREDENTIALS');
-    return transact((draft) => createSession(draft, draft.users.find((item) => item.id === user.id)));
+    if (!user || user.active === false) {
+      throw makeError('Invalid demo credentials.', 401, 'AUTH_INVALID_CREDENTIALS');
+    }
+    return transact((draft) =>
+      createSession(
+        draft,
+        draft.users.find((item) => item.id === user.id),
+      ),
+    );
   });
 
   const register = delayed('auth.register', (input = {}) => {
-    const email = String(input.email ?? '').trim().toLocaleLowerCase();
+    const email = String(input.email ?? '')
+      .trim()
+      .toLocaleLowerCase();
     const name = String(input.name ?? '').trim();
     const password = String(input.password ?? '');
     if (!email || !name || password.length < 8) {
-      throw makeError('Name, email, and a password of at least 8 characters are required.', 400, 'AUTH_INVALID_REGISTRATION');
+      throw makeError(
+        'Name, email, and a password of at least 8 characters are required.',
+        400,
+        'AUTH_INVALID_REGISTRATION',
+      );
     }
     if (store.users.some((item) => item.email.toLocaleLowerCase() === email)) {
       throw makeError('An account already uses this email.', 409, 'AUTH_EMAIL_EXISTS');
@@ -894,9 +1021,15 @@ function createAuthApi() {
   });
 
   const verifyCode = delayed('auth.verifyCode', (input = {}) => {
-    const email = String(input.email ?? '').trim().toLocaleLowerCase();
+    const email = String(input.email ?? '')
+      .trim()
+      .toLocaleLowerCase();
     const record = store.verificationCodes[email];
-    if (!record || record.expiresAt <= new Date().toISOString() || record.code !== String(input.code ?? '')) {
+    if (
+      !record ||
+      record.expiresAt <= new Date().toISOString() ||
+      record.code !== String(input.code ?? '')
+    ) {
       throw makeError('The verification code is invalid or expired.', 400, 'AUTH_INVALID_CODE');
     }
     return transact((draft) => {
@@ -909,7 +1042,9 @@ function createAuthApi() {
   });
 
   const resend = delayed('auth.resend', (input = {}) => {
-    const email = String(input.email ?? '').trim().toLocaleLowerCase();
+    const email = String(input.email ?? '')
+      .trim()
+      .toLocaleLowerCase();
     const exists = store.users.some((item) => item.email.toLocaleLowerCase() === email);
     if (!exists) return { sent: true };
     const expiresAt = toIso(Date.now() + 10 * 60 * 1000);
@@ -942,11 +1077,18 @@ function createAuthApi() {
     }
     const user = store.users.find((item) => item.id === session.user.id);
     if (!user) throw makeError('The demo session has expired.', 401, 'AUTH_SESSION_EXPIRED');
-    return transact((draft) => createSession(draft, draft.users.find((item) => item.id === user.id)));
+    return transact((draft) =>
+      createSession(
+        draft,
+        draft.users.find((item) => item.id === user.id),
+      ),
+    );
   });
 
   const forgot = delayed('auth.forgot', (input = {}) => {
-    const email = String(input.email ?? '').trim().toLocaleLowerCase();
+    const email = String(input.email ?? '')
+      .trim()
+      .toLocaleLowerCase();
     const user = store.users.find((item) => item.email.toLocaleLowerCase() === email);
     if (!user) return { accepted: true };
     const resetToken = `reset.${encodeURIComponent(user.id)}.${Date.now()}`;
@@ -962,7 +1104,11 @@ function createAuthApi() {
     const password = String(input.password ?? '');
     const tokenRecord = store.resetTokens[resetToken];
     if (!tokenRecord || tokenRecord.expiresAt <= new Date().toISOString()) {
-      throw makeError('The password reset token is invalid or expired.', 400, 'AUTH_INVALID_RESET_TOKEN');
+      throw makeError(
+        'The password reset token is invalid or expired.',
+        400,
+        'AUTH_INVALID_RESET_TOKEN',
+      );
     }
     if (password.length < 8) {
       throw makeError('Password must contain at least 8 characters.', 400, 'AUTH_INVALID_PASSWORD');
@@ -983,6 +1129,8 @@ function resetStore() {
   analysisRetryTimers.forEach((timer) => globalThis.clearTimeout(timer));
   analysisRetryTimers.clear();
   aiServiceDown = false;
+  virtualClock.reset(Date.now());
+  eventQueue.reset();
   const previousSession = store.activeSession;
   const nextStore = createSeedStore();
   if (
@@ -1020,11 +1168,13 @@ const referenceData = deepFreeze({
   languages: [...LANGUAGE_CODES],
 });
 const demoUsers = Object.freeze(
-  seededStore.users.map((user) => Object.freeze({
-    email: user.email,
-    password: user.password,
-    ...publicUser(user),
-  })),
+  seededStore.users.map((user) =>
+    Object.freeze({
+      email: user.email,
+      password: user.password,
+      ...publicUser(user),
+    }),
+  ),
 );
 
 const auth = createAuthApi();
@@ -1064,12 +1214,57 @@ function injectError(operation, error) {
   if (typeof operation !== 'string' || !operation.trim()) {
     return Promise.reject(new TypeError('An API operation name is required.'));
   }
-  enqueueError(operation, error ?? makeError('An injected mock API error occurred.', 500, 'MOCK_INJECTED_ERROR'));
+  enqueueError(
+    operation,
+    error ?? makeError('An injected mock API error occurred.', 500, 'MOCK_INJECTED_ERROR'),
+  );
   return simulateLatency().then(() => ({ injected: true, operation }));
 }
 
+function wrapDomain(prefix, domain) {
+  return Object.freeze(
+    Object.fromEntries(
+      Object.entries(domain).map(([name, value]) => [
+        name,
+        typeof value === 'function'
+          ? delayed(`${prefix}.${name}`, value)
+          : wrapDomain(`${prefix}.${name}`, value),
+      ]),
+    ),
+  );
+}
+
+const domainMethods = Object.fromEntries(
+  Object.entries(domainApi).filter(([name]) => name !== 'advanceTime'),
+);
+const publicDomains = Object.fromEntries(
+  Object.entries(domainMethods).map(([name, domain]) => [name, wrapDomain(name, domain)]),
+);
+const submitResolution = delayed('submitResolution', (input = {}, context = input) => ({
+  data: domainApi.verification.submitResolution(input, context),
+  mode: 'mock',
+}));
+const verifyResolution = delayed('verifyResolution', (input = {}, context = input) => {
+  const complaint =
+    input.accepted === false
+      ? domainApi.verification.reject(input, context)
+      : domainApi.verification.accept(input, context);
+  return {
+    data: {
+      complaintId: complaint.id,
+      accepted: input.accepted !== false,
+      rejectionReason: input.rejectionReason ?? input.reason ?? null,
+      status: complaint.status,
+      rejectionCount: complaint.rejectionCount ?? 0,
+      escalated: complaint.status === 'Escalated',
+    },
+    mode: 'mock',
+  };
+});
+
 export const apiConfig = Object.freeze({ mockEnabled: true, apiBaseUrl: '' });
 export const api = Object.freeze({
+  ...publicDomains,
   ai,
   auth,
   complaints,
@@ -1085,11 +1280,27 @@ export const api = Object.freeze({
   listComplaints: complaints.list,
   getComplaint: complaints.get,
   submitComplaint,
-  analyzeComplaint: delayed('analyzeComplaint', (originalText) => mockApi.analyzeComplaint(originalText)),
-  reviewComplaint: delayed('reviewComplaint', (input) => mockApi.reviewComplaint(input)),
-  submitResolution: delayed('submitResolution', (input) => mockApi.submitResolution(input)),
-  verifyResolution: delayed('verifyResolution', (input) => mockApi.verifyResolution(input)),
-  getAuditTrail: delayed('getAuditTrail', (complaintId) => mockApi.getAuditTrail(complaintId)),
+  analyzeComplaint: delayed('analyzeComplaint', (originalText) =>
+    mockApi.analyzeComplaint(originalText),
+  ),
+  reviewComplaint: delayed('reviewComplaint', (input = {}, context = input) => ({
+    data: domainApi.review.correct(input, context),
+    mode: 'mock',
+  })),
+  submitResolution,
+  verifyResolution,
+  getAuditTrail: delayed('getAuditTrail', (complaintId, options = {}) => {
+    const result = domainApi.audit.list({ ...options, complaintId });
+    return {
+      data: result.items,
+      complaintId,
+      appendOnly: true,
+      mode: 'mock',
+      page: result.page,
+      pageSize: result.pageSize,
+      total: result.total,
+    };
+  }),
 });
 
 store.complaints
