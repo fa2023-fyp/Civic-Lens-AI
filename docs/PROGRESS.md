@@ -20,6 +20,7 @@
 - [ ] Prompt 15
 - [ ] Prompt 16
 - [x] Prompt 17 — Mock API lifecycle and demo controls complete
+- [x] Prompt 18 — Landing page hero and stats shell
 
 ## Decisions and deviations
 

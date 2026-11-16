@@ -14,6 +14,31 @@
     "switchThemeToDark": "Switch to dark theme",
     "switchThemeToSystem": "Use system theme"
   },
+  "landing": {
+    "hero": {
+      "kicker": "AI-assisted civic grievance platform",
+      "headline": "Report a civic problem in your own language.",
+      "lead": "English, Urdu, Roman Urdu, and mixed writing all work in one simple complaint flow.",
+      "primaryCta": "Submit a complaint",
+      "secondaryCta": "See how it works"
+    },
+    "card": {
+      "simulated": "Simulated example",
+      "language": "Language",
+      "category": "Category",
+      "issue": "Issue",
+      "duration": "Duration",
+      "urgency": "Urgency",
+      "department": "Department"
+    },
+    "stats": {
+      "ariaLabel": "CivicLens landing page statistics",
+      "languages": "languages understood",
+      "stages": "stages from understanding to audit",
+      "fields": "fields to file a complaint",
+      "decisions": "of final decisions made by people"
+    }
+  },
   "preview": {
     "kicker": "DESIGN SYSTEM · FOUNDATION",
     "title": "A clearer lens on civic workflows.",

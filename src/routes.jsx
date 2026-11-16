@@ -12,6 +12,7 @@ import { TopLoadingBar } from './components/ui/TopLoadingBar/TopLoadingBar.jsx';
 import { useDocumentTitle } from './hooks/useDocumentTitle.js';
 import { useI18n } from './i18n/I18nContext.jsx';
 import RouteErrorFallback from './pages/shared/RouteErrorFallback.jsx';
+import LandingPage from './pages/public/Landing/LandingPage.jsx';
 
 const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
 const ForbiddenPage = lazy(() =>
@@ -76,6 +77,14 @@ function RouteSuspenseFallback({ initialLoadComplete, onPendingChange }) {
 }
 
 function renderPlaceholder(entry) {
+  if (entry.path === '/') {
+    return (
+      <RouteDocumentTitle titleKey={entry.titleKey}>
+        <LandingPage />
+      </RouteDocumentTitle>
+    );
+  }
+
   const page = (
     <RoutePlaceholder
       titleKey={entry.titleKey}
