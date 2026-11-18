@@ -21,6 +21,8 @@ const ContactPage = lazy(() => import('./pages/public/ContactPage.jsx'));
 const FeaturesPage = lazy(() => import('./pages/public/FeaturesPage.jsx'));
 const HelpPage = lazy(() => import('./pages/public/HelpPage.jsx'));
 const TechnologyPage = lazy(() => import('./pages/public/TechnologyPage.jsx'));
+const HowItWorksPage = lazy(() => import('./pages/public/HowItWorksPage.jsx'));
+const TransparencyPage = lazy(() => import('./pages/public/TransparencyPage.jsx'));
 const ForbiddenPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.ForbiddenPage,
@@ -43,7 +45,7 @@ const routeEntries = [
   { path: '/contact', titleKey: 'publicPages.contact.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'contact' },
   { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
-  { path: '/how-it-works', titleKey: 'routes.pages.howItWorks', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/how-it-works', titleKey: 'routes.pages.howItWorks', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'howItWorks' },
   { path: '/ai-transparency', titleKey: 'routes.pages.aiTransparency', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
   { path: '/help', titleKey: 'publicPages.help.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'help' },
   { path: '/forgot-password', titleKey: 'routes.pages.forgotPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
@@ -109,6 +111,10 @@ function renderPlaceholder(entry) {
           <FeaturesPage />
         ) : entry.pageKey === 'technology' ? (
           <TechnologyPage />
+        ) : entry.pageKey === 'howItWorks' ? (
+          <HowItWorksPage />
+        ) : entry.pageKey === 'transparency' ? (
+          <TransparencyPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}

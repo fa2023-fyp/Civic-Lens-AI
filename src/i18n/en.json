@@ -285,10 +285,99 @@
       "ctaPrimary": "Submit a complaint",
       "ctaSecondary": "How it works"
     },
+    "howItWorks": {
+      "kicker": "How it works",
+      "title": "A complaint's journey through CivicLens",
+      "lead": "Follow the 10-stage intelligence pipeline using one Roman Urdu worked example.",
+      "exampleLabel": "Worked Roman Urdu example",
+      "exampleText": "Gali mein 3 din se gutter overflow ho raha hai aur smell bohat zyada hai.",
+      "pipelineLabel": "Complaint analysis stages",
+      "stages": {
+        "understand": {"title": "Understand", "body": "Read the original report and preserve it exactly. Language support is used to prepare, not replace, the citizen's wording.", "output": "Original text preserved; language: Roman Urdu"},
+        "extract": {"title": "Extract", "body": "Separate useful details such as the reported place, symptom, and time period.", "output": "Location clue: gali; symptom: gutter overflow; duration: 3 days"},
+        "classify": {"title": "Classify", "body": "Estimate the civic category and issue from the extracted text. The result is an AI recommendation.", "output": "Category: Sewerage (confidence estimate: 0.91)"},
+        "prioritise": {"title": "Prioritise", "body": "Estimate urgency using indicators and the likely effect of delay.", "output": "Urgency: High (confidence estimate: 0.87); reasons: overflow, smell"},
+        "route": {"title": "Route", "body": "Suggest a responsible department. A person confirms routing before assignment and SLA action.", "output": "Department recommendation: Sewerage Department"},
+        "related": {"title": "Detect related issues", "body": "Compare location and report similarity to suggest a potential duplicate or cluster.", "output": "Related complaints: potential cluster (human confirmation required)"},
+        "sla": {"title": "Monitor SLA", "body": "Track elapsed service time only after routing is confirmed and an assignment is active.", "output": "SLA status: pending human routing confirmation"},
+        "escalate": {"title": "Escalate", "body": "Highlight overdue or repeated cases for supervisor review according to configured rules.", "output": "Escalation: not started; reviewed only if policy thresholds are met"},
+        "verify": {"title": "Verify resolution", "body": "An officer submits proposed resolution evidence; the citizen accepts or rejects it.", "output": "Citizen verification: acceptance or rejection required"},
+        "audit": {"title": "Audit AI decisions", "body": "Append an audit record for recommendations and every human override.", "output": "Audit: original text, AI value, human value, reason, user, and time"}
+      },
+      "verificationKicker": "Resolution verification loop",
+      "verificationTitle": "AI may propose. Only a citizen may confirm resolution.",
+      "verificationSteps": {
+        "officer": "Officer submits resolution",
+        "citizen": "Citizen reviews evidence",
+        "accepted": "Accepted: resolved",
+        "rejected": "Rejected: reopen and review",
+        "escalate": "Two rejections: escalate"
+      },
+      "cta": {
+        "kicker": "Continue",
+        "title": "Explore the limits and safeguards",
+        "body": "See what the prototype estimates, what people decide, and what this system does not claim.",
+        "primary": "View transparency",
+        "secondary": "Submit a complaint"
+      }
+    },
     "transparency": {
       "kicker": "Transparency and limits",
       "title": "How decisions are made and what the limits are",
-      "lead": "This page explains how recommendations are reviewed by people and describes the boundaries of this academic prototype."
+      "lead": "This page explains how recommendations are reviewed by people and describes the boundaries of this academic prototype.",
+      "decision": {
+        "kicker": "Human control",
+        "title": "AI supports judgement; people make decisions.",
+        "body": "CivicLens estimates values and recommends routes. It never closes or deletes a complaint."
+      },
+      "accordionLabel": "Transparency topics",
+      "role": {
+        "title": "What AI does",
+        "body": "AI identifies language, extracts fields, estimates category and urgency, recommends departments, suggests related reports, and adds explainable audit context."
+      },
+      "doesNot": {
+        "title": "What AI does not do",
+        "body": "AI does not guarantee outcomes, prove fraud, make an official government determination, automatically resolve cases, or replace human review."
+      },
+      "confidence": {
+        "title": "Confidence is an estimate",
+        "body": "Confidence values are model estimates, not proof or certainty. Low-confidence results are intended for a human review queue."
+      },
+      "human": {
+        "title": "Human override and review queue",
+        "body": "Reviewers can change AI recommendations with a reason. Every override records the AI value, human value, reason, user, and time."
+      },
+      "audit": {
+        "title": "Audit trail",
+        "body": "The append-only trail records AI recommendations and human decisions. There are no edit or delete controls for completed audit entries."
+      },
+      "language": {
+        "title": "Languages and Roman Urdu spelling variation",
+        "body": "The prototype explores English, Urdu, Roman Urdu, and mixed text. Roman Urdu spelling varies widely, so the original wording is preserved and normalized text is shown separately."
+      },
+      "limitations": {
+        "title": "Known limitations",
+        "items": {
+          "data": "Limited Pakistani multilingual training and evaluation data.",
+          "imbalance": "Class imbalance may make common categories appear stronger than uncommon categories.",
+          "semantic": "False semantic matches can connect reports that are not actually related.",
+          "location": "Location accuracy may be limited by vague addresses or text rather than exact coordinates.",
+          "repairs": "Physical repairs are difficult to verify without reliable evidence and citizen confirmation."
+        }
+      },
+      "privacy": {
+        "title": "Privacy and data minimisation",
+        "body": "Collect only fields needed for complaint analysis and review. Keep original wording separate, restrict access by role, and avoid retaining unnecessary data."
+      },
+      "modelCard": {
+        "title": "Model-card summary",
+        "body": "Purpose: support multilingual civic complaint analysis. Intended use: recommendations for human review. Inputs: complaint text and optional structured context. Outputs: language, fields, classification, urgency, department recommendation, and review indicators."
+      },
+      "synthetic": {
+        "title": "Synthetic-data note",
+        "label": "Clearly labelled synthetic data",
+        "body": "Examples, demo counts, and prototype outputs may use synthetic or illustrative data. They are not measured real-world performance results."
+      }
     },
     "help": {
       "kicker": "Help and guidance",

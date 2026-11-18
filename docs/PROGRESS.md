@@ -50,3 +50,4 @@
 - [x] M3 — Build public page content (/features and /technology)
 - [x] M4 — Add page-specific interactions for About and Contact, including demo form feedback
 - [x] M5 — Move public navigation to routes and reorganize landing content across pages
+- [x] M6 — Build /how-it-works scroll-linked pipeline and /transparency accountability page
