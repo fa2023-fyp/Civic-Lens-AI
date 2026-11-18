@@ -76,6 +76,15 @@ import {
   StepsRail,
   stagger,
 } from '../../components/marketing/index.js';
+import {
+  AIBadge,
+  ConfidenceMeter,
+  ExplanationList,
+  ModelVersionTag,
+  LowConfidenceReason,
+  AIRecommendationCard,
+  aiFixtures,
+} from '../../components/ai/index.js';
 import './UIGallery.css';
 
 function GallerySection({ title, children, className = '' }) {
@@ -978,6 +987,169 @@ export default function UIGallery() {
                 </Card>
               }
             />
+          </div>
+        </GallerySection>
+
+        <GallerySection title={t('aiGallery.title')}>
+          <p style={{ margin: 0, color: 'var(--text-muted)' }}>
+            {t('aiGallery.description')}
+          </p>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.badgesSection')}</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+              <AIBadge />
+              <AIBadge size="sm" />
+              <ModelVersionTag version="classifier v1.3" />
+              <ModelVersionTag version="dept-router v2.0" />
+              <ModelVersionTag version="safety-policy v1.1" />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.confidenceSection')}</h3>
+            <div style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: '540px' }}>
+              <ConfidenceMeter
+                value={0.91}
+                threshold={0.70}
+                label={t('ai.confidenceLabel')}
+              />
+              <ConfidenceMeter
+                value={0.65}
+                threshold={0.60}
+                label={`${t('ai.confidenceLabel')} (Medium)`}
+              />
+              <ConfidenceMeter
+                value={0.58}
+                threshold={0.75}
+                label={`${t('ai.confidenceLabel')} (Below Threshold)`}
+              />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.lowConfidenceSection')}</h3>
+            <div style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: '640px' }}>
+              <LowConfidenceReason
+                field="Department"
+                value={0.58}
+                threshold={0.75}
+              />
+              <LowConfidenceReason
+                field="Classification"
+                value={0.62}
+                threshold={0.70}
+              />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.reasonsSection')}</h3>
+            <div style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: '640px' }}>
+              <ExplanationList
+                items={aiFixtures.categoryHighConfidence.reasons}
+              />
+              <ExplanationList
+                items={aiFixtures.emergencySafetyRule.reasons}
+                safetyRule={aiFixtures.emergencySafetyRule.safetyRule}
+              />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.cardsSection')}</h3>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: 'var(--space-6)',
+              }}
+            >
+              <AIRecommendationCard
+                field={aiFixtures.categoryHighConfidence.field}
+                value={aiFixtures.categoryHighConfidence.value}
+                confidence={aiFixtures.categoryHighConfidence.confidence}
+                threshold={aiFixtures.categoryHighConfidence.threshold}
+                reasons={aiFixtures.categoryHighConfidence.reasons}
+                alternatives={aiFixtures.categoryHighConfidence.alternatives}
+                modelVersion={aiFixtures.categoryHighConfidence.modelVersion}
+                onConfirm={() =>
+                  showToast(
+                    t('aiGallery.toastConfirmed', {
+                      field: aiFixtures.categoryHighConfidence.field,
+                      value: aiFixtures.categoryHighConfidence.value,
+                    }),
+                    'success',
+                  )
+                }
+                onChange={() =>
+                  showToast(
+                    t('aiGallery.toastChange', {
+                      field: aiFixtures.categoryHighConfidence.field,
+                      value: aiFixtures.categoryHighConfidence.value,
+                    }),
+                    'info',
+                  )
+                }
+              />
+
+              <AIRecommendationCard
+                field={aiFixtures.departmentBelowThreshold.field}
+                value={aiFixtures.departmentBelowThreshold.value}
+                confidence={aiFixtures.departmentBelowThreshold.confidence}
+                threshold={aiFixtures.departmentBelowThreshold.threshold}
+                reasons={aiFixtures.departmentBelowThreshold.reasons}
+                alternatives={aiFixtures.departmentBelowThreshold.alternatives}
+                modelVersion={aiFixtures.departmentBelowThreshold.modelVersion}
+                onConfirm={() =>
+                  showToast(
+                    t('aiGallery.toastConfirmed', {
+                      field: aiFixtures.departmentBelowThreshold.field,
+                      value: aiFixtures.departmentBelowThreshold.value,
+                    }),
+                    'success',
+                  )
+                }
+                onChange={() =>
+                  showToast(
+                    t('aiGallery.toastChange', {
+                      field: aiFixtures.departmentBelowThreshold.field,
+                      value: aiFixtures.departmentBelowThreshold.value,
+                    }),
+                    'info',
+                  )
+                }
+              />
+
+              <AIRecommendationCard
+                field={aiFixtures.emergencySafetyRule.field}
+                value={aiFixtures.emergencySafetyRule.value}
+                confidence={aiFixtures.emergencySafetyRule.confidence}
+                threshold={aiFixtures.emergencySafetyRule.threshold}
+                reasons={aiFixtures.emergencySafetyRule.reasons}
+                safetyRule={aiFixtures.emergencySafetyRule.safetyRule}
+                alternatives={aiFixtures.emergencySafetyRule.alternatives}
+                modelVersion={aiFixtures.emergencySafetyRule.modelVersion}
+                onConfirm={() =>
+                  showToast(
+                    t('aiGallery.toastConfirmed', {
+                      field: aiFixtures.emergencySafetyRule.field,
+                      value: aiFixtures.emergencySafetyRule.value,
+                    }),
+                    'success',
+                  )
+                }
+                onChange={() =>
+                  showToast(
+                    t('aiGallery.toastChange', {
+                      field: aiFixtures.emergencySafetyRule.field,
+                      value: aiFixtures.emergencySafetyRule.value,
+                    }),
+                    'info',
+                  )
+                }
+              />
+            </div>
           </div>
         </GallerySection>
 

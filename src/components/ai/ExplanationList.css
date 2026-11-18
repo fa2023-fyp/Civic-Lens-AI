@@ -1,0 +1,112 @@
+.explanation-list {
+  display: grid;
+  gap: var(--space-2);
+  inline-size: 100%;
+}
+
+.explanation-list__title {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.explanation-list__safety-highlight {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-2);
+  background: var(--warning-tint);
+  border: 1px solid var(--status-warning);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+
+.explanation-list__safety-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.explanation-list__safety-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.explanation-list__safety-icon {
+  color: var(--status-warning);
+  flex-shrink: 0;
+}
+
+.explanation-list__safety-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.explanation-list__safety-text {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.explanation-list__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.explanation-list__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.explanation-list__bullet {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: 50%;
+  background: var(--ai);
+  flex-shrink: 0;
+  transform: translateY(-2px);
+}
+
+.explanation-list__item--safety {
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-2);
+  background: var(--warning-tint);
+  border: 1px solid var(--status-warning);
+}
+
+.explanation-list__item-icon--safety {
+  color: var(--status-warning);
+  flex-shrink: 0;
+}
+
+.explanation-list__item-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.explanation-list__item-badge {
+  font-size: var(--text-xs);
+}
+
+.explanation-list__item-text {
+  color: var(--text);
+}

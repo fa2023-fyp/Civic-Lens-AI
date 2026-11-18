@@ -1136,5 +1136,35 @@
   "i18nGallery": {
     "controls": "زبان اور تھیم کے کنٹرول",
     "durationExample": "تین دن کی مدت"
+  },
+  "ai": {
+    "badge": "مصنوعی ذہانت کی تجویز",
+    "confidenceTooltip": "اعتماد کا اسکور ایک تخمینہ ہے، حتمی ضمانت نہیں۔",
+    "confidenceLabel": "تخمینی اعتماد",
+    "highConfidence": "زیادہ اعتماد",
+    "mediumConfidence": "درمیانہ اعتماد",
+    "lowConfidence": "کم اعتماد",
+    "belowThreshold": "حد سے کم ({{threshold}})",
+    "safetyRuleApplied": "نافذ حفاظتی اصول",
+    "safetyRuleDescription": "حفاظتی پالیسی کے اشارے سے لاگو ہوا",
+    "humanReviewRequired": "انسانی جائزے کی ضرورت ہے",
+    "lowConfidenceNotice": "{{field}} کا اعتماد {{value}} درکار حد {{threshold}} سے کم ہے۔",
+    "alternatives": "زیرِ غور متبادل",
+    "confirm": "تصدیق کریں",
+    "change": "تبدیل کریں",
+    "reasonsTitle": "اشارے اور وجوہات",
+    "predictedValue": "تجویز کردہ نتیجہ",
+    "fieldLabel": "شعبہ"
+  },
+  "aiGallery": {
+    "title": "مصنوعی ذہانت کے اجزاء اور تجاویز",
+    "description": "شفاف اے آئی احتسابی پرت: اعتماد کے تخمینے، عام فہم وجوہات، کم از کم حد، ماڈل کے ورژن، اور انسانی فیصلے کے کنٹرولز۔",
+    "badgesSection": "اے آئی بیجز اور ماڈل ورژن ٹیگز",
+    "confidenceSection": "اعتماد کے میٹر (زیادہ، درمیانہ، اور حد سے کم)",
+    "reasonsSection": "وضاحتی فہرست اور حفاظتی اصول",
+    "lowConfidenceSection": "کم اعتماد کی وجہ (انسانی جائزے کی قطار)",
+    "cardsSection": "اے آئی سفارشاتی کارڈز",
+    "toastConfirmed": "{{field}} کے لیے اے آئی کی تجویز کی تصدیق کی گئی: {{value}}",
+    "toastChange": "{{field}} کے لیے تبدیلی کی کارروائی شروع کی گئی: {{value}}"
   }
 }

@@ -1135,5 +1135,35 @@
   "i18nGallery": {
     "controls": "Language and theme controls",
     "durationExample": "Three-day duration"
+  },
+  "ai": {
+    "badge": "AI recommendation",
+    "confidenceTooltip": "Confidence is an estimate, not a guarantee.",
+    "confidenceLabel": "Confidence estimate",
+    "highConfidence": "High confidence",
+    "mediumConfidence": "Medium confidence",
+    "lowConfidence": "Low confidence",
+    "belowThreshold": "Below threshold ({{threshold}})",
+    "safetyRuleApplied": "Applied Safety Rule",
+    "safetyRuleDescription": "Triggered by safety policy indicators",
+    "humanReviewRequired": "Human review required",
+    "lowConfidenceNotice": "{{field}} confidence {{value}} is below threshold {{threshold}}.",
+    "alternatives": "Alternatives considered",
+    "confirm": "Confirm",
+    "change": "Change",
+    "reasonsTitle": "Indicators & reasoning",
+    "predictedValue": "AI-predicted value",
+    "fieldLabel": "Field"
+  },
+  "aiGallery": {
+    "title": "AI Components & Recommendations",
+    "description": "Visible AI accountability layer: confidence estimates, plain-language reasoning, thresholds, model versions, and human override controls.",
+    "badgesSection": "AIBadge & ModelVersionTag",
+    "confidenceSection": "ConfidenceMeter (High, Medium, Below Threshold)",
+    "reasonsSection": "ExplanationList & Safety Rules",
+    "lowConfidenceSection": "LowConfidenceReason (Human Review Queue)",
+    "cardsSection": "AIRecommendationCard",
+    "toastConfirmed": "Confirmed AI recommendation for {{field}}: {{value}}",
+    "toastChange": "Change action initiated for {{field}}: {{value}}"
   }
 }
