@@ -1,0 +1,111 @@
+.override-dialog {
+  max-inline-size: min(580px, 94vw);
+}
+
+.override-dialog__body {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.override-dialog__notice {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-2);
+  background: var(--surface-raised, #f1f5f3);
+  border: 1px solid var(--border);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.override-dialog__comparison {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.override-dialog__card {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.override-dialog__card--ai {
+  border-color: var(--ai);
+  background: var(--ai-tint);
+}
+
+.override-dialog__card--human {
+  border-color: var(--brand);
+}
+
+.override-dialog__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.override-dialog__tag {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.override-dialog__tag--human {
+  color: var(--brand-strong);
+}
+
+.override-dialog__value-display {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text);
+  padding: var(--space-2);
+  background: var(--surface);
+  border-radius: var(--radius-1);
+  border: 1px dashed var(--ai);
+}
+
+.override-dialog__arrow {
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  font-weight: 700;
+  text-align: center;
+}
+
+.override-dialog__reason-field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.override-dialog__reason-counter {
+  display: flex;
+  justify-content: flex-end;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.override-dialog__count-warn {
+  color: var(--status-warning);
+  font-weight: 600;
+}
+
+.override-dialog__count-ok {
+  color: var(--status-success);
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .override-dialog__comparison {
+    grid-template-columns: 1fr;
+  }
+  .override-dialog__arrow {
+    transform: rotate(90deg);
+  }
+}
