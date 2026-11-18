@@ -382,8 +382,38 @@
     },
     "help": {
       "kicker": "مدد اور رہنمائی",
-      "title": "اکثر پوچھے جانے والے سوالات",
-      "lead": "زبانوں کی معاونت، اے آئی کی تجاویز، حل پر رائے، اور اس تعلیمی نمونے کی حدود کے بارے میں جانیں۔"
+      "title": "مدد اور فوری آغاز",
+      "lead": "انگریزی یا اردو میں رجسٹریشن، شکایت جمع کرنے، پیروی اور تصدیق کرنا سیکھیں۔",
+      "faqSearchLabel": "اکثر پوچھے گئے سوال تلاش کریں",
+      "faqSearchPlaceholder": "موضوع سے تلاش کریں",
+      "faqEmpty": "کوئی ملتا جواب نہیں ملا۔ مختصر تلاش آزمائیں۔",
+      "guides": {
+        "kicker": "فوری آغاز کی رہنمائی",
+        "title": "شروع کرنے کے چار مراحل",
+        "label": "فوری آغاز کی زبان منتخب کریں",
+        "languages": {
+          "english": "انگریزی",
+          "urdu": "اردو"
+        },
+        "english": {
+          "register": {"title": "Register", "body": "Create an account with accurate contact details and keep your sign-in information private."},
+          "submit": {"title": "Submit", "body": "Describe what happened in your own words, choose or confirm the location, and add optional images."},
+          "track": {"title": "Track", "body": "Open My Complaints to follow status, review recommendations, and see when a human update is recorded."},
+          "verify": {"title": "Verify", "body": "Review any submitted resolution. Accept it to resolve the complaint or reject it with a reason."}
+        },
+        "urdu": {
+          "register": {"title": "رجسٹریشن", "body": "درست رابطہ تفصیلات سے اکاؤنٹ بنائیں اور اپنی سائن ان معلومات محفوظ رکھیں۔"},
+          "submit": {"title": "شکایت جمع کریں", "body": "جو ہوا اسے اپنے الفاظ میں بیان کریں، مقام منتخب یا تصدیق کریں، اور اگر چاہیں تصاویر شامل کریں۔"},
+          "track": {"title": "پیروی کریں", "body": "اپنی شکایات میں حالت، تجاویز اور انسانی اپ ڈیٹ دیکھیں۔"},
+          "verify": {"title": "حل کی تصدیق", "body": "جمع شدہ حل دیکھیں۔ قبول کرنے پر شکایت حل ہو جاتی ہے؛ رد کرنے پر وجہ لکھیں۔"}
+        }
+      },
+      "contact": {
+        "kicker": "مزید مدد چاہیے؟",
+        "title": "منصوبے کی ٹیم سے رابطہ",
+        "body": "یہ دیکھنے کے لیے نمائشی رابطہ فارم استعمال کریں کہ معاونت کی درخواست کیسے بھیجی جا سکتی ہے۔",
+        "action": "رابطہ صفحہ کھولیں"
+      }
     },
     "contact": {
       "kicker": "رابطہ",
@@ -544,6 +574,63 @@
     "sessionExpiredHint": "ترمیم جاری رکھنے کے لیے یہ پیغام بند کریں۔ جمع کرنے سے پہلے دوبارہ سائن اِن کریں۔",
     "keepPageOpen": "یہ صفحہ کھلا رکھیں"
   },
+  "authPages": {
+    "languageEnglish": "انگریزی",
+    "languageUrdu": "اردو",
+    "roles": {
+      "citizen": "شہری",
+      "officer": "افسر",
+      "supervisor": "نگران",
+      "admin": "منتظم"
+    },
+    "login": {
+      "kicker": "واپسی پر خوش آمدید",
+      "title": "سائن اِن",
+      "body": "اپنے سوک لینز اکاؤنٹ تک رسائی کریں۔",
+      "identifier": "ای میل یا موبائل",
+      "identifierPlaceholder": "name@example.com یا 03xx...",
+      "password": "پاس ورڈ",
+      "language": "زبان",
+      "forgot": "پاس ورڈ بھول گئے؟",
+      "submit": "سائن اِن",
+      "genericError": "سائن اِن مکمل نہیں ہو سکا۔ تفصیلات دیکھ کر دوبارہ کوشش کریں۔",
+      "lockoutTitle": "سائن اِن عارضی طور پر بند ہے",
+      "lockoutBody": "بہت زیادہ کوششیں ہوئیں۔ {{minutes}}:{{seconds}} بعد دوبارہ کوشش کریں۔",
+      "demoLabel": "اس منصوبہ بندی والے API میں",
+      "demoTitle": "نمائشی اکاؤنٹس",
+      "switch": "سوک لینز پر نئے ہیں؟",
+      "switchAction": "اکاؤنٹ بنائیں"
+    },
+    "register": {
+      "kicker": "شہری اکاؤنٹ",
+      "title": "اکاؤنٹ بنائیں",
+      "body": "شہری شکایات جمع اور پیروی کرنے کے لیے رجسٹریشن کریں۔",
+      "name": "پورا نام",
+      "identifier": "ای میل یا موبائل",
+      "identifierPlaceholder": "name@example.com یا 03xx...",
+      "password": "پاس ورڈ",
+      "language": "پسندیدہ زبان",
+      "rulesLabel": "پاس ورڈ کی شرائط",
+      "rules": {
+        "length": "کم از کم 8 حروف",
+        "case": "بڑے اور چھوٹے حروف",
+        "number": "کم از کم ایک عدد",
+        "symbol": "کم از کم ایک علامت"
+      },
+      "terms": "میں شرائط قبول کرتا ہوں اور سمجھتا ہوں کہ یہ تعلیمی نمونہ ہے۔",
+      "submit": "اکاؤنٹ بنائیں",
+      "emailExists": "یہ ای میل یا موبائل پہلے سے اکاؤنٹ میں استعمال ہو رہا ہے۔",
+      "genericError": "رجسٹریشن مکمل نہیں ہو سکی۔ براہ کرم دوبارہ کوشش کریں۔",
+      "errors": {
+        "name": "کم از کم دو حروف والا پورا نام درج کریں۔",
+        "identifier": "ای میل پتہ یا موبائل نمبر درج کریں۔",
+        "password": "پاس ورڈ کی تمام شرائط پوری کریں۔",
+        "terms": "جاری رکھنے کے لیے شرائط قبول کریں۔"
+      },
+      "switch": "پہلے سے اکاؤنٹ ہے؟",
+      "switchAction": "سائن اِن"
+    }
+  },
   "routes": {
     "placeholderKicker": "راستے کا عارضی صفحہ",
     "placeholderBody": "یہ منصوبہ بند راستہ ہے۔ اس کی مکمل سہولتیں اگلے مرحلے میں شامل ہوں گی۔",
@@ -566,6 +653,7 @@
       "home": "عوامی صفحۂ اول",
       "login": "سائن اِن",
       "register": "اکاؤنٹ بنائیں",
+      "verifyAccount": "اکاؤنٹ کی تصدیق",
       "howItWorks": "یہ کیسے کام کرتا ہے",
       "aiTransparency": "اے آئی کی شفافیت",
       "help": "مدد",
@@ -600,6 +688,17 @@
     "notFound": {
       "title": "صفحہ نہیں ملا",
       "body": "یہ راستہ موجود نہیں۔ پتہ دیکھیں یا صفحۂ اول پر واپس جائیں۔"
+    },
+    "serverError": {
+      "title": "سروس عارضی طور پر دستیاب نہیں",
+      "body": "غیر متوقع مسئلے نے صفحہ روک دیا۔ دوبارہ کوشش کریں یا صفحۂ اول پر جائیں۔",
+      "referenceCode": "CL-DEMO-500"
+    },
+    "offline": {
+      "title": "آپ آفلائن نظر آ رہے ہیں",
+      "body": "رابطہ میں خلل ہوا ہے۔ دوبارہ رابطہ کریں اور کوشش کریں۔",
+      "bannerTitle": "آفلائن",
+      "bannerBody": "کنکشن واپس آنے تک تبدیلیاں دستیاب نہیں ہو سکتی۔"
     },
     "error": {
       "title": "یہ صفحہ نہیں دکھایا جا سکا",

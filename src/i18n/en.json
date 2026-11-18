@@ -381,8 +381,38 @@
     },
     "help": {
       "kicker": "Help and guidance",
-      "title": "Frequently asked questions",
-      "lead": "Learn about language support, AI recommendations, resolution feedback, and the limits of this academic prototype."
+      "title": "Help and quick start",
+      "lead": "Learn how to register, submit, track, and verify a complaint in English or Urdu.",
+      "faqSearchLabel": "Search frequently asked questions",
+      "faqSearchPlaceholder": "Search by topic",
+      "faqEmpty": "No matching answers found. Try a shorter search.",
+      "guides": {
+        "kicker": "Quick-start guide",
+        "title": "Four steps to get started",
+        "label": "Choose a quick-start language",
+        "languages": {
+          "english": "English",
+          "urdu": "Urdu"
+        },
+        "english": {
+          "register": {"title": "Register", "body": "Create an account with accurate contact details and keep your sign-in information private."},
+          "submit": {"title": "Submit", "body": "Describe what happened in your own words, choose or confirm the location, and add optional images."},
+          "track": {"title": "Track", "body": "Open My Complaints to follow status, review recommendations, and see when a human update is recorded."},
+          "verify": {"title": "Verify", "body": "Review any submitted resolution. Accept it to resolve the complaint or reject it with a reason."}
+        },
+        "urdu": {
+          "register": {"title": "رجسٹریشن", "body": "درست رابطہ تفصیلات سے اکاؤنٹ بنائیں اور اپنی سائن ان معلومات محفوظ رکھیں۔"},
+          "submit": {"title": "شکایت جمع کریں", "body": "جو ہوا اسے اپنے الفاظ میں بیان کریں، مقام منتخب یا تصدیق کریں، اور اگر چاہیں تصاویر شامل کریں۔"},
+          "track": {"title": "پیروی کریں", "body": "اپنی شکایات میں حالت، تجاویز اور انسانی اپ ڈیٹ دیکھیں۔"},
+          "verify": {"title": "حل کی تصدیق", "body": "جمع شدہ حل دیکھیں۔ قبول کرنے پر شکایت حل ہو جاتی ہے؛ رد کرنے پر وجہ لکھیں۔"}
+        }
+      },
+      "contact": {
+        "kicker": "Need more help?",
+        "title": "Contact the project team",
+        "body": "Use the demo contact form to preview how the team could receive a support request.",
+        "action": "Open contact page"
+      }
     },
     "contact": {
       "kicker": "Contact",
@@ -543,6 +573,63 @@
     "sessionExpiredHint": "Dismiss this message to continue editing. Sign in again before submitting.",
     "keepPageOpen": "Keep this page open"
   },
+  "authPages": {
+    "languageEnglish": "English",
+    "languageUrdu": "Urdu",
+    "roles": {
+      "citizen": "Citizen",
+      "officer": "Officer",
+      "supervisor": "Supervisor",
+      "admin": "Administrator"
+    },
+    "login": {
+      "kicker": "Welcome back",
+      "title": "Sign in",
+      "body": "Access your CivicLens account.",
+      "identifier": "E-mail or mobile",
+      "identifierPlaceholder": "name@example.com or 03xx...",
+      "password": "Password",
+      "language": "Language",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "genericError": "Sign-in could not be completed. Check your details and try again.",
+      "lockoutTitle": "Sign-in temporarily locked",
+      "lockoutBody": "Too many attempts. Try again in {{minutes}}:{{seconds}}.",
+      "demoLabel": "In this mock API",
+      "demoTitle": "Demo accounts",
+      "switch": "New to CivicLens?",
+      "switchAction": "Create an account"
+    },
+    "register": {
+      "kicker": "Citizen account",
+      "title": "Create an account",
+      "body": "Register to submit and track civic complaints.",
+      "name": "Full name",
+      "identifier": "E-mail or mobile",
+      "identifierPlaceholder": "name@example.com or 03xx...",
+      "password": "Password",
+      "language": "Preferred language",
+      "rulesLabel": "Password requirements",
+      "rules": {
+        "length": "At least 8 characters",
+        "case": "Uppercase and lowercase",
+        "number": "At least one number",
+        "symbol": "At least one symbol"
+      },
+      "terms": "I accept the terms and understand this is an academic prototype.",
+      "submit": "Create account",
+      "emailExists": "An account already uses this e-mail or mobile.",
+      "genericError": "Registration could not be completed. Please try again.",
+      "errors": {
+        "name": "Enter a full name with at least two characters.",
+        "identifier": "Enter an e-mail address or mobile number.",
+        "password": "Meet all password requirements.",
+        "terms": "Accept the terms to continue."
+      },
+      "switch": "Already have an account?",
+      "switchAction": "Sign in"
+    }
+  },
   "routes": {
     "placeholderKicker": "ROUTE PLACEHOLDER",
     "placeholderBody": "This page marks a planned route. Its feature interface will be added in a later phase.",
@@ -565,6 +652,7 @@
       "home": "Public home",
       "login": "Sign in",
       "register": "Create an account",
+      "verifyAccount": "Verify account",
       "howItWorks": "How it works",
       "aiTransparency": "AI transparency",
       "help": "Help",
@@ -599,6 +687,17 @@
     "notFound": {
       "title": "Page not found",
       "body": "This route does not exist. Check the address or return to the home page."
+    },
+    "serverError": {
+      "title": "The service is temporarily unavailable",
+      "body": "An unexpected problem interrupted this page. Try again or return to the home page.",
+      "referenceCode": "CL-DEMO-500"
+    },
+    "offline": {
+      "title": "You appear to be offline",
+      "body": "The connection was interrupted. Reconnect and try again.",
+      "bannerTitle": "Offline",
+      "bannerBody": "Changes may not be available until the connection returns."
     },
     "error": {
       "title": "This page could not be displayed",

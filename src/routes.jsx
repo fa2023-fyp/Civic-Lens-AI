@@ -13,6 +13,7 @@ import { useDocumentTitle } from './hooks/useDocumentTitle.js';
 import { useI18n } from './i18n/I18nContext.jsx';
 import RouteErrorFallback from './pages/shared/RouteErrorFallback.jsx';
 import LandingPage from './pages/public/Landing/LandingPage.jsx';
+import './pages/shared/RouteStatusPage.css';
 
 const RoutePlaceholder = lazy(() => import('./pages/shared/RoutePlaceholder.jsx'));
 const PublicInfoPage = lazy(() => import('./pages/public/PublicInfoPage.jsx'));
@@ -23,6 +24,8 @@ const HelpPage = lazy(() => import('./pages/public/HelpPage.jsx'));
 const TechnologyPage = lazy(() => import('./pages/public/TechnologyPage.jsx'));
 const HowItWorksPage = lazy(() => import('./pages/public/HowItWorksPage.jsx'));
 const TransparencyPage = lazy(() => import('./pages/public/TransparencyPage.jsx'));
+const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
+const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const ForbiddenPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.ForbiddenPage,
@@ -31,6 +34,16 @@ const ForbiddenPage = lazy(() =>
 const NotFoundPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.NotFoundPage,
+  })),
+);
+const ServerErrorPage = lazy(() =>
+  import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
+    default: module.ServerErrorPage,
+  })),
+);
+const OfflinePage = lazy(() =>
+  import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
+    default: module.OfflinePage,
   })),
 );
 const TokenPreview = lazy(() => import('./pages/dev/TokenPreview.jsx'));
@@ -43,8 +56,9 @@ const routeEntries = [
   { path: '/technology', titleKey: 'publicPages.technology.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'technology' },
   { path: '/transparency', titleKey: 'publicPages.transparency.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'transparency' },
   { path: '/contact', titleKey: 'publicPages.contact.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'contact' },
-  { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
-  { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0', pageKey: 'login' },
+  { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0', pageKey: 'register' },
+  { path: '/verify', titleKey: 'routes.pages.verifyAccount', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
   { path: '/how-it-works', titleKey: 'routes.pages.howItWorks', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'howItWorks' },
   { path: '/ai-transparency', titleKey: 'routes.pages.aiTransparency', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
   { path: '/help', titleKey: 'publicPages.help.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'help' },
@@ -101,7 +115,11 @@ function renderPlaceholder(entry) {
   if (entry.pageKey) {
     return (
       <RouteDocumentTitle titleKey={entry.titleKey}>
-        {entry.pageKey === 'about' ? (
+        {entry.pageKey === 'login' ? (
+          <LoginPage />
+        ) : entry.pageKey === 'register' ? (
+          <RegisterPage />
+        ) : entry.pageKey === 'about' ? (
           <AboutPage />
         ) : entry.pageKey === 'contact' ? (
           <ContactPage />
@@ -160,15 +178,19 @@ function ScrollRestoration() {
 
 export function RouteView() {
   const location = useLocation();
+  const { t } = useI18n();
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [routeLoading, setRouteLoading] = useState(false);
   const [suspenseLoading, setSuspenseLoading] = useState(false);
+  const [isOffline, setIsOffline] = useState(
+    typeof navigator !== 'undefined' ? navigator.onLine === false : false,
+  );
   const previousPath = useRef(location.pathname);
   const markInitialLoadComplete = useCallback(() => setInitialLoadComplete(true), []);
   const markSuspensePending = useCallback((pending) => setSuspenseLoading(pending), []);
   const isPublicRoute = !/^\/(citizen|officer|supervisor|admin|dev)(\/|$)/.test(location.pathname);
   const firstPathSegment = location.pathname.split('/')[1];
-  const isAuthRoute = /^\/(login|register|forgot-password|reset-password)(\/|$)/.test(
+  const isAuthRoute = /^\/(login|register|verify|forgot-password|reset-password)(\/|$)/.test(
     location.pathname,
   );
   const isStaffRoute = ['officer', 'supervisor', 'admin'].includes(firstPathSegment);
@@ -180,6 +202,17 @@ export function RouteView() {
     const timer = window.setTimeout(() => setRouteLoading(false), 350);
     return () => window.clearTimeout(timer);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const goOffline = () => setIsOffline(true);
+    const goOnline = () => setIsOffline(false);
+    window.addEventListener('offline', goOffline);
+    window.addEventListener('online', goOnline);
+    return () => {
+      window.removeEventListener('offline', goOffline);
+      window.removeEventListener('online', goOnline);
+    };
+  }, []);
 
   const routeContent = (
     <>
@@ -206,6 +239,15 @@ export function RouteView() {
   return (
     <>
       <ScrollRestoration />
+      {isOffline ? (
+        <div className="offline-notice" role="status" aria-live="polite">
+          <strong>{t('routes.offline.bannerTitle')}</strong>
+          <span>{t('routes.offline.bannerBody')}</span>
+          <button type="button" onClick={() => window.location.reload()}>
+            {t('common.retry')}
+          </button>
+        </div>
+      ) : null}
       {isAuthRoute ? (
         <AuthLayout>{routeContent}</AuthLayout>
       ) : firstPathSegment === 'citizen' ? (
@@ -228,6 +270,8 @@ export function AppRoutes() {
       ))}
       <Route path="/403" element={<ForbiddenPage />} />
       <Route path="/404" element={<NotFoundPage />} />
+      <Route path="/500" element={<ServerErrorPage />} />
+      <Route path="/offline" element={<OfflinePage />} />
       <Route
         path="/dev/tokens"
         element={
