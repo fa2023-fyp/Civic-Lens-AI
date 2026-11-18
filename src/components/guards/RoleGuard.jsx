@@ -12,7 +12,7 @@ export function RoleGuard({ roles = [], ownerId, children }) {
   if (
     sessionExpired &&
     location.pathname === expiredPath &&
-    roles.includes(expiredRole) &&
+    (roles.length === 0 || roles.includes(expiredRole)) &&
     (resolvedOwnerId == null || String(resolvedOwnerId) === String(expiredUserId))
   ) {
     return children;

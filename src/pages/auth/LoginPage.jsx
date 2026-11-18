@@ -20,7 +20,7 @@ const dashboardByRole = {
 
 export default function LoginPage() {
   const { t, setLanguage } = useI18n();
-  const { login } = useAuth();
+  const { login, expireSession } = useAuth();
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
@@ -175,6 +175,16 @@ export default function LoginPage() {
               {t(`authPages.roles.${role}`)}
             </Button>
           ))}
+        </div>
+        <div style={{ marginBlockStart: 'var(--space-2)' }}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => expireSession()}
+          >
+            {t('authPages.login.simulateSessionExpired')}
+          </Button>
         </div>
       </aside>
 

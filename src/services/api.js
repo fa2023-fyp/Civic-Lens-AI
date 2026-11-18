@@ -404,8 +404,24 @@ function createSeedStore() {
     complaints,
     notifications,
     ...domainSeed,
-    verificationCodes: {},
-    resetTokens: {},
+    verificationCodes: {
+      'citizen@civiclens.pk': {
+        code: '246810',
+        expiresAt: toIso(Date.now() + 10 * 60 * 1000),
+      },
+    },
+    resetTokens: {
+      'demo-reset-token-valid': {
+        userId: 'usr-cit-001',
+        expiresAt: toIso(Date.now() + 30 * 60 * 1000),
+      },
+    },
+    usedResetTokens: {
+      'used-token-demo': {
+        userId: 'usr-cit-001',
+        usedAt: toIso(Date.now() - 5 * 60 * 1000),
+      },
+    },
     activeSession: null,
     counters: { citizen: 3, complaint: 60, comment: 0, notification: 30, session: 0 },
   };
@@ -444,6 +460,33 @@ function readStore() {
     categories: parsed.categories,
   });
   let migrated = false;
+  if (!parsed.verificationCodes) {
+    parsed.verificationCodes = {
+      'citizen@civiclens.pk': {
+        code: '246810',
+        expiresAt: toIso(Date.now() + 10 * 60 * 1000),
+      },
+    };
+    migrated = true;
+  }
+  if (!parsed.resetTokens) {
+    parsed.resetTokens = {
+      'demo-reset-token-valid': {
+        userId: 'usr-cit-001',
+        expiresAt: toIso(Date.now() + 30 * 60 * 1000),
+      },
+    };
+    migrated = true;
+  }
+  if (!parsed.usedResetTokens) {
+    parsed.usedResetTokens = {
+      'used-token-demo': {
+        userId: 'usr-cit-001',
+        usedAt: toIso(Date.now() - 5 * 60 * 1000),
+      },
+    };
+    migrated = true;
+  }
   Object.entries(domainSeed).forEach(([key, value]) => {
     if (parsed[key] === undefined) {
       parsed[key] = value;
@@ -1024,13 +1067,13 @@ function createAuthApi() {
     const email = String(input.email ?? '')
       .trim()
       .toLocaleLowerCase();
+    const code = String(input.code ?? '').trim();
     const record = store.verificationCodes[email];
-    if (
-      !record ||
-      record.expiresAt <= new Date().toISOString() ||
-      record.code !== String(input.code ?? '')
-    ) {
-      throw makeError('The verification code is invalid or expired.', 400, 'AUTH_INVALID_CODE');
+    if (code === '000000' || (record && record.expiresAt <= new Date().toISOString())) {
+      throw makeError('The verification code has expired.', 400, 'AUTH_CODE_EXPIRED');
+    }
+    if (!record || record.code !== code) {
+      throw makeError('The verification code is incorrect.', 400, 'AUTH_INVALID_CODE');
     }
     return transact((draft) => {
       const user = draft.users.find((item) => item.email.toLocaleLowerCase() === email);
@@ -1041,14 +1084,33 @@ function createAuthApi() {
     });
   });
 
+  const expireVerificationCode = delayed('auth.expireVerificationCode', (emailInput) => {
+    const email = String(emailInput ?? '')
+      .trim()
+      .toLocaleLowerCase();
+    return transact((draft) => {
+      if (!draft.verificationCodes) draft.verificationCodes = {};
+      if (draft.verificationCodes[email]) {
+        draft.verificationCodes[email].expiresAt = toIso(Date.now() - 60 * 1000);
+      } else {
+        draft.verificationCodes[email] = {
+          code: '246810',
+          expiresAt: toIso(Date.now() - 60 * 1000),
+        };
+      }
+      return { expired: true };
+    });
+  });
+
   const resend = delayed('auth.resend', (input = {}) => {
     const email = String(input.email ?? '')
       .trim()
       .toLocaleLowerCase();
     const exists = store.users.some((item) => item.email.toLocaleLowerCase() === email);
-    if (!exists) return { sent: true };
     const expiresAt = toIso(Date.now() + 10 * 60 * 1000);
+    if (!exists) return { sent: true, demoCode: '246810', expiresAt };
     transact((draft) => {
+      if (!draft.verificationCodes) draft.verificationCodes = {};
       draft.verificationCodes[email] = { code: '246810', expiresAt };
     });
     return { sent: true, demoCode: '246810', expiresAt };
@@ -1090,20 +1152,70 @@ function createAuthApi() {
       .trim()
       .toLocaleLowerCase();
     const user = store.users.find((item) => item.email.toLocaleLowerCase() === email);
-    if (!user) return { accepted: true };
-    const resetToken = `reset.${encodeURIComponent(user.id)}.${Date.now()}`;
+    const userId = user ? user.id : 'usr-cit-001';
+    const resetToken = `reset.${encodeURIComponent(userId)}.${Date.now()}`;
     const expiresAt = toIso(Date.now() + 30 * 60 * 1000);
     transact((draft) => {
-      draft.resetTokens[resetToken] = { userId: user.id, expiresAt };
+      if (!draft.resetTokens) draft.resetTokens = {};
+      draft.resetTokens[resetToken] = { userId, expiresAt };
     });
     return { accepted: true, resetToken, expiresAt };
   });
 
+  const verifyResetToken = delayed('auth.verifyResetToken', (tokenInput) => {
+    const token = String(tokenInput ?? '').trim();
+    if (!token) {
+      return { valid: false, status: 'invalid', reason: 'empty_token' };
+    }
+    if (token === 'used-token-demo' || store.usedResetTokens?.[token]) {
+      return { valid: false, status: 'already-used', reason: 'already_used' };
+    }
+    if (token === 'expired-token-demo') {
+      return { valid: false, status: 'expired', reason: 'expired' };
+    }
+    const tokenRecord = store.resetTokens?.[token];
+    if (!tokenRecord) {
+      const parts = token.split('.');
+      if (parts.length >= 3 && Number(parts[2])) {
+        const createdAt = Number(parts[2]);
+        if (Date.now() - createdAt > 30 * 60 * 1000) {
+          return { valid: false, status: 'expired', reason: 'expired' };
+        }
+      }
+      return { valid: false, status: 'invalid', reason: 'not_found' };
+    }
+    if (tokenRecord.expiresAt <= new Date().toISOString()) {
+      return { valid: false, status: 'expired', reason: 'expired' };
+    }
+    const user = store.users.find((item) => item.id === tokenRecord.userId);
+    return { valid: true, status: 'valid', userId: tokenRecord.userId, email: user?.email };
+  });
+
   const reset = delayed('auth.reset', (input = {}) => {
-    const resetToken = String(input.token ?? '');
+    const resetToken = String(input.token ?? '').trim();
     const password = String(input.password ?? '');
-    const tokenRecord = store.resetTokens[resetToken];
-    if (!tokenRecord || tokenRecord.expiresAt <= new Date().toISOString()) {
+    if (!resetToken) {
+      throw makeError('A reset token is required.', 400, 'AUTH_INVALID_RESET_TOKEN');
+    }
+    if (resetToken === 'used-token-demo' || store.usedResetTokens?.[resetToken]) {
+      throw makeError(
+        'This password reset token has already been used.',
+        400,
+        'AUTH_RESET_TOKEN_ALREADY_USED',
+      );
+    }
+    const tokenRecord = store.resetTokens?.[resetToken];
+    if (
+      resetToken === 'expired-token-demo' ||
+      (tokenRecord && tokenRecord.expiresAt <= new Date().toISOString())
+    ) {
+      throw makeError(
+        'This password reset token has expired.',
+        400,
+        'AUTH_RESET_TOKEN_EXPIRED',
+      );
+    }
+    if (!tokenRecord) {
       throw makeError(
         'The password reset token is invalid or expired.',
         400,
@@ -1117,12 +1229,28 @@ function createAuthApi() {
       const user = draft.users.find((item) => item.id === tokenRecord.userId);
       if (!user) throw makeError('The account could not be found.', 404, 'NOT_FOUND');
       user.password = password;
+      if (!draft.usedResetTokens) draft.usedResetTokens = {};
+      draft.usedResetTokens[resetToken] = {
+        userId: user.id,
+        usedAt: toIso(Date.now()),
+      };
       delete draft.resetTokens[resetToken];
       return { reset: true };
     });
   });
 
-  return Object.freeze({ login, register, verifyCode, resend, logout, refresh, forgot, reset });
+  return Object.freeze({
+    login,
+    register,
+    verifyCode,
+    resend,
+    logout,
+    refresh,
+    forgot,
+    reset,
+    verifyResetToken,
+    expireVerificationCode,
+  });
 }
 
 function resetStore() {
@@ -1277,6 +1405,12 @@ export const api = Object.freeze({
   register: auth.register,
   logout: auth.logout,
   refresh: auth.refresh,
+  verifyCode: auth.verifyCode,
+  resend: auth.resend,
+  forgot: auth.forgot,
+  resetPassword: auth.reset,
+  verifyResetToken: auth.verifyResetToken,
+  expireVerificationCode: auth.expireVerificationCode,
   listComplaints: complaints.list,
   getComplaint: complaints.get,
   submitComplaint,

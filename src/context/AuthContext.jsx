@@ -168,9 +168,10 @@ export function AuthProvider({ children }) {
       logout,
       register,
       refresh,
+      expireSession,
       dismissExpiredDialog,
     }),
-    [state, login, logout, register, refresh, dismissExpiredDialog],
+    [state, login, logout, register, refresh, expireSession, dismissExpiredDialog],
   );
 
   return (

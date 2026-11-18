@@ -103,9 +103,113 @@
   color: var(--status-success);
 }
 
+.auth-success {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  animation: fadeIn var(--dur-slow) var(--ease-out) both;
+}
+
+.auth-success__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+  color: var(--status-success);
+}
+
+.auth-success__body {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.auth-checkmark {
+  inline-size: 72px;
+  block-size: 72px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 3.5;
+  stroke: var(--status-success);
+  stroke-miterlimit: 10;
+}
+
+.auth-checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 3.5;
+  stroke: var(--status-success);
+  fill: none;
+  animation: authStroke 0.6s var(--ease-out) forwards;
+}
+
+.auth-checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-width: 3.5;
+  stroke: var(--status-success);
+  fill: none;
+  animation: authStroke 0.4s var(--ease-out) 0.35s forwards;
+}
+
+@keyframes authStroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.auth-otp-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.auth-resend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.auth-demo-links {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.auth-demo-links a {
+  color: var(--brand-strong);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.auth-token-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-raised, #f1f5f3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
 @media (max-width: 30rem) {
   .auth-demo__accounts,
   .auth-password-rules {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-checkmark__circle,
+  .auth-checkmark__check {
+    stroke-dashoffset: 0 !important;
+    animation: none !important;
   }
 }

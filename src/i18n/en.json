@@ -597,6 +597,7 @@
       "lockoutBody": "Too many attempts. Try again in {{minutes}}:{{seconds}}.",
       "demoLabel": "In this mock API",
       "demoTitle": "Demo accounts",
+      "simulateSessionExpired": "Simulate session expiry",
       "switch": "New to CivicLens?",
       "switchAction": "Create an account"
     },
@@ -628,6 +629,65 @@
       },
       "switch": "Already have an account?",
       "switchAction": "Sign in"
+    },
+    "verify": {
+      "kicker": "Account verification",
+      "title": "Verify your account",
+      "body": "Enter the 6-digit code sent to {{target}}.",
+      "codeLabel": "Verification code",
+      "submit": "Verify code",
+      "resend": "Resend code",
+      "resendIn": "Resend code in {{seconds}}s",
+      "resendSuccess": "A new verification code has been sent (Demo code: {{code}}).",
+      "wrongCode": "The verification code is incorrect. Please try again.",
+      "expiredCode": "This verification code has expired. Please request a new code.",
+      "successTitle": "Account verified!",
+      "successBody": "Redirecting to your dashboard...",
+      "demoCodeHint": "Demo verification code: {{code}}",
+      "simulateExpired": "Simulate expired code",
+      "backToLogin": "Back to sign in"
+    },
+    "forgotPassword": {
+      "kicker": "Password recovery",
+      "title": "Forgot password",
+      "body": "Enter your registered email address and we will issue a single-use password reset link valid for 30 minutes.",
+      "identifier": "E-mail or mobile",
+      "identifierPlaceholder": "name@example.com or 03xx...",
+      "submit": "Send reset link",
+      "successTitle": "Reset link issued",
+      "successBody": "If an account exists for this address, a single-use reset link valid for 30 minutes has been created.",
+      "demoLink": "Demo reset link (single-use, 30 min):",
+      "openResetLink": "Open reset link",
+      "testExpiredLink": "Test expired token",
+      "testUsedLink": "Test already-used token",
+      "backToLogin": "Back to sign in"
+    },
+    "resetPassword": {
+      "kicker": "Password recovery",
+      "title": "Reset password",
+      "body": "Create a new secure password for your CivicLens account.",
+      "password": "New password",
+      "confirmPassword": "Confirm new password",
+      "submit": "Update password",
+      "tokenNotice": "Single-use reset token · Valid for 30 minutes",
+      "passwordMismatch": "Passwords do not match.",
+      "rulesLabel": "Password requirements",
+      "rules": {
+        "length": "At least 8 characters",
+        "case": "Uppercase and lowercase",
+        "number": "At least one number",
+        "symbol": "At least one symbol"
+      },
+      "successTitle": "Password updated successfully!",
+      "successBody": "Your password has been changed. You can now sign in with your new credentials.",
+      "goToLogin": "Sign in now",
+      "expiredTitle": "Reset link expired",
+      "expiredBody": "This password reset token has expired. Password reset links are valid for 30 minutes.",
+      "alreadyUsedTitle": "Reset link already used",
+      "alreadyUsedBody": "This single-use password reset link has already been used. Please request a new link.",
+      "invalidTitle": "Invalid reset link",
+      "invalidBody": "This password reset link is invalid or incomplete.",
+      "requestNew": "Request a new reset link"
     }
   },
   "routes": {

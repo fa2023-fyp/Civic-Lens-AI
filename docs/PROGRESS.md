@@ -16,7 +16,7 @@
 - [x] Prompt 11
 - [x] Prompt 12
 - [x] Prompt 13
-- [ ] Prompt 14
+- [x] Prompt 14 — Finish authentication (/verify, /forgot-password, /reset-password)
 - [ ] Prompt 15
 - [ ] Prompt 16
 - [x] Prompt 17 — Mock API lifecycle and demo controls complete
@@ -53,3 +53,4 @@
 - [x] M6 — Build /how-it-works scroll-linked pipeline and /transparency accountability page
 - [x] M7 — Build /help guides, live FAQ search, emergency card, and route/error/offline screens
 - [x] M8 — Build bilingual /login and /register forms with demo sign-in
+- [x] M9 — Finish authentication (/verify, /forgot-password, /reset-password)

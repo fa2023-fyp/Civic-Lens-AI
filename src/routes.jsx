@@ -26,6 +26,9 @@ const HowItWorksPage = lazy(() => import('./pages/public/HowItWorksPage.jsx'));
 const TransparencyPage = lazy(() => import('./pages/public/TransparencyPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
+const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
+const ForgotPasswordPage = lazy(() => import('./pages/auth/ForgotPasswordPage.jsx'));
+const ResetPasswordPage = lazy(() => import('./pages/auth/ResetPasswordPage.jsx'));
 const ForbiddenPage = lazy(() =>
   import('./pages/shared/RouteStatusPage.jsx').then((module) => ({
     default: module.ForbiddenPage,
@@ -58,13 +61,13 @@ const routeEntries = [
   { path: '/contact', titleKey: 'publicPages.contact.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'contact' },
   { path: '/login', titleKey: 'routes.pages.login', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0', pageKey: 'login' },
   { path: '/register', titleKey: 'routes.pages.register', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0', pageKey: 'register' },
-  { path: '/verify', titleKey: 'routes.pages.verifyAccount', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0' },
+  { path: '/verify', titleKey: 'routes.pages.verifyAccount', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p0', pageKey: 'verify' },
   { path: '/how-it-works', titleKey: 'routes.pages.howItWorks', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'howItWorks' },
   { path: '/ai-transparency', titleKey: 'routes.pages.aiTransparency', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
   { path: '/help', titleKey: 'publicPages.help.title', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'help' },
-  { path: '/forgot-password', titleKey: 'routes.pages.forgotPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
-  { path: '/reset-password', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
-  { path: '/reset-password/:token', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1' },
+  { path: '/forgot-password', titleKey: 'routes.pages.forgotPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'forgotPassword' },
+  { path: '/reset-password', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'resetPassword' },
+  { path: '/reset-password/:token', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'resetPassword' },
   { path: '/citizen/dashboard', titleKey: 'routes.pages.citizenDashboard', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
   { path: '/citizen/complaints', titleKey: 'routes.pages.citizenComplaints', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
   { path: '/citizen/complaints/new', titleKey: 'routes.pages.newComplaint', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p0', roles: ['citizen'] },
@@ -119,6 +122,12 @@ function renderPlaceholder(entry) {
           <LoginPage />
         ) : entry.pageKey === 'register' ? (
           <RegisterPage />
+        ) : entry.pageKey === 'verify' ? (
+          <VerifyPage />
+        ) : entry.pageKey === 'forgotPassword' ? (
+          <ForgotPasswordPage />
+        ) : entry.pageKey === 'resetPassword' ? (
+          <ResetPasswordPage />
         ) : entry.pageKey === 'about' ? (
           <AboutPage />
         ) : entry.pageKey === 'contact' ? (
