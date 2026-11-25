@@ -1,0 +1,131 @@
+.citizen-detail {
+  display: grid;
+  gap: var(--space-4);
+  min-inline-size: 0;
+}
+
+.citizen-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--brand-strong);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.citizen-detail__header {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.citizen-detail__id-row,
+.citizen-detail__badges,
+.citizen-detail__locality,
+.citizen-detail__related {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.citizen-detail__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.citizen-detail__date,
+.citizen-detail__muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.citizen-detail__verify-banner {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+
+.citizen-detail__verify-banner p {
+  margin: 0;
+}
+
+.citizen-detail__grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.citizen-detail__info-card,
+.citizen-detail__map-card,
+.citizen-detail__section-card,
+.citizen-detail__reopen-card {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.citizen-detail__kv {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.citizen-detail__kv-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.citizen-detail__section-title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 750;
+}
+
+.citizen-detail__comments {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.citizen-detail__comment {
+  display: grid;
+  gap: var(--space-1);
+  border-block-end: var(--border-width) solid var(--border);
+  padding-block-end: var(--space-3);
+}
+
+.citizen-detail__comment p {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.citizen-detail__comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.citizen-detail__comment-form {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+
+.citizen-detail__reopen-row {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+
+@media (min-width: 48rem) {
+  .citizen-detail__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
