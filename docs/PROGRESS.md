@@ -56,3 +56,4 @@
 - [x] M8 — Build bilingual /login and /register forms with demo sign-in
 - [x] M9 — Finish authentication (/verify, /forgot-password, /reset-password)
 - [x] M10 — Build /citizen home dashboard inside CitizenLayout
+- [x] M11 — Build /citizen/submit complaint submission form
