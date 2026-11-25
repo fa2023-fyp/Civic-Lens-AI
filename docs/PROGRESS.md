@@ -18,7 +18,7 @@
 - [x] Prompt 13
 - [x] Prompt 14 — Finish authentication (/verify, /forgot-password, /reset-password)
 - [x] Prompt 15 — AI presentation components in src/components/ai and /dev/ui integration
-- [ ] Prompt 16
+- [x] Prompt 16 — Complaint gallery components and /dev/ui integration
 - [x] Prompt 17 — Mock API lifecycle and demo controls complete
 - [x] Prompt 18 — Landing page hero and stats shell
 - [x] Prompt 19 — Landing sections 3 to 6

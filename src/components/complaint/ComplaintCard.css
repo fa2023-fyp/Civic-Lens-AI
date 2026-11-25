@@ -1,0 +1,45 @@
+.complaint-card {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--space-3);
+  text-align: start;
+}
+
+.complaint-card--button {
+  inline-size: 100%;
+  border: var(--border-width) solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+}
+
+.complaint-card__header,
+.complaint-card__meta,
+.complaint-card__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.complaint-card__id,
+.complaint-card__meta {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.complaint-card__title {
+  overflow: hidden;
+  margin: 0;
+  font-size: var(--text-lg);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.complaint-card__status {
+  justify-content: flex-start;
+}
+
+.complaint-card__progress {
+  gap: var(--space-1);
+}

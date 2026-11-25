@@ -1,0 +1,62 @@
+.complaint-resolution-card {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.complaint-resolution-card h3,
+.complaint-resolution-card h4,
+.complaint-resolution-card p {
+  margin: 0;
+}
+
+.complaint-resolution-card__description {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.complaint-resolution-card ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.complaint-resolution-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.complaint-resolution-card li svg {
+  flex: none;
+  color: var(--status-success);
+}
+
+.complaint-resolution-card__evidence {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: var(--space-3);
+  margin-block-start: var(--space-2);
+}
+
+.complaint-resolution-card__evidence-item {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.complaint-resolution-card__evidence-item img {
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-1);
+  object-fit: cover;
+}
+
+.complaint-resolution-card__timestamp {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}

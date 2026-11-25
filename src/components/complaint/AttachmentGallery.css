@@ -1,0 +1,114 @@
+.complaint-attachment-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.complaint-attachment-gallery__thumbnail {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  background: var(--grey-page-alt);
+  color: var(--text-muted);
+  cursor: zoom-in;
+}
+
+.complaint-attachment-gallery__thumbnail img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.complaint-attachment-gallery__thumbnail:hover img {
+  transform: scale(1.04);
+}
+
+.complaint-attachment-gallery__empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.complaint-lightbox-overlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(11 18 16 / 82%);
+}
+
+.complaint-lightbox {
+  display: grid;
+  inline-size: min(90vw, 64rem);
+  max-block-size: 90vh;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: var(--border-width) solid var(--dark-border);
+  border-radius: var(--radius-3);
+  background: var(--ink-900);
+  color: var(--dark-text);
+}
+
+.complaint-lightbox__header {
+  display: flex;
+  min-block-size: var(--space-12);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-inline: var(--space-4);
+  border-block-end: var(--border-width) solid var(--dark-border);
+}
+
+.complaint-lightbox__controls {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.complaint-lightbox__stage {
+  position: relative;
+  display: grid;
+  min-block-size: min(70vh, 36rem);
+  place-items: center;
+  overflow: hidden;
+  padding: var(--space-12);
+}
+
+.complaint-lightbox__stage img {
+  max-inline-size: 100%;
+  max-block-size: 65vh;
+  object-fit: contain;
+  transition: transform 160ms var(--ease-out);
+}
+
+.complaint-lightbox__previous,
+.complaint-lightbox__next {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.complaint-lightbox__previous {
+  inset-inline-start: var(--space-4);
+}
+
+.complaint-lightbox__next {
+  inset-inline-end: var(--space-4);
+}
+
+@media (max-width: 36rem) {
+  .complaint-attachment-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .complaint-lightbox {
+    inline-size: 100%;
+  }
+
+  .complaint-lightbox__stage {
+    padding-inline: var(--space-10);
+  }
+}

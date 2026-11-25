@@ -85,6 +85,13 @@ import {
   AIRecommendationCard,
   aiFixtures,
 } from '../../components/ai/index.js';
+import {
+  AttachmentGallery,
+  BeforeAfterViewer,
+  ResolutionCard,
+  ComplaintCard,
+  DemoDataBadge as ComplaintDemoDataBadge,
+} from '../../components/complaint/index.js';
 import './UIGallery.css';
 
 function GallerySection({ title, children, className = '' }) {
@@ -215,6 +222,15 @@ export default function UIGallery() {
     { variant: 'slide-start', label: t('marketingGallery.revealSlideStart') },
     { variant: 'slide-end', label: t('marketingGallery.revealSlideEnd') },
     { variant: 'scale', label: t('marketingGallery.revealScale') },
+  ];
+  const makeGalleryImage = (color, label) =>
+    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="800" height="500" fill="${color}"/><circle cx="400" cy="250" r="110" fill="#ffffff" fill-opacity=".18"/><text x="400" y="270" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="54" font-weight="700">${label}</text></svg>`,
+    )}`;
+  const complaintAttachments = [
+    { src: makeGalleryImage('#047857', '01'), alt: t('complaintGallery.sampleAttachmentOne') },
+    { src: makeGalleryImage('#2563eb', '02'), alt: t('complaintGallery.sampleAttachmentTwo') },
+    { src: makeGalleryImage('#b45309', '03'), alt: t('complaintGallery.sampleAttachmentThree') },
   ];
 
   function showToast(message, type) {
@@ -1149,6 +1165,65 @@ export default function UIGallery() {
                   )
                 }
               />
+            </div>
+          </div>
+        </GallerySection>
+
+        <GallerySection title={t('complaintGallery.title')}>
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.attachmentsTitle')}</h3>
+            <AttachmentGallery attachments={complaintAttachments} />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.beforeAfterTitle')}</h3>
+            <BeforeAfterViewer
+              beforeSrc={makeGalleryImage('#7c2d12', 'Before')}
+              afterSrc={makeGalleryImage('#047857', 'After')}
+              beforeAlt={t('complaintGallery.before')}
+              afterAlt={t('complaintGallery.after')}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.resolutionTitle')}</h3>
+            <ResolutionCard
+              description={t('complaintGallery.sampleDescription')}
+              actionsPerformed={[
+                t('complaintGallery.sampleActionOne'),
+                t('complaintGallery.sampleActionTwo'),
+              ]}
+              evidence={complaintAttachments}
+              timestamp="2026-11-24T10:30:00"
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.cardsTitle')}</h3>
+            <div className="ui-gallery__cards">
+              <ComplaintCard
+                id="CL-2026-0042"
+                title={t('complaintGallery.sampleCardTitle')}
+                category={t('gallery.water')}
+                status="progress"
+                statusLabel={t('complaintGallery.statusInProgress')}
+                timestamp="2026-11-25T08:00:00"
+                progress={68}
+                isDemo
+              />
+              <ComplaintCard
+                id="CL-2026-0043"
+                title={t('complaintGallery.sampleCardTitleTwo')}
+                category={t('gallery.roads')}
+                status="review"
+                statusLabel={t('complaintGallery.statusReview')}
+                timestamp="2026-11-24T12:00:00"
+                progress={35}
+              />
+              <ComplaintCard loading />
+            </div>
+            <div className="ui-gallery__row">
+              <ComplaintDemoDataBadge>{t('preview.demoBadge')}</ComplaintDemoDataBadge>
             </div>
           </div>
         </GallerySection>
