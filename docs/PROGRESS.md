@@ -19,6 +19,7 @@
 - [x] Prompt 14 — Finish authentication (/verify, /forgot-password, /reset-password)
 - [x] Prompt 15 — Finish AI components, override controls, extracted entities, pipeline, duplicates, and clusters
 - [x] Prompt 16 — Complaint gallery components and /dev/ui integration
+- [x] Prompt 22 — Complaint text, lifecycle, SLA, and urgency components
 - [x] Prompt 17 — Mock API lifecycle and demo controls complete
 - [x] Prompt 18 — Landing page hero and stats shell
 - [x] Prompt 19 — Landing sections 3 to 6
@@ -54,3 +55,4 @@
 - [x] M7 — Build /help guides, live FAQ search, emergency card, and route/error/offline screens
 - [x] M8 — Build bilingual /login and /register forms with demo sign-in
 - [x] M9 — Finish authentication (/verify, /forgot-password, /reset-password)
+- [x] M10 — Build /citizen home dashboard inside CitizenLayout

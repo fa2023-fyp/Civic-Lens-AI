@@ -1260,6 +1260,82 @@
     "clusterStreetOne": "کالج روڈ",
     "clusterStreetTwo": "سینٹرل ایونیو"
   },
+  "complaintText": {
+    "originalTitle": "اصل متن",
+    "normalisedTitle": "معیاری متن",
+    "showOriginal": "اصل متن دکھائیں",
+    "showNormalised": "معیاری متن دکھائیں",
+    "derivedLabel": "اخذ کردہ متن؛ ترمیم شدہ نہیں",
+    "language": {
+      "english": "انگریزی",
+      "urdu": "اردو",
+      "romanUrdu": "رومن اردو",
+      "mixed": "مخلوط",
+      "unknown": "نامعلوم"
+    }
+  },
+  "complaintStatus": {
+    "created": "بنائی گئی",
+    "submitted": "جمع شدہ",
+    "processing": "اے آئی عمل جاری",
+    "review": "انسانی جائزے کی منتظر",
+    "assigned": "تفویض شدہ",
+    "in-progress": "کام جاری",
+    "resolution-submitted": "حل جمع کرایا گیا",
+    "citizen-verification": "شہری تصدیق",
+    "resolved": "حل شدہ",
+    "reopened": "دوبارہ کھولی گئی",
+    "escalated": "اضافی کارروائی",
+    "closed": "بند",
+    "rejected": "مسترد"
+  },
+  "complaintUrgency": {
+    "low": "کم",
+    "medium": "درمیانی",
+    "high": "زیادہ",
+    "critical": "انتہائی اہم"
+  },
+  "complaintTimeline": {
+    "label": "شکایت کی حیثیت کا زمانی سلسلہ",
+    "actor": "کارکن",
+    "pending": "منتظر",
+    "escalated": "اضافی کارروائی",
+    "steps": {
+      "created": "بنائی گئی",
+      "assigned": "تفویض شدہ",
+      "in-progress": "کام جاری",
+      "resolution-submitted": "حل جمع کرایا گیا",
+      "citizen-verification": "شہری تصدیق",
+      "resolved-or-reopened": "حل شدہ یا دوبارہ کھولی گئی"
+    }
+  },
+  "complaintSla": {
+    "states": {
+      "on-track": "ٹھیک راستے پر",
+      "warning": "انتباہ",
+      "at-risk": "خطرے میں",
+      "overdue": "مدت ختم",
+      "escalated": "اضافی کارروائی",
+      "paused": "روکا گیا",
+      "completed": "مکمل"
+    },
+    "overdueBy": "SLA کی آخری تاریخ گذر گئی",
+    "daysShort": "{{value}} دن",
+    "hoursShort": "{{value}} گھنٹے",
+    "minutesShort": "{{value}} منٹ",
+    "secondsShort": "{{value}} سیکنڈ",
+    "risk": {
+      "low": "کم خطرہ",
+      "medium": "درمیانہ خطرہ",
+      "high": "زیادہ خطرہ",
+      "factors": "خطرے کے عوامل",
+      "noFactors": "کوئی عامل فراہم نہیں کیا گیا۔",
+      "method": {
+        "ml": "طریقہ: ML تخمینہ",
+        "rules": "طریقہ: قاعدہ پر مبنی تخمینہ (محدود تاریخ)"
+      }
+    }
+  },
   "complaintGallery": {
     "title": "شکایت کے اجزاء",
     "attachmentsTitle": "منسلکات کی گیلری",
@@ -1295,6 +1371,49 @@
     "sampleCardTitle": "ماڈل ٹاؤن سڑک پر نالا اوور فلو",
     "sampleCardTitleTwo": "مارکیٹ کے داخلی راستے کے قریب گاڑھا",
     "statusInProgress": "کام جاری ہے",
-    "statusReview": "انسانی جائزے کی منتظر"
+    "statusReview": "انسانی جائزے کی منتظر",
+    "textTitle": "شکایت کا متن",
+    "textSection": "شکایت کا متن اور زبان",
+    "timelineSection": "حیثیت کا زمانی سلسلہ",
+    "slaSection": "SLA کاؤنٹ ڈاؤن اور خطرہ",
+    "badgesSection": "حیثیت اور فوریت کے نشان",
+    "textSample": "Gali mein 3 din se gutter overflow ho raha hai aur smell bohat zyada hai.\nDrain ka cover bhi toota hua hai.",
+    "normalisedSample": "گٹر تین دن سے اوور فلو ہو رہا ہے۔ نالی کا ڈھکن ٹوٹا ہوا ہے۔",
+    "actorOfficer": "پانی اور صفائی کا افسر",
+    "actorSupervisor": "محکمی سپروائزر",
+    "actorCitizen": "شہری",
+    "timelineTimestampCreated": "بنائی گئی",
+    "timelineTimestampAssigned": "تفویض شدہ",
+    "timelineTimestampProgress": "جاری",
+    "timelineTimestampResolution": "حل جمع کرایا گیا",
+    "timelineTimestampVerification": "شہری تصدیق",
+    "timelineTimestampResolved": "حل شدہ",
+    "timelineTimestampEscalated": "اضافی کارروائی",
+    "riskFactorOverdue": "آخری تاریخ گذر گئی",
+    "riskFactorRepeated": "اسی علاقے میں بار بار رپورٹس",
+    "riskFactorHistory": "اس جگہ کی محدود سابقہ تاریخ"
+  },
+  "citizenHome": {
+    "greeting": "السلام علیکم، {{name}}",
+    "subtitle": "اپنی شہری شکایات کی صورتحال دیکھیں، مکمل کام کی تصدیق کریں، یا نیا مسئلہ درج کریں۔",
+    "submitCta": "شکایت درج کریں",
+    "submitHint": "انگریزی، اردو یا رومن اردو میں لکھیں۔",
+    "actionNeededTitle": "کارروائی درکار ہے",
+    "actionNeededSingle": "شکایت {{id}} کے مجوزہ حل کی آپ کی تصدیق درکار ہے۔",
+    "actionNeededMultiple": "{{count}} مجوزہ حل آپ کی تصدیق کے منتظر ہیں۔",
+    "verifyNow": "حل کی تصدیق کریں",
+    "activeTitle": "فعال شکایات",
+    "viewAll": "سب دیکھیں",
+    "activeEmptyTitle": "کوئی فعال شکایت نہیں",
+    "activeEmptyText": "آپ کی درج کردہ شکایات اور ان کی پیش رفت یہاں نظر آئے گی۔",
+    "notificationsTitle": "حالیہ اطلاعات",
+    "notificationsEmptyTitle": "ابھی کوئی اطلاع نہیں",
+    "notificationsEmptyText": "تفویض اور حل کی تصدیق سے متعلق اطلاعات یہاں آئیں گی۔",
+    "notificationStatus": "شکایت {{id}} کی تازہ صورتحال",
+    "unread": "نیا",
+    "offlineTitle": "آپ آف لائن ہیں",
+    "offlineText": "اپنی تازہ شکایات اور اطلاعات دیکھنے کے لیے انٹرنیٹ سے منسلک ہوں۔",
+    "errorTitle": "صفحہ لوڈ نہیں ہو سکا",
+    "errorText": "اس وقت آپ کی شکایات اور اطلاعات حاصل نہیں کی جا سکیں۔"
   }
 }

@@ -1,0 +1,15 @@
+.complaint-badge {
+  gap: var(--space-1);
+  text-transform: none;
+}
+
+.complaint-badge__confidence {
+  padding-inline-start: var(--space-1);
+  border-inline-start: var(--border-width) solid currentColor;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+.complaint-badge--urgency {
+  font-weight: 800;
+}

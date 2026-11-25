@@ -24,6 +24,7 @@ const HelpPage = lazy(() => import('./pages/public/HelpPage.jsx'));
 const TechnologyPage = lazy(() => import('./pages/public/TechnologyPage.jsx'));
 const HowItWorksPage = lazy(() => import('./pages/public/HowItWorksPage.jsx'));
 const TransparencyPage = lazy(() => import('./pages/public/TransparencyPage.jsx'));
+const CitizenDashboardPage = lazy(() => import('./pages/citizen/CitizenDashboardPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -68,7 +69,8 @@ const routeEntries = [
   { path: '/forgot-password', titleKey: 'routes.pages.forgotPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'forgotPassword' },
   { path: '/reset-password', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'resetPassword' },
   { path: '/reset-password/:token', titleKey: 'routes.pages.resetPassword', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p1', pageKey: 'resetPassword' },
-  { path: '/citizen/dashboard', titleKey: 'routes.pages.citizenDashboard', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen', titleKey: 'routes.pages.citizenDashboard', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenDashboard' },
+  { path: '/citizen/dashboard', titleKey: 'routes.pages.citizenDashboard', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenDashboard' },
   { path: '/citizen/complaints', titleKey: 'routes.pages.citizenComplaints', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
   { path: '/citizen/complaints/new', titleKey: 'routes.pages.newComplaint', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p0', roles: ['citizen'] },
   { path: '/citizen/complaints/:complaintId', titleKey: 'routes.pages.citizenComplaintDetail', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
@@ -116,7 +118,7 @@ function renderPlaceholder(entry) {
   }
 
   if (entry.pageKey) {
-    return (
+    const content = (
       <RouteDocumentTitle titleKey={entry.titleKey}>
         {entry.pageKey === 'login' ? (
           <LoginPage />
@@ -142,10 +144,19 @@ function renderPlaceholder(entry) {
           <HowItWorksPage />
         ) : entry.pageKey === 'transparency' ? (
           <TransparencyPage />
+        ) : entry.pageKey === 'citizenDashboard' ? (
+          <CitizenDashboardPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
       </RouteDocumentTitle>
+    );
+    return entry.roles ? (
+      <RoleGuard roles={entry.roles} ownerId={entry.ownerId}>
+        {content}
+      </RoleGuard>
+    ) : (
+      content
     );
   }
 

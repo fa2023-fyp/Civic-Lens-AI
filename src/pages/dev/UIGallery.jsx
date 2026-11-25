@@ -95,6 +95,13 @@ import {
   ResolutionCard,
   ComplaintCard,
   DemoDataBadge as ComplaintDemoDataBadge,
+  ComplaintText,
+  LanguageBadge,
+  StatusBadge,
+  UrgencyBadge,
+  StatusTimeline,
+  SLACountdown,
+  SLARiskBadge,
 } from '../../components/complaint/index.js';
 import './UIGallery.css';
 
@@ -1314,6 +1321,88 @@ export default function UIGallery() {
             </div>
             <div className="ui-gallery__row">
               <ComplaintDemoDataBadge>{t('preview.demoBadge')}</ComplaintDemoDataBadge>
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.textSection')}</h3>
+            <ComplaintText
+              originalText={t('complaintGallery.textSample')}
+              normalisedText={t('complaintGallery.normalisedSample')}
+            />
+            <div className="ui-gallery__row">
+              <LanguageBadge language="Roman Urdu" confidence={0.92} />
+              <LanguageBadge language="Urdu" confidence={0.88} />
+              <LanguageBadge language="English" confidence={0.96} />
+              <LanguageBadge language="Mixed" confidence={0.71} />
+              <LanguageBadge language="Unknown" />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.badgesSection')}</h3>
+            <div className="ui-gallery__row">
+              <StatusBadge status="submitted" />
+              <StatusBadge status="assigned" />
+              <StatusBadge status="in-progress" />
+              <StatusBadge status="resolved" />
+              <StatusBadge status="reopened" />
+              <StatusBadge status="escalated" />
+            </div>
+            <div className="ui-gallery__row">
+              <UrgencyBadge urgency="low" />
+              <UrgencyBadge urgency="medium" />
+              <UrgencyBadge urgency="high" />
+              <UrgencyBadge urgency="critical" />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.timelineSection')}</h3>
+            <StatusTimeline
+              escalated
+              escalatedStep={{
+                actor: t('complaintGallery.actorSupervisor'),
+                timestamp: '2026-11-25T09:45:00',
+              }}
+              steps={[
+                { id: 'created', complete: true, timestamp: '2026-11-24T08:10:00', actor: t('complaintGallery.actorCitizen') },
+                { id: 'assigned', complete: true, timestamp: '2026-11-24T10:20:00', actor: t('complaintGallery.actorSupervisor') },
+                { id: 'in-progress', complete: true, timestamp: '2026-11-24T12:40:00', actor: t('complaintGallery.actorOfficer') },
+                { id: 'resolution-submitted', complete: true, timestamp: '2026-11-24T18:05:00', actor: t('complaintGallery.actorOfficer') },
+                { id: 'citizen-verification', current: true, complete: true, timestamp: '2026-11-25T09:15:00', actor: t('complaintGallery.actorCitizen') },
+                { id: 'resolved-or-reopened', complete: false },
+              ]}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('complaintGallery.slaSection')}</h3>
+            <div className="ui-gallery__row">
+              <SLACountdown
+                startedAt={new Date(Date.now() - 20 * 60 * 60 * 1000)}
+                dueDate={new Date(Date.now() + 4 * 60 * 60 * 1000)}
+              />
+              <SLACountdown state="overdue" dueDate={new Date(Date.now() - 2 * 60 * 60 * 1000)} />
+              <SLACountdown state="paused" />
+              <SLACountdown state="escalated" />
+              <SLACountdown state="completed" />
+            </div>
+            <div className="ui-gallery__cards">
+              <SLARiskBadge
+                level="high"
+                factors={[
+                  t('complaintGallery.riskFactorOverdue'),
+                  t('complaintGallery.riskFactorRepeated'),
+                ]}
+                method="ml"
+              />
+              <SLARiskBadge
+                level="medium"
+                factors={[t('complaintGallery.riskFactorHistory')]}
+                method="rules"
+              />
+              <SLARiskBadge loading />
             </div>
           </div>
         </GallerySection>

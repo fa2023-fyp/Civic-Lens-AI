@@ -1,0 +1,42 @@
+.complaint-text {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.complaint-text__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.complaint-text h3,
+.complaint-text p {
+  margin: 0;
+}
+
+.complaint-text h3 {
+  font-size: var(--text-base);
+}
+
+.complaint-text__body {
+  unicode-bidi: plaintext;
+  white-space: pre-wrap;
+  line-height: 1.75;
+  text-align: start;
+}
+
+.complaint-text__body--original {
+  padding-inline: var(--space-3);
+  padding-block: var(--space-2);
+  border-inline-start: 3px solid var(--brand);
+  background: var(--surface-raised);
+}
+
+.complaint-text__derived {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+}

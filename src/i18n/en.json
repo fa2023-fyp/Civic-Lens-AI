@@ -1259,6 +1259,82 @@
     "clusterStreetOne": "College Road",
     "clusterStreetTwo": "Central Avenue"
   },
+  "complaintText": {
+    "originalTitle": "Original text",
+    "normalisedTitle": "Normalised text",
+    "showOriginal": "Show original",
+    "showNormalised": "Show normalised",
+    "derivedLabel": "Derived, not edited",
+    "language": {
+      "english": "English",
+      "urdu": "Urdu",
+      "romanUrdu": "Roman Urdu",
+      "mixed": "Mixed",
+      "unknown": "Unknown"
+    }
+  },
+  "complaintStatus": {
+    "created": "Created",
+    "submitted": "Submitted",
+    "processing": "AI Processing",
+    "review": "Pending human review",
+    "assigned": "Assigned",
+    "in-progress": "In progress",
+    "resolution-submitted": "Resolution submitted",
+    "citizen-verification": "Citizen verification",
+    "resolved": "Resolved",
+    "reopened": "Reopened",
+    "escalated": "Escalated",
+    "closed": "Closed",
+    "rejected": "Rejected"
+  },
+  "complaintUrgency": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "complaintTimeline": {
+    "label": "Complaint status timeline",
+    "actor": "Actor",
+    "pending": "Pending",
+    "escalated": "Escalated",
+    "steps": {
+      "created": "Created",
+      "assigned": "Assigned",
+      "in-progress": "In progress",
+      "resolution-submitted": "Resolution submitted",
+      "citizen-verification": "Citizen verification",
+      "resolved-or-reopened": "Resolved or reopened"
+    }
+  },
+  "complaintSla": {
+    "states": {
+      "on-track": "On track",
+      "warning": "Warning",
+      "at-risk": "At risk",
+      "overdue": "Overdue",
+      "escalated": "Escalated",
+      "paused": "Paused",
+      "completed": "Completed"
+    },
+    "overdueBy": "SLA deadline passed",
+    "daysShort": "{{value}}d",
+    "hoursShort": "{{value}}h",
+    "minutesShort": "{{value}}m",
+    "secondsShort": "{{value}}s",
+    "risk": {
+      "low": "Low risk",
+      "medium": "Medium risk",
+      "high": "High risk",
+      "factors": "Contributing factors",
+      "noFactors": "No contributing factors provided.",
+      "method": {
+        "ml": "Method: ML estimate",
+        "rules": "Method: Rule-based estimate (limited history)"
+      }
+    }
+  },
   "complaintGallery": {
     "title": "Complaint Components",
     "attachmentsTitle": "Attachment gallery",
@@ -1294,6 +1370,49 @@
     "sampleCardTitle": "Overflowing drain on Model Town road",
     "sampleCardTitleTwo": "Pothole near the market entrance",
     "statusInProgress": "In progress",
-    "statusReview": "Pending human review"
+    "statusReview": "Pending human review",
+    "textTitle": "Complaint text",
+    "textSection": "Complaint text and language",
+    "timelineSection": "Status timeline",
+    "slaSection": "SLA countdown and risk",
+    "badgesSection": "Status and urgency badges",
+    "textSample": "Gali mein 3 din se gutter overflow ho raha hai aur smell bohat zyada hai.\nDrain ka cover bhi toota hua hai.",
+    "normalisedSample": "The gutter has been overflowing for three days. The drain cover is broken.",
+    "actorOfficer": "Water and sanitation officer",
+    "actorSupervisor": "Department supervisor",
+    "actorCitizen": "Citizen",
+    "timelineTimestampCreated": "Created",
+    "timelineTimestampAssigned": "Assigned",
+    "timelineTimestampProgress": "In progress",
+    "timelineTimestampResolution": "Resolution submitted",
+    "timelineTimestampVerification": "Citizen verification",
+    "timelineTimestampResolved": "Resolved",
+    "timelineTimestampEscalated": "Escalated",
+    "riskFactorOverdue": "Deadline elapsed",
+    "riskFactorRepeated": "Repeated reports in the same area",
+    "riskFactorHistory": "Limited history for this location"
+  },
+  "citizenHome": {
+    "greeting": "Assalam-o-Alaikum, {{name}}",
+    "subtitle": "Track your civic reports, verify completed work, or submit a new issue.",
+    "submitCta": "Submit a complaint",
+    "submitHint": "Write in English, Urdu, or Roman Urdu.",
+    "actionNeededTitle": "Action needed",
+    "actionNeededSingle": "A proposed resolution for {{id}} is awaiting your verification.",
+    "actionNeededMultiple": "{{count}} proposed resolutions are awaiting your verification.",
+    "verifyNow": "Verify resolution",
+    "activeTitle": "Active complaints",
+    "viewAll": "View all",
+    "activeEmptyTitle": "No active complaints",
+    "activeEmptyText": "Your submitted complaints and their progress will appear here.",
+    "notificationsTitle": "Recent notifications",
+    "notificationsEmptyTitle": "No notifications yet",
+    "notificationsEmptyText": "Updates on assignment and resolution verification will appear here.",
+    "notificationStatus": "Status update for {{id}}",
+    "unread": "Unread",
+    "offlineTitle": "You are offline",
+    "offlineText": "Reconnect to load your latest complaints and notifications.",
+    "errorTitle": "Could not load your home view",
+    "errorText": "Your complaints and notifications could not be fetched right now."
   }
 }
