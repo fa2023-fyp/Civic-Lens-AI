@@ -60,3 +60,4 @@
 - [x] M12 — Install leaflet and build lazy-loaded LocationPicker for /citizen/submit
 - [x] M13 — Build /citizen/submit/confirmation/:id confirmation and async analysis page
 - [x] M14 — Build /citizen/complaints list and /citizen/complaints/:id detail pages
+- [x] M15 — Build /citizen/complaints/:id/verify resolution verification page
