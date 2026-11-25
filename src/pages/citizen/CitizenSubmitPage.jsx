@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LocationPicker } from '../../components/map/LocationPicker.jsx';
 import { Button } from '../../components/ui/Button/Button.jsx';
 import { Card } from '../../components/ui/Card/Card.jsx';
 import { Checkbox } from '../../components/ui/Checkbox/Checkbox.jsx';
 import { FileDrop } from '../../components/ui/FileDrop/FileDrop.jsx';
 import { Icon } from '../../components/ui/Icon/Icon.jsx';
 import { InlineAlert } from '../../components/ui/InlineAlert/InlineAlert.jsx';
-import { Input } from '../../components/ui/Input/Input.jsx';
 import { Textarea } from '../../components/ui/Textarea/Textarea.jsx';
 import { useToast } from '../../components/ui/ToastProvider/ToastProvider.jsx';
 import { EMERGENCY_NUMBERS } from '../../config/constants.js';
@@ -52,7 +52,14 @@ export default function CitizenSubmitPage() {
   const navigate = useNavigate();
 
   const [text, setText] = useState('');
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState({
+    mode: 'type',
+    locality: '',
+    lat: null,
+    lng: null,
+    accuracy: null,
+    approximate: true,
+  });
   const [extraInfo, setExtraInfo] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [files, setFiles] = useState([]);
@@ -101,7 +108,8 @@ export default function CitizenSubmitPage() {
   function validate() {
     const nextErrors = {};
     const trimmedText = text.trim();
-    const trimmedLocation = location.trim();
+    const trimmedLocation = (location.locality || '').trim();
+    const hasCoords = Number.isFinite(location.lat) && Number.isFinite(location.lng);
 
     if (!trimmedText) {
       nextErrors.text = t('citizenSubmit.textRequiredError');
@@ -111,7 +119,7 @@ export default function CitizenSubmitPage() {
       nextErrors.text = t('citizenSubmit.textTooLongError');
     }
 
-    if (!trimmedLocation) {
+    if (!trimmedLocation && !hasCoords) {
       nextErrors.location = t('citizenSubmit.locationRequiredError');
     }
 
@@ -130,13 +138,26 @@ export default function CitizenSubmitPage() {
     if (isRateLimited) return;
     if (!validate()) return;
 
+    const resolvedLocality =
+      (location.locality || '').trim() ||
+      (Number.isFinite(location.lat) && Number.isFinite(location.lng)
+        ? `${location.lat.toFixed(5)}, ${location.lng.toFixed(5)}`
+        : '');
+
     setSubmitting(true);
     try {
       const created = await api.complaints.create(
         {
           originalText: text.trim(),
-          locality: location.trim(),
-          location: { locality: location.trim() },
+          locality: resolvedLocality,
+          location: {
+            locality: resolvedLocality,
+            lat: location.lat ?? null,
+            lng: location.lng ?? null,
+            accuracy: location.accuracy ?? null,
+            approximate: Boolean(location.approximate),
+            source: location.mode,
+          },
           extraInfo: extraInfo.trim() || null,
           attachments: files.map((file) => ({
             name: file.name,
@@ -227,18 +248,16 @@ export default function CitizenSubmitPage() {
             error={errors.text}
           />
 
-          <Input
+          <LocationPicker
             id="complaint-location"
             label={t('citizenSubmit.locationLabel')}
             hint={t('citizenSubmit.locationHint')}
-            placeholder={t('citizenSubmit.locationPlaceholder')}
             value={location}
-            onChange={(event) => {
-              setLocation(event.target.value);
+            onChange={(nextLocation) => {
+              setLocation(nextLocation);
               if (errors.location) setErrors((prev) => ({ ...prev, location: '' }));
             }}
             required
-            dir="auto"
             error={errors.location}
           />
 

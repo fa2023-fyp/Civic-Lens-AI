@@ -1,0 +1,116 @@
+.location-picker {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-3);
+  padding: var(--space-3);
+  background: var(--surface);
+  min-inline-size: 0;
+}
+
+.location-picker .ui-tabs__list {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.location-picker .ui-tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.location-picker .ui-tabs__tab {
+  white-space: nowrap;
+  font-size: var(--text-xs);
+  padding-inline: var(--space-2);
+}
+
+.location-picker__panel {
+  display: grid;
+  gap: var(--space-3);
+  padding-block-start: var(--space-2);
+  min-inline-size: 0;
+}
+
+.location-picker__explainer {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.location-picker__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.location-picker__suggestion {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-3);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.location-picker__suggestion.is-selected {
+  border-color: var(--brand-strong);
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.location-picker__approx {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.location-picker__gps-result,
+.location-picker__fallback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.location-picker__map-canvas {
+  inline-size: 100%;
+  block-size: 15rem;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  z-index: 0;
+}
+
+.location-picker__skeleton {
+  border-radius: var(--radius-2);
+}
+
+.location-picker__coords {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.location-picker__pin {
+  background: transparent;
+  border: 0;
+}
+
+.location-picker__pin-dot {
+  display: block;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border: 3px solid var(--brand-contrast);
+  border-radius: var(--radius-pill);
+  background: var(--brand-strong);
+  box-shadow: var(--shadow-md);
+}

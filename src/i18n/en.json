@@ -1447,5 +1447,28 @@
     "submittingButton": "Submitting complaint...",
     "submitErrorTitle": "Could not submit complaint",
     "submitErrorBody": "Something went wrong while submitting your complaint. Please try again."
+  },
+  "locationPicker": {
+    "tabsLabel": "Choose how to provide location",
+    "tabGps": "Use my location",
+    "tabMap": "Pin on map",
+    "tabType": "Type the area",
+    "gpsExplainer": "We only use your device location for this complaint so the right team can find the issue.",
+    "gpsButton": "Get current location",
+    "gpsLoading": "Finding your location...",
+    "gpsSuccess": "Location captured ({{lat}}, {{lng}})",
+    "gpsAccuracy": "Accuracy: ±{{meters}} m",
+    "gpsDenied": "Location permission was denied or unavailable. Please type your area instead.",
+    "gpsUnsupported": "Location is not supported on this browser. Please type your area instead.",
+    "mapHint": "Drag the pin or tap on the map to mark the exact spot.",
+    "mapSelected": "Pinned at {{lat}}, {{lng}}",
+    "mapUnavailableTitle": "Map provider unavailable",
+    "mapUnavailableBody": "The map could not be loaded right now. Type your area below — your complaint will be marked as an approximate location.",
+    "mapSwitchToType": "Type the area instead",
+    "areaLabel": "Area or neighbourhood",
+    "areaPlaceholder": "e.g. Block C, Model Town, Lahore",
+    "suggestionsLabel": "Suggested areas",
+    "approximateFlag": "Approximate location",
+    "approximateHint": "No exact pin provided; this complaint will be flagged as approximate location."
   }
 }
