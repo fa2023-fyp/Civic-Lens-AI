@@ -1470,5 +1470,29 @@
     "suggestionsLabel": "Suggested areas",
     "approximateFlag": "Approximate location",
     "approximateHint": "No exact pin provided; this complaint will be flagged as approximate location."
+  },
+  "citizenConfirm": {
+    "pageTitle": "Complaint Submitted",
+    "kicker": "SUBMISSION CONFIRMED",
+    "title": "Your complaint has been received",
+    "subtitle": "Save your tracking ID below. You can follow every step until you verify the resolution.",
+    "referenceLabel": "Complaint ID",
+    "copyId": "Copy ID",
+    "copiedId": "Copied",
+    "analysisTitle": "AI understanding",
+    "pendingTitle": "Waiting for automatic AI analysis",
+    "pendingBody": "The AI service is temporarily unavailable, so your complaint is safely queued as Pending Analysis. It will be analysed automatically when the service is back.",
+    "detectedLanguage": "Detected language",
+    "suggestedCategory": "AI-suggested category",
+    "informationalLabel": "Informational",
+    "informationalHint": "For your information only — routing is confirmed by the system and human reviewers.",
+    "nextStepsTitle": "What happens next",
+    "step1": "Automated triage estimates the category, urgency, and relevant department (low-confidence cases go to a human reviewer).",
+    "step2": "An officer from the assigned department investigates and submits resolution evidence.",
+    "step3": "You review the resolution and accept or reject it before the complaint can be marked Resolved.",
+    "trackButton": "Track complaint",
+    "backHome": "Back to Citizen Home",
+    "loadErrorTitle": "Could not load confirmation",
+    "loadErrorBody": "We could not fetch the details for this complaint right now."
   }
 }

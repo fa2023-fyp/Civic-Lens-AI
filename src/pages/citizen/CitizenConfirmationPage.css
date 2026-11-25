@@ -1,0 +1,171 @@
+.citizen-confirm {
+  display: grid;
+  gap: var(--space-5);
+  min-inline-size: 0;
+  max-inline-size: 42rem;
+}
+
+.citizen-confirm__hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.citizen-confirm__check-wrap {
+  inline-size: 3.75rem;
+  block-size: 3.75rem;
+}
+
+.citizen-confirm__check-svg {
+  inline-size: 100%;
+  block-size: 100%;
+  fill: none;
+}
+
+.citizen-confirm__check-circle {
+  stroke: var(--status-success);
+  stroke-width: 3;
+  stroke-dasharray: 145;
+  stroke-dashoffset: 145;
+  animation: confirmCircle 0.55s var(--ease-out) forwards;
+}
+
+.citizen-confirm__check-mark {
+  stroke: var(--status-success);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: confirmCheck 0.4s var(--ease-out) 0.35s forwards;
+}
+
+@keyframes confirmCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes confirmCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .citizen-confirm__check-circle,
+  .citizen-confirm__check-mark {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+
+.citizen-confirm__kicker {
+  margin: 0;
+  color: var(--status-success);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.citizen-confirm__title {
+  margin: 0;
+  font-size: clamp(1.375rem, 4vw, 1.875rem);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.citizen-confirm__subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.citizen-confirm__id-card,
+.citizen-confirm__results,
+.citizen-confirm__steps-card {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.citizen-confirm__id-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.citizen-confirm__id-label {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.citizen-confirm__id-value {
+  font-size: var(--text-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.citizen-confirm__analysis,
+.citizen-confirm__pending,
+.citizen-confirm__pipeline {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.citizen-confirm__section-title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 750;
+}
+
+.citizen-confirm__result-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.citizen-confirm__result-label {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.citizen-confirm__category-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.citizen-confirm__category-value {
+  font-size: var(--text-sm);
+  text-transform: capitalize;
+}
+
+.citizen-confirm__info-hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.citizen-confirm__steps {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.citizen-confirm__actions {
+  display: grid;
+  gap: var(--space-2);
+}

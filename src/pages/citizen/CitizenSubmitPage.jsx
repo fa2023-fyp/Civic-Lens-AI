@@ -175,7 +175,7 @@ export default function CitizenSubmitPage() {
         toast.info(t('citizenSubmit.pendingAnalysisNotice'));
       }
 
-      navigate(`/citizen/complaints/${created.id}`, {
+      navigate(`/citizen/submit/confirmation/${created.id}`, {
         state: {
           justSubmitted: true,
           pendingAnalysis: isPendingAnalysis,
