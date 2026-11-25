@@ -30,6 +30,8 @@ const CitizenConfirmationPage = lazy(() => import('./pages/citizen/CitizenConfir
 const CitizenComplaintsPage = lazy(() => import('./pages/citizen/CitizenComplaintsPage.jsx'));
 const CitizenComplaintDetailPage = lazy(() => import('./pages/citizen/CitizenComplaintDetailPage.jsx'));
 const CitizenVerifyPage = lazy(() => import('./pages/citizen/CitizenVerifyPage.jsx'));
+const CitizenNotificationsPage = lazy(() => import('./pages/citizen/CitizenNotificationsPage.jsx'));
+const CitizenProfilePage = lazy(() => import('./pages/citizen/CitizenProfilePage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -82,8 +84,9 @@ const routeEntries = [
   { path: '/citizen/complaints/new', titleKey: 'routes.pages.newComplaint', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p0', roles: ['citizen'], pageKey: 'citizenSubmit' },
   { path: '/citizen/complaints/:complaintId', titleKey: 'routes.pages.citizenComplaintDetail', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenDetail' },
   { path: '/citizen/complaints/:complaintId/verify', titleKey: 'routes.pages.verifyResolution', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenVerify' },
-  { path: '/citizen/alerts', titleKey: 'routes.pages.alerts', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
-  { path: '/citizen/profile', titleKey: 'routes.pages.profile', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'] },
+  { path: '/citizen/notifications', titleKey: 'routes.pages.alerts', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenNotifications' },
+  { path: '/citizen/alerts', titleKey: 'routes.pages.alerts', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenNotifications' },
+  { path: '/citizen/profile', titleKey: 'routes.pages.profile', roleKey: 'routes.roles.citizen', priorityKey: 'routes.priorities.p1', roles: ['citizen'], pageKey: 'citizenProfile' },
   { path: '/officer/dashboard', titleKey: 'routes.pages.officerDashboard', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
   { path: '/officer/assignments', titleKey: 'routes.pages.assignments', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
   { path: '/officer/complaints/:complaintId', titleKey: 'routes.pages.officerComplaintDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'] },
@@ -163,6 +166,10 @@ function renderPlaceholder(entry) {
           <CitizenComplaintDetailPage />
         ) : entry.pageKey === 'citizenVerify' ? (
           <CitizenVerifyPage />
+        ) : entry.pageKey === 'citizenNotifications' ? (
+          <CitizenNotificationsPage />
+        ) : entry.pageKey === 'citizenProfile' ? (
+          <CitizenProfilePage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
