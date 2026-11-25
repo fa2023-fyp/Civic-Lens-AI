@@ -155,7 +155,7 @@ export function OverrideDialog({
                   : 'override-dialog__count-ok'
               }
             >
-              {reason.trim().length} / 10 min
+              {t('ai.overrideReasonCounter', { count: reason.trim().length, min: 10 })}
             </span>
           </div>
         </div>

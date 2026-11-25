@@ -4,6 +4,8 @@ import { Button } from '../ui/Button/Button.jsx';
 import { Card } from '../ui/Card/Card.jsx';
 import { Chip } from '../ui/Chip/Chip.jsx';
 import { Icon } from '../ui/Icon/Icon.jsx';
+import { SkeletonCard } from '../ui/SkeletonCard/SkeletonCard.jsx';
+import { ErrorState } from '../ui/ErrorState/ErrorState.jsx';
 import { useI18n } from '../../i18n/I18nContext.jsx';
 import './SimilarComplaints.css';
 
@@ -12,6 +14,10 @@ export function SimilarComplaints({
   onConfirmDuplicate,
   onRejectDuplicate,
   title,
+  loading = false,
+  error = false,
+  errorMessage,
+  onRetry,
   className = '',
 }) {
   const { t } = useI18n();
@@ -43,7 +49,18 @@ export function SimilarComplaints({
         <span>{t('ai.similar.duplicateNotice')}</span>
       </p>
 
-      {items.length === 0 ? (
+      {loading ? (
+        <div className="similar-complaints__loading" aria-busy="true">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+      ) : error ? (
+        <ErrorState
+          message={errorMessage || t('ai.similar.error')}
+          referenceCode="CL-SIM-1"
+          onRetry={onRetry}
+        />
+      ) : items.length === 0 ? (
         <Card variant="outlined" className="similar-complaints__empty">
           <p>{t('ai.similar.empty')}</p>
         </Card>
@@ -59,18 +76,20 @@ export function SimilarComplaints({
               typeof item.languages === 'string'
                 ? item.languages
                 : item.languages
-                  ? `${item.languages.source || 'English'} ↔ ${item.languages.target || 'Roman Urdu'}`
+                  ? `${item.languages.source || t('ai.similar.english')} ↔ ${item.languages.target || t('ai.similar.romanUrdu')}`
                   : null;
 
             const distanceText =
               typeof item.distance === 'number'
                 ? `${item.distance} m`
-                : item.distance || '120 m';
+                : item.distance || '—';
 
             const daysText =
               item.daysApart === 0
                 ? t('ai.similar.sameDay')
-                : t('ai.similar.daysApart', { days: item.daysApart ?? 1 });
+                : Number.isFinite(item.daysApart)
+                  ? t('ai.similar.daysApart', { days: item.daysApart })
+                  : '—';
 
             return (
               <li key={item.id} className="similar-complaints__item">

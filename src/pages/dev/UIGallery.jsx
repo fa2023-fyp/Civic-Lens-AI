@@ -83,6 +83,10 @@ import {
   ModelVersionTag,
   LowConfidenceReason,
   AIRecommendationCard,
+  EntityChips,
+  PipelineProgress,
+  SimilarComplaints,
+  ClusterCard,
   aiFixtures,
 } from '../../components/ai/index.js';
 import {
@@ -1165,6 +1169,92 @@ export default function UIGallery() {
                   )
                 }
               />
+            </div>
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.entitySection')}</h3>
+            <EntityChips
+              originalText={t('aiGallery.entityLtrText')}
+              entities={{
+                area: { value: t('aiGallery.entityArea'), confidence: 0.91, span: [0, 10] },
+                block: { value: t('aiGallery.entityBlock'), confidence: 0.84, span: [11, 16] },
+                street: { value: t('aiGallery.entityStreet'), confidence: 0.88, span: [17, 29] },
+                landmark: { value: null },
+                facility: { value: t('aiGallery.entityFacility'), confidence: 0.79, span: [30, 38] },
+                issue: { value: t('aiGallery.entityIssue'), confidence: 0.93, span: [39, 55] },
+                duration: { value: t('aiGallery.entityDuration'), confidence: 0.89, span: [56, 63] },
+                dateTime: { value: null },
+                severityCues: { value: t('aiGallery.entitySeverity'), confidence: 0.86, span: [64, 79] },
+              }}
+            />
+            <EntityChips
+              originalText={t('aiGallery.entityRtlText')}
+              entities={{
+                area: { value: t('aiGallery.entityRtlArea'), confidence: 0.88, span: [0, 7] },
+                block: { value: null },
+                street: { value: t('aiGallery.entityRtlStreet'), confidence: 0.82, span: [8, 17] },
+                landmark: { value: null },
+                facility: { value: null },
+                issue: { value: t('aiGallery.entityRtlIssue'), confidence: 0.91, span: [18, 33] },
+                duration: { value: t('aiGallery.entityRtlDuration'), confidence: 0.87, span: [34, 40] },
+                dateTime: { value: null },
+                severityCues: { value: null },
+              }}
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.pipelineSection')}</h3>
+            <PipelineProgress status="running" stepDuration={650} />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.similarSection')}</h3>
+            <SimilarComplaints
+              items={[
+                {
+                  id: 'CL-2026-0042',
+                  similarity: 0.88,
+                  languages: { source: t('ai.similar.english'), target: t('ai.similar.romanUrdu') },
+                  distance: 220,
+                  daysApart: 4,
+                  text: t('aiGallery.similarTextOne'),
+                  status: t('aiGallery.statusAssigned'),
+                },
+                {
+                  id: 'CL-2026-0038',
+                  similarity: 0.81,
+                  languages: { source: t('ai.similar.romanUrdu'), target: t('ai.similar.english') },
+                  distance: 380,
+                  daysApart: 8,
+                  text: t('aiGallery.similarTextTwo'),
+                  status: t('aiGallery.statusReview'),
+                },
+              ]}
+              onConfirmDuplicate={(item) =>
+                showToast(t('aiGallery.duplicateConfirmed', { id: item.id }), 'success')
+              }
+              onRejectDuplicate={(item) =>
+                showToast(t('aiGallery.duplicateRejected', { id: item.id }), 'info')
+              }
+            />
+          </div>
+
+          <div className="ui-gallery__section">
+            <h3>{t('aiGallery.clusterSection')}</h3>
+            <div className="ui-gallery__cards">
+              <ClusterCard
+                title={t('aiGallery.clusterTitle')}
+                category={t('gallery.water')}
+                area={t('aiGallery.clusterArea')}
+                reportCount={6}
+                affectedStreets={[t('aiGallery.clusterStreetOne'), t('aiGallery.clusterStreetTwo')]}
+                firstReport="2026-11-20T10:30:00"
+                latestReport="2026-11-24T16:15:00"
+                status={t('aiGallery.statusReview')}
+              />
+              <ClusterCard loading />
             </div>
           </div>
         </GallerySection>

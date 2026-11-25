@@ -1,0 +1,106 @@
+.similar-complaints {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.similar-complaints__header,
+.similar-complaint-card__header,
+.similar-complaint-card__badge-row,
+.similar-complaint-card__meta,
+.similar-complaint-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.similar-complaints__title,
+.similar-complaints__notice p {
+  margin: 0;
+}
+
+.similar-complaints__count,
+.similar-complaint-card__id,
+.similar-complaint-card__meta-tag,
+.similar-complaint-card__sim-pct {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.similar-complaints__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.similar-complaints__notice-icon {
+  flex: none;
+  color: var(--info);
+}
+
+.similar-complaints__list,
+.similar-complaints__loading {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.similar-complaints__loading {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.similar-complaint-card {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.similar-complaint-card.is-confirmed {
+  border-color: var(--status-success);
+}
+
+.similar-complaint-card.is-rejected {
+  opacity: 0.75;
+}
+
+.similar-complaint-card__badge-row,
+.similar-complaint-card__meta {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.similar-complaint-card__sim-score {
+  display: grid;
+  text-align: end;
+}
+
+.similar-complaint-card__meta-tag,
+.similar-complaint-card__lang-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.similar-complaint-card__text {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.similar-complaint-card__actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 36rem) {
+  .similar-complaint-card__actions {
+    align-items: stretch;
+  }
+
+  .similar-complaint-card__actions .ui-button {
+    flex: 1;
+  }
+}

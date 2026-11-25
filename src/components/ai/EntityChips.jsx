@@ -48,14 +48,19 @@ export function EntityChips({
     let start = -1;
     let end = -1;
 
-    if (
-      Array.isArray(activeEntity.span) &&
-      activeEntity.span.length === 2 &&
-      typeof activeEntity.span[0] === 'number' &&
-      typeof activeEntity.span[1] === 'number'
+    if (Array.isArray(activeEntity.span) && activeEntity.span.length === 2) {
+      const [spanStart, spanEnd] = activeEntity.span;
+      if (typeof spanStart === 'number' && typeof spanEnd === 'number') {
+        start = spanStart;
+        end = spanEnd;
+      }
+    } else if (
+      activeEntity.span &&
+      typeof activeEntity.span.start === 'number' &&
+      typeof activeEntity.span.end === 'number'
     ) {
-      start = activeEntity.span[0];
-      end = activeEntity.span[1];
+      start = activeEntity.span.start;
+      end = activeEntity.span.end;
     } else if (typeof activeEntity.value === 'string' && activeEntity.value.trim()) {
       const idx = originalText.toLowerCase().indexOf(activeEntity.value.toLowerCase().trim());
       if (idx !== -1) {
@@ -142,6 +147,12 @@ export function EntityChips({
               }}
               onMouseLeave={() => {
                 if (hasValue && activeKey === key) setActiveKey(null);
+              }}
+              onFocus={() => {
+                if (hasValue) setActiveKey(key);
+              }}
+              onBlur={() => {
+                if (hasValue) setActiveKey(null);
               }}
               disabled={!hasValue}
               aria-pressed={isActive}

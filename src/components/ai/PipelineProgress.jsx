@@ -32,11 +32,24 @@ export function PipelineProgress({
   const [internalStep, setInternalStep] = useState(isInitiallySettled ? PIPELINE_STEPS.length : 0);
   const [isSettled, setIsSettled] = useState(isInitiallySettled);
 
+  useEffect(() => {
+    if (status === 'settled') {
+      setInternalStep(PIPELINE_STEPS.length);
+      setIsSettled(true);
+    } else if (status === 'pending') {
+      setInternalStep(-1);
+      setIsSettled(false);
+    } else if (typeof controlledStep !== 'number') {
+      setInternalStep((step) => (step < 0 ? 0 : step));
+      setIsSettled(false);
+    }
+  }, [status, controlledStep]);
+
   const activeStepIndex =
     typeof controlledStep === 'number' ? controlledStep : internalStep;
 
   useEffect(() => {
-    if (!autoAnimate || isSettled) return undefined;
+    if (!autoAnimate || isSettled || status === 'pending') return undefined;
 
     const timer = window.setTimeout(() => {
       setInternalStep((prev) => {
@@ -142,7 +155,7 @@ export function PipelineProgress({
         <div className="pipeline-progress__controls">
           <Button type="button" variant="ghost" size="sm" onClick={restart}>
             <Icon name="refresh" size={14} />
-            <span>Restart analysis</span>
+            <span>{t('ai.pipeline.restart')}</span>
           </Button>
         </div>
       ) : null}
