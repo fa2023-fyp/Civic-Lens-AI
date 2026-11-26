@@ -185,7 +185,28 @@ export function createMockDomains({
     const visibleIds = new Set(scopedComplaints(actor).map((complaint) => complaint.id));
     const complaintIds = cluster.complaintIds.filter((id) => visibleIds.has(id));
     if (!complaintIds.length) return null;
-    return { ...cluster, complaintIds };
+    const members = complaintIds
+      .map((id) => store().complaints.find((complaint) => complaint.id === id))
+      .filter(Boolean);
+    const affectedStreets = [...new Set(members.map((item) => item.address).filter(Boolean))];
+    const timestamps = members
+      .map((item) => Date.parse(item.createdAt))
+      .filter((value) => Number.isFinite(value));
+    const firstReport = timestamps.length
+      ? new Date(Math.min(...timestamps)).toISOString()
+      : null;
+    const latestReport = timestamps.length
+      ? new Date(Math.max(...timestamps)).toISOString()
+      : null;
+    return {
+      ...cluster,
+      complaintIds,
+      reportCount: complaintIds.length,
+      area: cluster.locality,
+      affectedStreets,
+      firstReport,
+      latestReport,
+    };
   }
 
   function scopedEvents(actor) {
@@ -495,7 +516,8 @@ export function createMockDomains({
       merge: (idsOrInput, input = {}, context = input) => {
         const args = resolveTargetAndInput(idsOrInput, input, context);
         const actor = getActor(args.context);
-        requireRole(actor, ['supervisor']);
+        requireRole(actor, ['officer', 'supervisor']);
+        const reason = requiredReason(args.input, 'A reason', makeError);
         const ids =
           args.input.clusterIds ?? args.input.ids ?? (Array.isArray(idsOrInput) ? idsOrInput : []);
         if (!Array.isArray(ids) || ids.length < 2) {
@@ -507,7 +529,7 @@ export function createMockDomains({
             throw makeError('A cluster could not be found.', 404, 'NOT_FOUND');
           selected.forEach((cluster) =>
             cluster.complaintIds.forEach((id) =>
-              assertComplaintAccess(findComplaint(id, draft), actor, { write: true }),
+              assertReviewerAccess(findComplaint(id, draft), actor),
             ),
           );
           const target = selected[0];
@@ -518,6 +540,8 @@ export function createMockDomains({
           appendAudit(draft, 'clusters_merged', actor, null, {
             clusterIds: ids,
             targetClusterId: target.id,
+            reason,
+            humanAction: true,
           });
           return target;
         });
@@ -525,12 +549,13 @@ export function createMockDomains({
       split: (idOrInput, input = {}, context = input) => {
         const args = resolveTargetAndInput(idOrInput, input, context);
         const actor = getActor(args.context);
-        requireRole(actor, ['supervisor']);
+        requireRole(actor, ['officer', 'supervisor']);
+        const reason = requiredReason(args.input, 'A reason', makeError);
         return transact((draft) => {
           const cluster = draft.clusters.find((item) => item.id === String(args.id));
           if (!cluster) throw makeError('The cluster could not be found.', 404, 'NOT_FOUND');
           cluster.complaintIds.forEach((id) =>
-            assertComplaintAccess(findComplaint(id, draft), actor, { write: true }),
+            assertReviewerAccess(findComplaint(id, draft), actor),
           );
           const groups = args.input.groups;
           if (!Array.isArray(groups) || groups.length < 2) {
@@ -562,6 +587,8 @@ export function createMockDomains({
           appendAudit(draft, 'cluster_split', actor, null, {
             clusterId: cluster.id,
             newClusterIds: created.map((item) => item.id),
+            reason,
+            humanAction: true,
           });
           return { original: cluster, created };
         });

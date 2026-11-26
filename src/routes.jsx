@@ -36,6 +36,8 @@ const OfficerDashboardPage = lazy(() => import('./pages/officer/OfficerDashboard
 const OfficerComplaintDetailPage = lazy(() => import('./pages/officer/OfficerComplaintDetailPage.jsx'));
 const OfficerResolvePage = lazy(() => import('./pages/officer/OfficerResolvePage.jsx'));
 const ReviewQueuePage = lazy(() => import('./pages/shared/ReviewQueuePage.jsx'));
+const OfficerClustersPage = lazy(() => import('./pages/officer/OfficerClustersPage.jsx'));
+const OfficerClusterDetailPage = lazy(() => import('./pages/officer/OfficerClusterDetailPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -95,6 +97,8 @@ const routeEntries = [
   { path: '/officer/dashboard', titleKey: 'routes.pages.officerDashboard', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'officerDashboard' },
   { path: '/officer/assignments', titleKey: 'routes.pages.assignments', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'officerDashboard' },
   { path: '/officer/review-queue', titleKey: 'routes.pages.reviewQueue', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'reviewQueue' },
+  { path: '/officer/clusters', titleKey: 'routes.pages.clusters', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p2', roles: ['officer', 'supervisor', 'admin'], pageKey: 'clusters' },
+  { path: '/officer/clusters/:id', titleKey: 'routes.pages.clusterDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p2', roles: ['officer', 'supervisor', 'admin'], pageKey: 'clusterDetail' },
   { path: '/officer/complaints/:complaintId', titleKey: 'routes.pages.officerComplaintDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'officerComplaintDetail' },
   { path: '/officer/complaints/:complaintId/resolve', titleKey: 'routes.pages.submitResolution', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'submitResolution' },
   { path: '/supervisor/dashboard', titleKey: 'routes.pages.supervisorDashboard', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
@@ -184,6 +188,10 @@ function renderPlaceholder(entry) {
           <OfficerResolvePage />
         ) : entry.pageKey === 'reviewQueue' ? (
           <ReviewQueuePage />
+        ) : entry.pageKey === 'clusters' ? (
+          <OfficerClustersPage />
+        ) : entry.pageKey === 'clusterDetail' ? (
+          <OfficerClusterDetailPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}

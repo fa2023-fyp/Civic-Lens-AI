@@ -21,6 +21,7 @@ const navigationByRole = {
     { to: '/officer/dashboard', labelKey: 'routes.pages.officerDashboard', icon: 'chart-bar' },
     { to: '/officer/assignments', labelKey: 'routes.pages.assignments', icon: 'clipboard' },
     { to: '/officer/review-queue', labelKey: 'routes.pages.reviewQueue', icon: 'check-circle' },
+    { to: '/officer/clusters', labelKey: 'routes.pages.clusters', icon: 'layers' },
   ],
   supervisor: [
     { to: '/supervisor/dashboard', labelKey: 'routes.pages.supervisorDashboard', icon: 'chart-bar' },
