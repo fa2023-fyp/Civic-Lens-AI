@@ -27,6 +27,7 @@
 - [x] Prompt 21 — Landing sections 8 to 12
 - [x] Prompt 23 — Officer complaint detail: left and centre zones (text, entities, attachments, AI recommendation cards with confirm/override, low-confidence and location-conflict banners)
 - [x] Prompt 24 — Officer workspace right zone (map, SLA + risk, similar/cluster, timeline) with sticky action bar, and /officer/complaints/:id/resolve submission page
+- [x] Prompt 25 — Shared review queue at /officer/review-queue and /supervisor/review-queue (flag reason + threshold, queue age with 24h alert, AI-vs-correction side panel, confirm/correct/mark-invalid, demo clock advance)
 
 ## Decisions and deviations
 

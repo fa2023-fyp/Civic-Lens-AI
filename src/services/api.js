@@ -1319,6 +1319,11 @@ const ai = Object.freeze({
     return { serviceDown: aiServiceDown, label: AI_STUB_LABEL };
   }),
 });
+const demo = Object.freeze({
+  advanceClock: delayed('demo.advanceClock', (milliseconds) => ({
+    now: virtualClock.advanceBy(Number(milliseconds) || 0),
+  })),
+});
 const complaints = Object.freeze({
   create: delayed('complaints.create', createComplaint),
   list: delayed('complaints.list', listComplaints),
@@ -1394,6 +1399,7 @@ export const apiConfig = Object.freeze({ mockEnabled: true, apiBaseUrl: '' });
 export const api = Object.freeze({
   ...publicDomains,
   ai,
+  demo,
   auth,
   complaints,
   notifications,

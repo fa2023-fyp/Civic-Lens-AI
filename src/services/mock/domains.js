@@ -1,3 +1,5 @@
+import { analyzeComplaint } from './analyze.js';
+
 const CLONE = (value) => JSON.parse(JSON.stringify(value));
 const TERMINAL_STATUSES = new Set([
   'Resolved',
@@ -41,6 +43,59 @@ export function createMockDomains({
   eventQueue,
 }) {
   const store = getStore;
+
+  const REVIEW_THRESHOLDS = { language: 0.6, category: 0.7, urgency: 0.7, department: 0.75 };
+
+  function reviewerDeptIds(actor) {
+    return actor.departmentIds?.length
+      ? actor.departmentIds
+      : [actor.departmentId].filter(Boolean);
+  }
+
+  function assertReviewerAccess(complaint, actor) {
+    if (actor.role === 'admin') return;
+    if (actor.role === 'supervisor' || actor.role === 'officer') {
+      if (!reviewerDeptIds(actor).includes(complaint.departmentId)) {
+        throw makeError('You do not have access to this complaint.', 403, 'FORBIDDEN');
+      }
+      return;
+    }
+    throw makeError('This role cannot review complaints.', 403, 'FORBIDDEN');
+  }
+
+  function flagFor(complaint, analysis) {
+    const checks = [
+      ['language', analysis.language_confidence ?? analysis.language?.confidence, REVIEW_THRESHOLDS.language],
+      ['category', analysis.category?.confidence, REVIEW_THRESHOLDS.category],
+      ['urgency', analysis.urgency?.confidence, REVIEW_THRESHOLDS.urgency],
+      ['department', analysis.department?.confidence, REVIEW_THRESHOLDS.department],
+    ];
+    const below = checks.find(
+      ([, confidence, threshold]) =>
+        typeof confidence === 'number' && confidence < threshold,
+    );
+    if (below) {
+      return { field: below[0], confidence: below[1], threshold: below[2] };
+    }
+    const forced = analyzeComplaint(complaint.originalText, {
+      forceLowConfidence: true,
+      complaints: store().complaints,
+      locality: complaint.locality,
+    });
+    const forcedChecks = [
+      ['language', forced.language_confidence, REVIEW_THRESHOLDS.language],
+      ['category', forced.category?.confidence, REVIEW_THRESHOLDS.category],
+      ['urgency', forced.urgency?.confidence, REVIEW_THRESHOLDS.urgency],
+      ['department', forced.department?.confidence, REVIEW_THRESHOLDS.department],
+    ];
+    const forcedBelow = forcedChecks.find(
+      ([, confidence, threshold]) =>
+        typeof confidence === 'number' && confidence < threshold,
+    );
+    return forcedBelow
+      ? { field: forcedBelow[0], confidence: forcedBelow[1], threshold: forcedBelow[2] }
+      : { field: 'category', confidence: 0, threshold: REVIEW_THRESHOLDS.category };
+  }
 
   function getTracker(complaintId, draft = store()) {
     let tracker = draft.slaTrackers.find((item) => item.complaintId === complaintId);
@@ -156,29 +211,42 @@ export function createMockDomains({
     return Object.freeze({
       queue: (options = {}) => {
         const actor = getActor(options);
-        requireRole(actor, ['supervisor', 'admin']);
-        const departmentIds =
-          actor.role === 'admin'
-            ? null
-            : actor.departmentIds?.length
-              ? actor.departmentIds
-              : [actor.departmentId].filter(Boolean);
+        requireRole(actor, ['officer', 'supervisor', 'admin']);
+        const departmentIds = actor.role === 'admin' ? null : reviewerDeptIds(actor);
+        const nowMs = clock.timestamp();
         const items = store()
           .complaints.filter((item) => item.status === 'Pending Human Review')
           .filter((item) => !departmentIds || departmentIds.includes(item.departmentId))
-          .map((complaint) => ({
-            ...CLONE(complaint),
-            sla: CLONE(getTracker(complaint.id)),
-          }));
-        return paginate(items, options);
+          .map((complaint) => {
+            const analysis =
+              complaint.aiAnalysis ||
+              analyzeComplaint(complaint.originalText, {
+                complaints: store().complaints,
+                locality: complaint.locality,
+              });
+            const queuedEntry = (complaint.statusHistory ?? [])
+              .filter((entry) => entry.status === 'Pending Human Review')
+              .at(-1);
+            const queuedAt = queuedEntry?.changedAt ?? complaint.createdAt;
+            const ageMs = Math.max(0, nowMs - Date.parse(queuedAt));
+            return {
+              ...CLONE(complaint),
+              aiAnalysis: analysis,
+              flag: flagFor(complaint, analysis),
+              queuedAt,
+              ageMs,
+              sla: CLONE(getTracker(complaint.id)),
+            };
+          });
+        return { ...paginate(items, options), now: clock.now() };
       },
       confirm: (idOrInput, input = {}, context = input) => {
         const args = resolveTargetAndInput(idOrInput, input, context);
         const actor = getActor(args.context);
-        requireRole(actor, ['supervisor']);
+        requireRole(actor, ['officer', 'supervisor']);
         const assignment = transact((draft) => {
           const complaint = findComplaint(args.id, draft);
-          assertComplaintAccess(complaint, actor, { write: true });
+          assertReviewerAccess(complaint, actor);
           if (!['Pending Human Review', 'Submitted'].includes(complaint.status)) {
             throw makeError('Only queued complaints can be confirmed.', 409, 'INVALID_TRANSITION');
           }
@@ -256,7 +324,7 @@ export function createMockDomains({
         }
         return transact((draft) => {
           const complaint = findComplaint(args.id, draft);
-          assertComplaintAccess(complaint, actor, { write: true });
+          assertReviewerAccess(complaint, actor);
           const override = {
             field,
             aiValue: aiValue ?? complaint.aiAnalysis?.[field] ?? null,
@@ -298,11 +366,11 @@ export function createMockDomains({
       markInvalid: (idOrInput, input = {}, context = input) => {
         const args = resolveTargetAndInput(idOrInput, input, context);
         const actor = getActor(args.context);
-        requireRole(actor, ['supervisor']);
+        requireRole(actor, ['officer', 'supervisor']);
         const reason = requiredReason(args.input, 'A reason', makeError);
         return transact((draft) => {
           const complaint = findComplaint(args.id, draft);
-          assertComplaintAccess(complaint, actor, { write: true });
+          assertReviewerAccess(complaint, actor);
           if (TERMINAL_STATUSES.has(complaint.status)) {
             throw makeError(
               'A terminal complaint cannot be marked invalid.',
@@ -314,6 +382,16 @@ export function createMockDomains({
           complaint.invalidReason = reason;
           getTracker(complaint.id, draft).state = 'completed';
           appendAudit(draft, 'complaint_marked_invalid', actor, complaint, { reason });
+          const invalidatedAt = clock.now();
+          draft.notifications.unshift({
+            id: `NOT-${String(++draft.counters.notification).padStart(5, '0')}`,
+            userId: complaint.reporterId,
+            complaintId: complaint.id,
+            type: 'complaint_invalid',
+            readAt: null,
+            createdAt: invalidatedAt,
+            isSynthetic: false,
+          });
           return complaint;
         });
       },
