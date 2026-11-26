@@ -119,20 +119,186 @@
 }
 
 .officer-complaint__entity-card,
-.officer-complaint__attachments-card {
+.officer-complaint__attachments-card,
+.officer-complaint__map-card,
+.officer-complaint__sla-card,
+.officer-complaint__similar-card,
+.officer-complaint__timeline-card {
   display: grid;
   gap: var(--space-3);
 }
 
+.officer-complaint__map-card .location-picker__map-canvas {
+  block-size: 12rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.officer-complaint__muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.officer-complaint__cluster-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+  padding-block-start: var(--space-2);
+  border-block-start: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+
+.officer-complaint__cluster-open {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--brand-strong);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.officer-complaint__cluster-open:hover {
+  text-decoration: underline;
+}
+
+.officer-complaint__comments {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+  padding-block-start: var(--space-2);
+  border-block-start: 1px solid var(--border);
+}
+
+.officer-complaint__comments-title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+.officer-complaint__comment-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.officer-complaint__comment {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.officer-complaint__comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.officer-complaint__comment p {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.officer-progress-form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.officer-action-bar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 20;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.officer-action-bar__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.officer-action-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
 @media (min-width: 60rem) {
   .officer-complaint__zones {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-5);
+  }
+
+  .officer-complaint__zone--right {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .officer-action-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+@media (min-width: 80rem) {
+  .officer-complaint__zones {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .officer-complaint__zone--right {
+    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .officer-action-bar {
+    animation: officerActionBarSlideUp var(--dur-slow) var(--ease-out) both;
+  }
+}
+
+@keyframes officerActionBarSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
 @media (max-width: 30rem) {
   .officer-complaint__conflict-values {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .officer-action-bar__actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .officer-action-bar__actions > * {
+    inline-size: 100%;
   }
 }

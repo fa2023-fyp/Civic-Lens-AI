@@ -1,20 +1,28 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AIRecommendationCard } from '../../components/ai/AIRecommendationCard.jsx';
 import { EntityChips } from '../../components/ai/EntityChips.jsx';
 import { LowConfidenceReason } from '../../components/ai/LowConfidenceReason.jsx';
+import { SimilarComplaints } from '../../components/ai/SimilarComplaints.jsx';
 import { AttachmentGallery } from '../../components/complaint/AttachmentGallery.jsx';
 import { ComplaintText } from '../../components/complaint/ComplaintText.jsx';
 import { DemoDataBadge } from '../../components/complaint/DemoDataBadge.jsx';
 import { LanguageBadge } from '../../components/complaint/LanguageBadge.jsx';
+import { SLACountdown } from '../../components/complaint/SLACountdown.jsx';
+import { SLARiskBadge } from '../../components/complaint/SLARiskBadge.jsx';
 import { StatusBadge } from '../../components/complaint/StatusBadge.jsx';
+import { StatusTimeline } from '../../components/complaint/StatusTimeline.jsx';
 import { Badge } from '../../components/ui/Badge/Badge.jsx';
+import { Button } from '../../components/ui/Button/Button.jsx';
 import { Card } from '../../components/ui/Card/Card.jsx';
 import { ErrorState } from '../../components/ui/ErrorState/ErrorState.jsx';
 import { Icon } from '../../components/ui/Icon/Icon.jsx';
 import { InlineAlert } from '../../components/ui/InlineAlert/InlineAlert.jsx';
+import { Modal } from '../../components/ui/Modal/Modal.jsx';
+import { Select } from '../../components/ui/Select/Select.jsx';
 import { Skeleton } from '../../components/ui/Skeleton/Skeleton.jsx';
 import { SkeletonCard } from '../../components/ui/SkeletonCard/SkeletonCard.jsx';
+import { Textarea } from '../../components/ui/Textarea/Textarea.jsx';
 import { useToast } from '../../components/ui/ToastProvider/ToastProvider.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useAsync } from '../../hooks/useAsync.js';
@@ -23,9 +31,21 @@ import { ForbiddenPage } from '../../pages/shared/RouteStatusPage.jsx';
 import { api } from '../../services/api.js';
 import './OfficerComplaintDetailPage.css';
 
+const LeafletMapPane = lazy(() => import('../../components/map/LeafletMapPane.jsx'));
+
 const CATEGORY_THRESHOLD = 0.7;
 const URGENCY_THRESHOLD = 0.7;
 const DEPARTMENT_THRESHOLD = 0.75;
+
+const TERMINAL_STATUSES = new Set([
+  'Resolved',
+  'Resolved (Unverified)',
+  'Closed',
+  'Rejected',
+  'Invalid',
+]);
+const VERIFICATION_STATUSES = new Set(['Resolution Submitted', 'Citizen Verification']);
+const RESOLVABLE_STATUSES = new Set(['Assigned', 'In Progress', 'Reopened', 'Escalated']);
 
 const BADGE_MAP = {
   Submitted: 'submitted',
@@ -47,6 +67,24 @@ const BADGE_MAP = {
 
 const QUEUED_STATUSES = new Set(['Pending Human Review', 'Submitted', 'AI Processing']);
 
+const SLA_STATE_MAP = {
+  on_track: 'on-track',
+  warning: 'warning',
+  breached: 'overdue',
+  escalated: 'escalated',
+  completed: 'completed',
+  not_started: 'paused',
+  verification: 'paused',
+};
+
+const RISK_LEVEL_MAP = {
+  low: 'low',
+  moderate: 'medium',
+  elevated: 'medium',
+  high: 'high',
+  not_applicable: 'low',
+};
+
 function mapLanguageKey(code) {
   const normalized = String(code || '').toLowerCase();
   if (normalized === 'en' || normalized === 'english') return 'english';
@@ -60,15 +98,32 @@ function normaliseArea(value) {
   return String(value || '').trim().toLocaleLowerCase();
 }
 
+function buildTimelineSteps(complaint) {
+  const history = complaint?.statusHistory ?? [];
+  return history.map((entry, index) => ({
+    id: `${entry.status}-${index}`,
+    label: entry.status,
+    timestamp: entry.changedAt,
+    complete: true,
+    current: index === history.length - 1,
+  }));
+}
+
 export default function OfficerComplaintDetailPage() {
   const { complaintId, id } = useParams();
   const targetId = complaintId || id;
   const { state: authState } = useAuth();
   const { t, formatDate } = useI18n();
   const { toast } = useToast();
+  const centreRef = useRef(null);
 
   const [analysis, setAnalysis] = useState(null);
   const [confirmedFields, setConfirmedFields] = useState({});
+  const [progressOpen, setProgressOpen] = useState(false);
+  const [progressComment, setProgressComment] = useState('');
+  const [progressStatus, setProgressStatus] = useState('In Progress');
+  const [progressError, setProgressError] = useState('');
+  const [progressSaving, setProgressSaving] = useState(false);
 
   const fetchComplaint = useCallback(async () => {
     return api.complaints.get(targetId, { token: authState.token });
@@ -77,6 +132,22 @@ export default function OfficerComplaintDetailPage() {
   const { status, data: complaint, error, retry } = useAsync(fetchComplaint, {
     immediate: Boolean(targetId && authState.token),
   });
+
+  const fetchWorkspace = useCallback(async () => {
+    const [sla, risk, clusterPage] = await Promise.all([
+      api.sla.get(targetId, { token: authState.token }),
+      api.sla.riskFor(targetId, { token: authState.token }),
+      api.clusters.list({ token: authState.token, pageSize: 100 }),
+    ]);
+    const cluster =
+      (clusterPage?.items ?? []).find((item) => item.complaintIds?.includes(targetId)) ?? null;
+    return { sla, risk, cluster };
+  }, [targetId, authState.token]);
+
+  const {
+    data: workspace,
+    retry: retryWorkspace,
+  } = useAsync(fetchWorkspace, { immediate: Boolean(targetId && authState.token) });
 
   useEffect(() => {
     if (!complaint) return undefined;
@@ -129,6 +200,13 @@ export default function OfficerComplaintDetailPage() {
       })),
     [t],
   );
+  const progressOptions = useMemo(
+    () => [
+      { value: 'In Progress', label: t('complaintStatus.in-progress') },
+      { value: 'Escalated', label: t('complaintStatus.escalated') },
+    ],
+    [t],
+  );
 
   const entities = useMemo(() => {
     const map = {};
@@ -154,16 +232,14 @@ export default function OfficerComplaintDetailPage() {
   async function handleOverride(field, data) {
     if (!complaint) return;
     try {
-      await api.reviewComplaint(
-        {
-          complaintId: complaint.id,
-          token: authState.token,
-          field,
-          aiValue: data.aiValue,
-          humanValue: data.newValue,
-          reason: data.reason,
-        },
-      );
+      await api.reviewComplaint({
+        complaintId: complaint.id,
+        token: authState.token,
+        field,
+        aiValue: data.aiValue,
+        humanValue: data.newValue,
+        reason: data.reason,
+      });
       toast(t('officerComplaint.overrideSuccess', { field: t(`officerComplaint.${field}Field`) }), 'success');
       retry();
     } catch (overrideError) {
@@ -178,6 +254,55 @@ export default function OfficerComplaintDetailPage() {
   function handleConfirm(field) {
     setConfirmedFields((prev) => ({ ...prev, [field]: true }));
     toast(t('officerComplaint.confirmSuccess', { field: t(`officerComplaint.${field}Field`) }), 'success');
+  }
+
+  async function handleAccept() {
+    if (!complaint) return;
+    try {
+      await api.complaints.updateProgress(complaint.id, { status: 'In Progress' }, { token: authState.token });
+      toast(t('officerWorkspace.acceptSuccess'), 'success');
+      retry();
+      retryWorkspace();
+    } catch (acceptError) {
+      toast(acceptError?.message || t('officerWorkspace.acceptError'), 'error');
+    }
+  }
+
+  function openProgress() {
+    setProgressComment('');
+    setProgressStatus('In Progress');
+    setProgressError('');
+    setProgressOpen(true);
+  }
+
+  async function handleUpdateProgress() {
+    if (!complaint) return;
+    const trimmed = progressComment.trim();
+    if (trimmed.length < 5) {
+      setProgressError(t('officerWorkspace.progressCommentError'));
+      return;
+    }
+    setProgressSaving(true);
+    try {
+      await api.complaints.updateProgress(
+        complaint.id,
+        { status: progressStatus },
+        { token: authState.token },
+      );
+      await api.complaints.addComment(complaint.id, { body: trimmed }, { token: authState.token });
+      setProgressOpen(false);
+      toast(t('officerWorkspace.progressSuccess'), 'success');
+      retry();
+      retryWorkspace();
+    } catch (progressErr) {
+      setProgressError(progressErr?.message || t('officerWorkspace.progressError'));
+    } finally {
+      setProgressSaving(false);
+    }
+  }
+
+  function handleOverrideShortcut() {
+    centreRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   if (status === 'error' || (status === 'success' && !complaint)) {
@@ -211,6 +336,10 @@ export default function OfficerComplaintDetailPage() {
             <SkeletonCard />
             <SkeletonCard />
           </div>
+          <div className="officer-complaint__zone">
+            <SkeletonCard />
+            <SkeletonCard />
+          </div>
         </div>
       </div>
     );
@@ -221,9 +350,7 @@ export default function OfficerComplaintDetailPage() {
 
   const categoryValue = categoryName(analysis?.category?.label ?? complaint.categoryId);
   const urgencyValue = t(`complaintUrgency.${analysis?.urgency?.label ?? 'medium'}`);
-  const departmentValue = departmentName(
-    analysis?.department?.label ?? complaint.departmentId,
-  );
+  const departmentValue = departmentName(analysis?.department?.label ?? complaint.departmentId);
 
   const categoryAlternatives = (analysis?.category?.top3 ?? [])
     .slice(1)
@@ -238,7 +365,8 @@ export default function OfficerComplaintDetailPage() {
       confidence: altConfidence,
     }));
 
-  const modelVersion = analysis?.model_versions?.classifier ?? complaint.aiAnalysis?.modelVersions?.classifier;
+  const modelVersion =
+    analysis?.model_versions?.classifier ?? complaint.aiAnalysis?.modelVersions?.classifier;
   const explanation = analysis?.explanation
     ? [analysis.explanation]
     : [t('officerComplaint.noIndicators')];
@@ -247,6 +375,48 @@ export default function OfficerComplaintDetailPage() {
     src: att.src || att.url || '',
     alt: att.name || t('complaintGallery.attachment', { number: index + 1 }),
   }));
+
+  const trackerState = workspace?.sla?.state;
+  const slaCompleted =
+    TERMINAL_STATUSES.has(complaint.status) || trackerState === 'completed';
+  const slaPaused =
+    VERIFICATION_STATUSES.has(complaint.status) ||
+    isQueued ||
+    trackerState === 'not_started' ||
+    trackerState === 'verification';
+  const slaEscalated = complaint.status === 'Escalated' || trackerState === 'escalated';
+  const slaState = SLA_STATE_MAP[trackerState] || 'on-track';
+
+  const riskLevel = RISK_LEVEL_MAP[workspace?.risk?.risk] || 'low';
+  const riskFactors = [];
+  if (workspace?.risk && Number.isFinite(workspace.risk.elapsedPercent)) {
+    riskFactors.push(t('officerWorkspace.slaFactorElapsed', { percent: workspace.risk.elapsedPercent }));
+  }
+  if (slaEscalated) {
+    riskFactors.push(t('officerWorkspace.slaFactorEscalated'));
+  }
+  const riskMethod = trackerState === 'not_started' ? 'rules' : 'ml';
+
+  const similarItems = (analysis?.similar ?? []).map((item) => ({
+    id: item.complaint_id,
+    similarity: item.score,
+    languages: item.cross_language
+      ? { source: t('ai.similar.english'), target: t('ai.similar.romanUrdu') }
+      : null,
+    distance: item.distance_m,
+    daysApart: item.days_apart,
+  }));
+
+  const cluster = workspace?.cluster ?? null;
+  const clusterLead = cluster
+    ? (cluster.complaintIds.find((cid) => cid !== targetId) ?? cluster.complaintIds[0])
+    : null;
+
+  const hasCoords =
+    Number.isFinite(complaint.location?.lat) && Number.isFinite(complaint.location?.lng);
+  const canAccept = complaint.status === 'Assigned';
+  const canProgress = !TERMINAL_STATUSES.has(complaint.status) && !VERIFICATION_STATUSES.has(complaint.status);
+  const canResolve = RESOLVABLE_STATUSES.has(complaint.status);
 
   const stagger = (index) => ({ '--delay': `${index * 80}ms` });
 
@@ -339,6 +509,7 @@ export default function OfficerComplaintDetailPage() {
         </section>
 
         <section
+          ref={centreRef}
           className="officer-complaint__zone officer-complaint__zone--centre"
           aria-label={t('officerComplaint.recommendationsTitle')}
         >
@@ -399,7 +570,180 @@ export default function OfficerComplaintDetailPage() {
             />
           </div>
         </section>
+
+        <section
+          className="officer-complaint__zone officer-complaint__zone--right"
+          aria-label={t('officerWorkspace.rightZoneTitle')}
+        >
+          <div className="officer-complaint__panel anim-fade-up" style={stagger(3)}>
+            <Card className="officer-complaint__map-card">
+              <h2 className="officer-complaint__section-title">{t('officerWorkspace.mapTitle')}</h2>
+              {hasCoords ? (
+                <Suspense fallback={<Skeleton height="12rem" />}>
+                  <LeafletMapPane
+                    lat={complaint.location.lat}
+                    lng={complaint.location.lng}
+                    ariaLabel={t('officerWorkspace.mapTitle')}
+                  />
+                </Suspense>
+              ) : (
+                <p className="officer-complaint__muted">
+                  {complaint.locality || complaint.location?.locality || t('officerWorkspace.mapNoPin')}
+                </p>
+              )}
+            </Card>
+          </div>
+
+          <div className="officer-complaint__panel anim-fade-up" style={stagger(4)}>
+            <Card className="officer-complaint__sla-card">
+              <h2 className="officer-complaint__section-title">{t('officerWorkspace.slaTitle')}</h2>
+              <SLACountdown
+                dueDate={workspace?.sla?.dueAt}
+                startedAt={workspace?.sla?.startedAt}
+                state={slaState}
+                completed={slaCompleted}
+                paused={slaPaused}
+                escalated={slaEscalated}
+                loading={!workspace}
+              />
+              <SLARiskBadge
+                level={riskLevel}
+                factors={riskFactors}
+                method={riskMethod}
+                loading={!workspace}
+              />
+            </Card>
+          </div>
+
+          <div className="officer-complaint__panel anim-fade-up" style={stagger(5)}>
+            <Card className="officer-complaint__similar-card">
+              <SimilarComplaints
+                items={similarItems}
+                title={t('ai.similar.title')}
+                onConfirmDuplicate={() => toast(t('officerWorkspace.duplicateConfirmed'), 'success')}
+                onRejectDuplicate={() => toast(t('officerWorkspace.duplicateRejected'), 'info')}
+              />
+              {cluster ? (
+                <div className="officer-complaint__cluster-link">
+                  <span className="officer-complaint__cluster-label">
+                    {t('officerWorkspace.parentCluster')}: <strong>{cluster.title}</strong>
+                  </span>
+                  <Link
+                    className="officer-complaint__cluster-open"
+                    to={`/officer/complaints/${clusterLead}`}
+                  >
+                    {t('officerWorkspace.viewCluster')}
+                    <Icon name="chevron-right" size={14} />
+                  </Link>
+                </div>
+              ) : null}
+            </Card>
+          </div>
+
+          <div className="officer-complaint__panel anim-fade-up" style={stagger(6)}>
+            <Card className="officer-complaint__timeline-card">
+              <h2 className="officer-complaint__section-title">
+                {t('officerWorkspace.activityTitle')}
+              </h2>
+              <StatusTimeline
+                steps={buildTimelineSteps(complaint)}
+                escalated={complaint.status === 'Escalated'}
+              />
+              <div className="officer-complaint__comments">
+                <h3 className="officer-complaint__comments-title">
+                  {t('officerWorkspace.commentsTitle')}
+                </h3>
+                {(complaint.comments ?? []).length === 0 ? (
+                  <p className="officer-complaint__muted">{t('officerWorkspace.noComments')}</p>
+                ) : (
+                  <ul className="officer-complaint__comment-list">
+                    {(complaint.comments ?? []).map((comment) => (
+                      <li key={comment.id} className="officer-complaint__comment">
+                        <div className="officer-complaint__comment-meta">
+                          <Badge tone="neutral">{comment.authorRole}</Badge>
+                          <time dateTime={new Date(comment.createdAt).toISOString()}>
+                            {formatDate(comment.createdAt, { dateStyle: 'medium', timeStyle: 'short' })}
+                          </time>
+                        </div>
+                        <p dir="auto">{comment.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </Card>
+          </div>
+        </section>
       </div>
+
+      <div className="officer-action-bar" role="region" aria-label={t('officerWorkspace.actionBarLabel')}>
+        <p className="officer-action-bar__note">{t('officerWorkspace.noResolveNote')}</p>
+        <div className="officer-action-bar__actions">
+          {canAccept ? (
+            <Button variant="secondary" size="sm" iconStart="check" onClick={handleAccept}>
+              {t('officerWorkspace.accept')}
+            </Button>
+          ) : null}
+          {canProgress ? (
+            <Button variant="secondary" size="sm" iconStart="edit" onClick={openProgress}>
+              {t('officerWorkspace.updateProgress')}
+            </Button>
+          ) : null}
+          <Button variant="ghost" size="sm" iconStart="sparkles" onClick={handleOverrideShortcut}>
+            {t('officerWorkspace.overrideAi')}
+          </Button>
+          {canResolve ? (
+            <Button
+              as={Link}
+              to={`/officer/complaints/${complaint.id}/resolve`}
+              variant="cta"
+              size="sm"
+              iconEnd="chevron-right"
+            >
+              {t('officerWorkspace.submitResolution')}
+            </Button>
+          ) : null}
+        </div>
+      </div>
+
+      <Modal
+        open={progressOpen}
+        onClose={() => setProgressOpen(false)}
+        title={t('officerWorkspace.progressDialogTitle')}
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setProgressOpen(false)}>
+              {t('common.cancel')}
+            </Button>
+            <Button variant="cta" loading={progressSaving} onClick={handleUpdateProgress}>
+              {t('officerWorkspace.progressConfirm')}
+            </Button>
+          </>
+        }
+      >
+        <div className="officer-progress-form">
+          <Select
+            id="officer-progress-status"
+            label={t('officerWorkspace.progressStatusLabel')}
+            options={progressOptions}
+            value={progressStatus}
+            onChange={(event) => setProgressStatus(event.target.value)}
+          />
+          <Textarea
+            id="officer-progress-comment"
+            label={t('officerWorkspace.progressCommentLabel')}
+            placeholder={t('officerWorkspace.progressCommentPlaceholder')}
+            value={progressComment}
+            onChange={(event) => {
+              setProgressComment(event.target.value);
+              if (progressError) setProgressError('');
+            }}
+            error={progressError}
+            rows={3}
+            required
+          />
+        </div>
+      </Modal>
     </div>
   );
 }

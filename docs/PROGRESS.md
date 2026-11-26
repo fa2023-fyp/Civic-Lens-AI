@@ -26,6 +26,7 @@
 - [x] Prompt 20 — Dark intelligence layer section
 - [x] Prompt 21 — Landing sections 8 to 12
 - [x] Prompt 23 — Officer complaint detail: left and centre zones (text, entities, attachments, AI recommendation cards with confirm/override, low-confidence and location-conflict banners)
+- [x] Prompt 24 — Officer workspace right zone (map, SLA + risk, similar/cluster, timeline) with sticky action bar, and /officer/complaints/:id/resolve submission page
 
 ## Decisions and deviations
 
