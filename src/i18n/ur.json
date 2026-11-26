@@ -1694,5 +1694,31 @@
     "selectRow": "قطار منتخب کریں",
     "selectColumn": "منتخب کریں",
     "selectedCount": "{{count}} منتخب"
+  },
+  "officerComplaint": {
+    "backToDashboard": "ڈیش بورڈ پر واپس جائیں",
+    "submittedAt": "جمع کروایا گیا",
+    "originalZoneTitle": "شہری کی شکایت",
+    "entitiesTitle": "نکالی گئی تفصیلات",
+    "attachmentsTitle": "منسلکات",
+    "recommendationsTitle": "اے آئی کی تجاویز",
+    "recommendationsSubtitle": "اے آئی تجویز کرتا ہے، فیصلہ آپ کا۔ ہر قدر ایک اندازہ ہے اور اسے وجہ کے ساتھ تبدیل یا تصدیق کیا جا سکتا ہے۔",
+    "categoryField": "زمرہ",
+    "urgencyField": "اہمیت",
+    "departmentField": "محکمہ",
+    "noIndicators": "شکایت کے متن میں کوئی مضبوط اشارے نہیں ملے۔",
+    "confirmSuccess": "{{field}} کی تجویز کی تصدیق ہو گئی۔",
+    "overrideSuccess": "آپ کا {{field}} کا فیصلہ محفوظ ہو گیا۔",
+    "overrideError": "آپ کا فیصلہ محفوظ نہیں ہو سکا۔ دوبارہ کوشش کریں۔",
+    "overrideForbidden": "آپ کو اس شکایت کو تبدیل کرنے کی اجازت نہیں ہے۔",
+    "queuedTitle": "انسانی جائزے کے لیے قطار میں",
+    "queuedBody": "کم اعتماد تجزیہ جائزہ لینے والے کے منتظر ہے تاکہ راستہ طے ہونے سے پہلے کوئی ایس ایل اے ٹائمر شروع نہ ہو۔",
+    "lowConfidenceReason": "یہ شکایت اس لیے قطار میں ڈالی گئی کیونکہ ایک یا زیادہ اے آئی کے اندازے اعتماد کی حد سے کم تھے۔",
+    "locationConflictTitle": "متن اور جی پی ایس مقام میں اختلاف",
+    "locationConflictBody": "شکایت کے متن میں \"{{text}}\" لکھا ہے مگر جی پی ایس مقام \"{{gps}}\" ہے۔ راستہ طے کرنے سے پہلے علاقے کی تصدیق کریں۔",
+    "locationTextLabel": "متن میں ذکر",
+    "locationGpsLabel": "جی پی ایس مقام",
+    "errorTitle": "شکایت لوڈ نہیں ہو سکی",
+    "errorText": "اس وقت یہ شکایت حاصل نہیں کی جا سکی۔"
   }
 }

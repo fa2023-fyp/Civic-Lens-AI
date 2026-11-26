@@ -246,7 +246,7 @@ export function createMockDomains({
       correct: (idOrInput, input = {}, context = input) => {
         const args = resolveTargetAndInput(idOrInput, input, context);
         const actor = getActor(args.context);
-        requireRole(actor, ['supervisor']);
+        requireRole(actor, ['officer', 'supervisor']);
         const reason = requiredReason(args.input, 'A reason', makeError);
         const field = String(args.input.field ?? '');
         const aiValue = args.input.aiValue;

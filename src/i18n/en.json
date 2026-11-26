@@ -1693,5 +1693,31 @@
     "selectRow": "Select row",
     "selectColumn": "Select",
     "selectedCount": "{{count}} selected"
+  },
+  "officerComplaint": {
+    "backToDashboard": "Back to dashboard",
+    "submittedAt": "Submitted",
+    "originalZoneTitle": "Citizen complaint",
+    "entitiesTitle": "Extracted attributes",
+    "attachmentsTitle": "Attachments",
+    "recommendationsTitle": "AI recommendations",
+    "recommendationsSubtitle": "AI recommends, you decide. Every value is an estimate and can be confirmed or changed with a reason.",
+    "categoryField": "Category",
+    "urgencyField": "Urgency",
+    "departmentField": "Department",
+    "noIndicators": "No strong indicators were found in the complaint text.",
+    "confirmSuccess": "Confirmed the {{field}} recommendation.",
+    "overrideSuccess": "Saved your {{field}} decision.",
+    "overrideError": "Could not save your decision. Please try again.",
+    "overrideForbidden": "You do not have permission to change this complaint.",
+    "queuedTitle": "Queued for human review",
+    "queuedBody": "A low-confidence analysis is waiting for a reviewer to confirm the routing before any SLA timer starts.",
+    "lowConfidenceReason": "This complaint was queued because one or more AI estimates fell below the confidence threshold.",
+    "locationConflictTitle": "Reported text and GPS location disagree",
+    "locationConflictBody": "The complaint text mentions \"{{text}}\" but the GPS location is \"{{gps}}\". Please verify the area before routing.",
+    "locationTextLabel": "Text mentions",
+    "locationGpsLabel": "GPS location",
+    "errorTitle": "Could not load the complaint",
+    "errorText": "This complaint could not be fetched right now."
   }
 }

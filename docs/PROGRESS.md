@@ -25,6 +25,7 @@
 - [x] Prompt 19 — Landing sections 3 to 6
 - [x] Prompt 20 — Dark intelligence layer section
 - [x] Prompt 21 — Landing sections 8 to 12
+- [x] Prompt 23 — Officer complaint detail: left and centre zones (text, entities, attachments, AI recommendation cards with confirm/override, low-confidence and location-conflict banners)
 
 ## Decisions and deviations
 
