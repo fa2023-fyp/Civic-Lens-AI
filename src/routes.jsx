@@ -36,6 +36,7 @@ const OfficerDashboardPage = lazy(() => import('./pages/officer/OfficerDashboard
 const OfficerComplaintDetailPage = lazy(() => import('./pages/officer/OfficerComplaintDetailPage.jsx'));
 const OfficerResolvePage = lazy(() => import('./pages/officer/OfficerResolvePage.jsx'));
 const ReviewQueuePage = lazy(() => import('./pages/shared/ReviewQueuePage.jsx'));
+const NotificationsPage = lazy(() => import('./pages/shared/NotificationsPage.jsx'));
 const OfficerClustersPage = lazy(() => import('./pages/officer/OfficerClustersPage.jsx'));
 const OfficerClusterDetailPage = lazy(() => import('./pages/officer/OfficerClusterDetailPage.jsx'));
 const SupervisorDashboardPage = lazy(() => import('./pages/supervisor/SupervisorDashboardPage.jsx'));
@@ -50,6 +51,8 @@ const AdminSlaPoliciesPage = lazy(() => import('./pages/admin/AdminSlaPoliciesPa
 const AdminThresholdsPage = lazy(() => import('./pages/admin/AdminThresholdsPage.jsx'));
 const AdminModelsPage = lazy(() => import('./pages/admin/AdminModelsPage.jsx'));
 const AdminAuditPage = lazy(() => import('./pages/admin/AdminAuditPage.jsx'));
+const AdminAutomationPage = lazy(() => import('./pages/admin/AdminAutomationPage.jsx'));
+const AdminFeaturesPage = lazy(() => import('./pages/admin/AdminFeaturesPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -128,6 +131,9 @@ const routeEntries = [
   { path: '/admin/thresholds', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminThresholds' },
   { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminModels' },
   { path: '/admin/audit', titleKey: 'routes.pages.audit', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p1', roles: ['admin'], pageKey: 'adminAudit' },
+  { path: '/admin/automation', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminAutomation' },
+  { path: '/admin/features', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminFeatures' },
+  { path: '/notifications', titleKey: 'routes.pages.alerts', roleKey: 'routes.roles.public', priorityKey: 'routes.priorities.p2', pageKey: 'notifications' },
   { path: '/admin/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/users', titleKey: 'routes.pages.users', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
@@ -237,6 +243,12 @@ function renderPlaceholder(entry) {
           <AdminModelsPage />
         ) : entry.pageKey === 'adminAudit' ? (
           <AdminAuditPage />
+        ) : entry.pageKey === 'adminAutomation' ? (
+          <AdminAutomationPage />
+        ) : entry.pageKey === 'adminFeatures' ? (
+          <AdminFeaturesPage />
+        ) : entry.pageKey === 'notifications' ? (
+          <NotificationsPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
