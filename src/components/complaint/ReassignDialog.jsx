@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useI18n } from '../../../i18n/I18nContext.jsx';
+import { useI18n } from '../../i18n/I18nContext.jsx';
 import { Button } from '../ui/Button/Button.jsx';
 import { Modal } from '../ui/Modal/Modal.jsx';
 import { Select } from '../ui/Select/Select.jsx';
