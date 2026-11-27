@@ -41,6 +41,8 @@ const OfficerClusterDetailPage = lazy(() => import('./pages/officer/OfficerClust
 const SupervisorDashboardPage = lazy(() => import('./pages/supervisor/SupervisorDashboardPage.jsx'));
 const EscalationsPage = lazy(() => import('./pages/supervisor/EscalationsPage.jsx'));
 const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage.jsx'));
+const AdminAiPerformancePage = lazy(() => import('./pages/admin/AdminAiPerformancePage.jsx'));
+const AdminReportsPage = lazy(() => import('./pages/admin/AdminReportsPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -110,6 +112,8 @@ const routeEntries = [
   { path: '/supervisor/escalations', titleKey: 'routes.pages.escalations', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'], pageKey: 'escalations' },
   { path: '/supervisor/complaints/:complaintId', titleKey: 'routes.pages.supervisorComplaintDetail', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
   { path: '/admin/dashboard', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p1', roles: ['admin'], pageKey: 'adminDashboard' },
+  { path: '/admin/ai-performance', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminAiPerformance' },
+  { path: '/admin/reports', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminReports' },
   { path: '/admin/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/users', titleKey: 'routes.pages.users', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
@@ -201,6 +205,10 @@ function renderPlaceholder(entry) {
           <EscalationsPage />
         ) : entry.pageKey === 'adminDashboard' ? (
           <AdminDashboardPage />
+        ) : entry.pageKey === 'adminAiPerformance' ? (
+          <AdminAiPerformancePage />
+        ) : entry.pageKey === 'adminReports' ? (
+          <AdminReportsPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
