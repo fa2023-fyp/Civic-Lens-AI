@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DemoDataBadge } from '../../components/complaint/DemoDataBadge.jsx';
+import { ReassignDialog } from '../../components/complaint/ReassignDialog.jsx';
 import { SLARiskBadge } from '../../components/complaint/SLARiskBadge.jsx';
 import { StatusBadge } from '../../components/complaint/StatusBadge.jsx';
 import { AnimatedNumber } from '../../components/ui/AnimatedNumber.jsx';
@@ -88,6 +89,8 @@ export default function SupervisorDashboardPage() {
 
   const [clockNow, setClockNow] = useState(() => Date.now());
   const [demoBusy, setDemoBusy] = useState(false);
+  const [reassignOfficer, setReassignOfficer] = useState(null);
+  const [reassignBusy, setReassignBusy] = useState(false);
 
   const departmentIds = useMemo(() => {
     if (!user) return [];
@@ -216,9 +219,15 @@ export default function SupervisorDashboardPage() {
           name: officer.name,
           open: assigned.length,
           overdue: assigned.filter((row) => row.overdue).length,
+          complaints: assigned,
         };
       });
   }, [rows, departmentIds]);
+
+  const deptOfficers = useMemo(
+    () => officers.map((officer) => ({ id: officer.id, name: officer.name })),
+    [officers],
+  );
 
   const slaList = useMemo(
     () => rows.filter((row) => row.overdue || row.atRisk),
@@ -246,6 +255,21 @@ export default function SupervisorDashboardPage() {
     }
   }
 
+  async function handleReassign({ complaintId, officerId }) {
+    setReassignBusy(true);
+    try {
+      await api.complaints.reassign(complaintId, { officerId }, { token: authState.token });
+      const officer = deptOfficers.find((item) => item.id === officerId);
+      toast(t('escalations.reassignSuccess', { id: complaintId, officer: officer?.name ?? officerId }), 'success');
+      setReassignOfficer(null);
+      retry();
+    } catch (reassignError) {
+      toast(reassignError?.message || t('supervisorDashboard.actionError'), 'error');
+    } finally {
+      setReassignBusy(false);
+    }
+  }
+
   const isLoading = status === 'loading' || status === 'idle';
   const demoLabel = t('preview.demoBadge');
 
@@ -261,6 +285,21 @@ export default function SupervisorDashboardPage() {
         ) : (
           <span className="supervisor-dashboard__muted">0</span>
         ),
+    },
+    {
+      key: 'action',
+      label: t('supervisorDashboard.colAction'),
+      render: (row) => (
+        <Button
+          variant="secondary"
+          size="sm"
+          iconStart="refresh"
+          disabled={!row.complaints || row.complaints.length === 0}
+          onClick={() => setReassignOfficer(row)}
+        >
+          {t('supervisorDashboard.reassign')}
+        </Button>
+      ),
     },
   ];
 
@@ -545,6 +584,15 @@ export default function SupervisorDashboardPage() {
       </section>
 
       <Tabs tabs={tabs} label={t('supervisorDashboard.tabsLabel')} />
+
+      <ReassignDialog
+        open={Boolean(reassignOfficer)}
+        onClose={() => setReassignOfficer(null)}
+        complaints={reassignOfficer?.complaints ?? []}
+        officers={deptOfficers}
+        onConfirm={handleReassign}
+        loading={reassignBusy}
+      />
     </div>
   );
 }

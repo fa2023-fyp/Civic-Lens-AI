@@ -10,3 +10,4 @@ export { UrgencyBadge } from './UrgencyBadge.jsx';
 export { StatusTimeline } from './StatusTimeline.jsx';
 export { SLACountdown } from './SLACountdown.jsx';
 export { SLARiskBadge } from './SLARiskBadge.jsx';
+export { ReassignDialog } from './ReassignDialog.jsx';

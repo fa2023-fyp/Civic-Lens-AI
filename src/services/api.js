@@ -986,6 +986,66 @@ function acceptComplaint(id, input = {}, context = input) {
   });
 }
 
+function reassignComplaint(id, input = {}, context = input) {
+  const actor = getActor(context);
+  requireRole(actor, ['supervisor']);
+  const officerId = String(input.officerId ?? input.assignedOfficerId ?? '');
+  const reason = String(input.reason ?? '').trim();
+
+  return transact((draft) => {
+    const complaint = findComplaint(id, draft);
+    assertComplaintAccess(complaint, actor, { write: true });
+    if (
+      ['Resolved', 'Closed', 'Rejected', 'Invalid', 'Resolved (Unverified)'].includes(
+        complaint.status,
+      )
+    ) {
+      throw makeError('A completed complaint cannot be reassigned.', 409, 'INVALID_TRANSITION');
+    }
+    const officer = draft.users.find(
+      (user) => user.id === officerId && user.role === 'officer' && user.active !== false,
+    );
+    if (!officer) throw makeError('The selected officer was not found.', 404, 'NOT_FOUND');
+    const department = draft.departments.find((item) => item.id === complaint.departmentId);
+    const inDepartment =
+      department?.officerIds?.includes(officer.id) ||
+      officer.departmentId === complaint.departmentId;
+    if (!inDepartment) {
+      throw makeError('The selected officer is not in this department.', 400, 'INVALID_OFFICER');
+    }
+
+    const now = new Date().toISOString();
+    const previousOfficerId = complaint.assignedOfficerId ?? null;
+    complaint.assignmentHistory ??= [];
+    complaint.assignmentHistory.push({
+      fromOfficerId: previousOfficerId,
+      toOfficerId: officer.id,
+      reason: reason || null,
+      actorId: actor.id,
+      at: now,
+    });
+    complaint.assignedOfficerId = officer.id;
+    complaint.status = 'Assigned';
+    complaint.updatedAt = now;
+    complaint.statusHistory.push({
+      status: 'Assigned',
+      changedAt: now,
+      actorId: actor.id,
+      reassignedFrom: previousOfficerId,
+    });
+    draft.notifications.unshift({
+      id: `NOT-${String(++draft.counters.notification).padStart(5, '0')}`,
+      userId: officer.id,
+      complaintId: complaint.id,
+      type: 'complaint_assigned',
+      readAt: null,
+      createdAt: now,
+      isSynthetic: false,
+    });
+    return complaint;
+  });
+}
+
 function listNotifications(options = {}) {
   const actor = getActor(options);
   const items = store.notifications
@@ -1330,6 +1390,7 @@ const complaints = Object.freeze({
   get: delayed('complaints.get', getComplaint),
   addComment: delayed('complaints.addComment', addComment),
   updateProgress: delayed('complaints.updateProgress', updateProgress),
+  reassign: delayed('complaints.reassign', reassignComplaint),
   accept: delayed('complaints.accept', acceptComplaint),
 });
 const notifications = Object.freeze({

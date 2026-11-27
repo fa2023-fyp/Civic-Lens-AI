@@ -1,0 +1,53 @@
+.ui-reassign-dialog__fields {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ui-reassign-dialog__empty {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.ui-reassign-dialog__history {
+  display: grid;
+  gap: var(--space-2);
+  border-top: var(--border-width) solid var(--border);
+  padding-top: var(--space-3);
+}
+
+.ui-reassign-dialog__history-title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ui-reassign-dialog__history-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-reassign-dialog__history-item {
+  display: grid;
+  gap: var(--space-1);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+}
+
+.ui-reassign-dialog__history-route {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.ui-reassign-dialog__history-reason {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
