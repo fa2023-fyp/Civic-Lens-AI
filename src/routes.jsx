@@ -46,6 +46,8 @@ const AdminReportsPage = lazy(() => import('./pages/admin/AdminReportsPage.jsx')
 const AdminMapPage = lazy(() => import('./pages/admin/AdminMapPage.jsx'));
 const AdminUsersPage = lazy(() => import('./pages/admin/AdminUsersPage.jsx'));
 const AdminTaxonomyPage = lazy(() => import('./pages/admin/AdminTaxonomyPage.jsx'));
+const AdminSlaPoliciesPage = lazy(() => import('./pages/admin/AdminSlaPoliciesPage.jsx'));
+const AdminThresholdsPage = lazy(() => import('./pages/admin/AdminThresholdsPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -120,6 +122,8 @@ const routeEntries = [
   { path: '/admin/map', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminMap' },
   { path: '/admin/users', titleKey: 'routes.pages.users', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminUsers' },
   { path: '/admin/taxonomy', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminTaxonomy' },
+  { path: '/admin/sla-policies', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminSlaPolicies' },
+  { path: '/admin/thresholds', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminThresholds' },
   { path: '/admin/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/users', titleKey: 'routes.pages.users', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
@@ -221,6 +225,10 @@ function renderPlaceholder(entry) {
           <AdminUsersPage />
         ) : entry.pageKey === 'adminTaxonomy' ? (
           <AdminTaxonomyPage />
+        ) : entry.pageKey === 'adminSlaPolicies' ? (
+          <AdminSlaPoliciesPage />
+        ) : entry.pageKey === 'adminThresholds' ? (
+          <AdminThresholdsPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
