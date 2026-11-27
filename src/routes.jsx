@@ -49,6 +49,7 @@ const AdminTaxonomyPage = lazy(() => import('./pages/admin/AdminTaxonomyPage.jsx
 const AdminSlaPoliciesPage = lazy(() => import('./pages/admin/AdminSlaPoliciesPage.jsx'));
 const AdminThresholdsPage = lazy(() => import('./pages/admin/AdminThresholdsPage.jsx'));
 const AdminModelsPage = lazy(() => import('./pages/admin/AdminModelsPage.jsx'));
+const AdminAuditPage = lazy(() => import('./pages/admin/AdminAuditPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -126,6 +127,7 @@ const routeEntries = [
   { path: '/admin/sla-policies', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminSlaPolicies' },
   { path: '/admin/thresholds', titleKey: 'routes.pages.adminDashboard', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminThresholds' },
   { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'], pageKey: 'adminModels' },
+  { path: '/admin/audit', titleKey: 'routes.pages.audit', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p1', roles: ['admin'], pageKey: 'adminAudit' },
   { path: '/admin/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/users', titleKey: 'routes.pages.users', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
   { path: '/admin/models', titleKey: 'routes.pages.models', roleKey: 'routes.roles.admin', priorityKey: 'routes.priorities.p2', roles: ['admin'] },
@@ -233,6 +235,8 @@ function renderPlaceholder(entry) {
           <AdminThresholdsPage />
         ) : entry.pageKey === 'adminModels' ? (
           <AdminModelsPage />
+        ) : entry.pageKey === 'adminAudit' ? (
+          <AdminAuditPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
