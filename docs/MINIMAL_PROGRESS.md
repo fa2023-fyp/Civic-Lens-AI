@@ -1,0 +1,42 @@
+# Minimalism progress
+
+## Checklist
+
+1. [ ] Item 1
+2. [ ] Item 2
+3. [ ] Item 3
+4. [ ] Item 4
+5. [ ] Item 5
+6. [ ] Item 6
+7. [ ] Item 7
+8. [ ] Item 8
+9. [ ] Item 9
+10. [ ] Item 10
+11. [ ] Item 11
+12. [ ] Item 12
+13. [ ] Item 13
+14. [ ] Item 14
+15. [ ] Item 15
+16. [ ] Item 16
+17. [ ] Item 17
+18. [ ] Item 18
+19. [ ] Item 19
+20. [ ] Item 20
+21. [ ] Item 21
+22. [ ] Item 22
+23. [ ] Item 23
+24. [ ] Item 24
+25. [ ] Item 25
+26. [ ] Item 26
+27. [ ] Item 27
+28. [ ] Item 28
+29. [ ] Item 29
+30. [ ] Item 30
+31. [ ] Item 31
+32. [ ] Item 32
+33. [ ] Item 33
+34. [ ] Item 34
+
+## Notes
+
+- Visual refinement only; no behaviour changes.

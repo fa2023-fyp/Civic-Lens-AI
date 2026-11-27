@@ -39,3 +39,9 @@ returns to the original URL after sign-in.
 Report the opened URL. Visual confirmation is the user's — the agent cannot see the browser; it
 confirms HTTP readiness and that the browser was opened. If the build or server fails, report the
 error and do not claim success.
+## MINIMALISM RULES
+- Read docs/MINIMAL_DESIGN.md once per task.
+- Visual refinement only.
+- Edit only files named by prompt.
+- Never remove trust cues, states, focus styles, RTL or dark mode.
+- Run build once and reply in 5 lines.

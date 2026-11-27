@@ -9,6 +9,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "lint": "eslint src vite.config.js",
     "test": "vitest run src/services/mock/analyze.test.js",
+    "audit:style": "node scripts/audit-style.mjs",
     "format": "prettier --write \"src/**/*.{js,jsx,css,json}\" index.html vite.config.js"
   },
   "dependencies": {
