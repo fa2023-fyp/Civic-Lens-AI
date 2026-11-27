@@ -4,6 +4,7 @@ import { DemoDataBadge } from '../../components/marketing/DemoDataBadge.jsx';
 export default function AdminMapPage() {
   const containerRef = useRef(null);
   const [status, setStatus] = useState('loading');
+  const [heat, setHeat] = useState(false);
   const [points] = useState(() => Array.from({ length: 5000 }, (_, i) => ({
     id: i + 1,
     lat: 31.5 + (Math.random() - 0.5) * 0.2,
@@ -40,7 +41,7 @@ export default function AdminMapPage() {
   return (
     <div className="admin-map">
       <h1>Admin map <DemoDataBadge>Demo data</DemoDataBadge></h1>
-      {status === 'down' && <div role="alert">Map provider down. Showing table fallback.</div>}
+      <button type="button" onClick={() => setHeat((v) => !v)}>{heat ? 'Markers' : 'Heatmap'}</button>
       {status === 'loading' && <div className="skeleton-map" style={{ blockSize: 400 }} />}
       <div ref={containerRef} style={{ blockSize: 400, display: status === 'down' ? 'none' : 'block' }} />
       {status === 'down' && (

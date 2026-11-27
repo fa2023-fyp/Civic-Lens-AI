@@ -29,7 +29,7 @@
 - [x] Prompt 24 — Officer workspace right zone (map, SLA + risk, similar/cluster, timeline) with sticky action bar, and /officer/complaints/:id/resolve submission page
 - [x] Prompt 25 — Shared review queue at /officer/review-queue and /supervisor/review-queue (flag reason + threshold, queue age with 24h alert, AI-vs-correction side panel, confirm/correct/mark-invalid, demo clock advance)
 - [x] Prompt 26 — /officer/clusters list (grid/table toggle, filters, search) and /officer/clusters/:id detail (members, extent mini-map with fallback, timeline, merge/split with reason, per-pair duplicate decisions)
-- [x] Prompt 30 — /admin/map with clustering and fallback
+- [x] Prompt 31 — Heatmap and hotspots on /admin/map
 
 ## Decisions and deviations
 
