@@ -38,6 +38,7 @@ const OfficerResolvePage = lazy(() => import('./pages/officer/OfficerResolvePage
 const ReviewQueuePage = lazy(() => import('./pages/shared/ReviewQueuePage.jsx'));
 const OfficerClustersPage = lazy(() => import('./pages/officer/OfficerClustersPage.jsx'));
 const OfficerClusterDetailPage = lazy(() => import('./pages/officer/OfficerClusterDetailPage.jsx'));
+const SupervisorDashboardPage = lazy(() => import('./pages/supervisor/SupervisorDashboardPage.jsx'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.jsx'));
 const VerifyPage = lazy(() => import('./pages/auth/VerifyPage.jsx'));
@@ -101,7 +102,7 @@ const routeEntries = [
   { path: '/officer/clusters/:id', titleKey: 'routes.pages.clusterDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p2', roles: ['officer', 'supervisor', 'admin'], pageKey: 'clusterDetail' },
   { path: '/officer/complaints/:complaintId', titleKey: 'routes.pages.officerComplaintDetail', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'officerComplaintDetail' },
   { path: '/officer/complaints/:complaintId/resolve', titleKey: 'routes.pages.submitResolution', roleKey: 'routes.roles.officer', priorityKey: 'routes.priorities.p1', roles: ['officer'], pageKey: 'submitResolution' },
-  { path: '/supervisor/dashboard', titleKey: 'routes.pages.supervisorDashboard', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
+  { path: '/supervisor/dashboard', titleKey: 'routes.pages.supervisorDashboard', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'], pageKey: 'supervisorDashboard' },
   { path: '/supervisor/analytics', titleKey: 'routes.pages.analytics', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p2', roles: ['supervisor'] },
   { path: '/supervisor/review-queue', titleKey: 'routes.pages.reviewQueue', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'], pageKey: 'reviewQueue' },
   { path: '/supervisor/escalations', titleKey: 'routes.pages.escalations', roleKey: 'routes.roles.supervisor', priorityKey: 'routes.priorities.p1', roles: ['supervisor'] },
@@ -192,6 +193,8 @@ function renderPlaceholder(entry) {
           <OfficerClustersPage />
         ) : entry.pageKey === 'clusterDetail' ? (
           <OfficerClusterDetailPage />
+        ) : entry.pageKey === 'supervisorDashboard' ? (
+          <SupervisorDashboardPage />
         ) : (
           <PublicInfoPage pageKey={entry.pageKey} />
         )}
