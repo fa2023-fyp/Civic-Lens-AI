@@ -327,6 +327,13 @@ export function RouteView() {
   }, [location.pathname]);
 
   useEffect(() => {
+    const timer = window.setTimeout(() => {
+      document.getElementById('main-content')?.focus();
+    }, 180);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const goOffline = () => setIsOffline(true);
     const goOnline = () => setIsOffline(false);
     window.addEventListener('offline', goOffline);
@@ -350,7 +357,10 @@ export function RouteView() {
           }
         >
           <LoadedRoute onLoaded={markInitialLoadComplete}>
-            <div key={location.pathname} className="route-view anim-fade-up">
+            <div
+              key={location.pathname}
+              className={`route-view${initialLoadComplete ? ' page-fade' : ''}`}
+            >
               <AppRoutes />
             </div>
           </LoadedRoute>

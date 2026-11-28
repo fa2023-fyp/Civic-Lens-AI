@@ -3,23 +3,59 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle.js';
 import { useI18n } from '../../i18n/I18nContext.jsx';
 import './RouteStatusPage.css';
 
+export function StatusIcon({ status, title }) {
+  return (
+    <svg viewBox="0 0 48 48" role="img" aria-label={title} className="route-status__icon">
+      {status === 'forbidden' ? (
+        <>
+          <path d="M24 10c-7.7 0-14 6.3-14 14v8c0 5.4 4.6 10 10 10h8c5.4 0 10-4.6 10-10v-8c0-7.7-6.3-14-14-14Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M16 24h16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </>
+      ) : status === 'notFound' ? (
+        <>
+          <path d="M10 10h18v18H10Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M28 10v18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M14 16h8M14 22h6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          {status === 'serverError' ? (
+            <>
+              <path d="M24 20v4M24 32h0.1" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </>
+          ) : (
+            <path d="M12 12 36 36M36 12 12 36" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          )}
+        </>
+      )}
+    </svg>
+  );
+}
+
+function routeStatusCode(status) {
+  if (status === 'forbidden') {
+    return '403';
+  }
+  if (status === 'serverError') {
+    return '500';
+  }
+  if (status === 'offline') {
+    return 'OFFLINE';
+  }
+  return '404';
+}
+
 function RouteStatusPage({ status }) {
   const { t } = useI18n();
   const title = t(`routes.${status}.title`);
   useDocumentTitle(`${title} · ${t('app.name')}`);
 
   return (
-    <section className="route-status container" aria-labelledby="route-status-title">
-      <svg className="route-status__illustration" viewBox="0 0 320 220" role="img" aria-label={title}>
-        <circle cx="160" cy="110" r="82" fill="var(--brand-soft)" />
-        <path d="M92 156V90l68-42 68 42v66l-68 42-68-42Z" fill="var(--surface)" stroke="var(--brand-strong)" strokeWidth="8" strokeLinejoin="round" />
-        <path d="m124 110 24 24 48-54" fill="none" stroke="var(--brand-strong)" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
-        {status === 'serverError' || status === 'offline' ? (
-          <path d="M48 58c18-18 38-26 60-24M272 162c-18 18-38 26-60 24" fill="none" stroke="var(--amber-400)" strokeWidth="8" strokeLinecap="round" />
-        ) : null}
-      </svg>
+    <section className="route-status" aria-labelledby="route-status-title">
+      <StatusIcon status={status} title={title} />
       <p className="route-status__code" aria-hidden="true">
-        {status === 'forbidden' ? '403' : status === 'serverError' ? '500' : status === 'offline' ? 'OFFLINE' : '404'}
+        {routeStatusCode(status)}
       </p>
       <div className="route-status__copy">
         <h1 id="route-status-title">{title}</h1>
@@ -31,13 +67,13 @@ function RouteStatusPage({ status }) {
         ) : null}
       </div>
       <div className="route-status__actions">
-        <Link to="/" className="route-status__link">{t('routes.returnHome')}</Link>
-        {status === 'notFound' ? (
-          <Link to="/help" className="route-status__link route-status__link--secondary">{t('common.navigation.help')}</Link>
-        ) : status === 'forbidden' ? (
-          <Link to="/help" className="route-status__link route-status__link--secondary">{t('common.navigation.help')}</Link>
+        <Link to="/" className="button button--cta">
+          {t('routes.returnHome')}
+        </Link>
+        {status === 'notFound' || status === 'forbidden' ? (
+          <Link to="/help">{t('common.navigation.help')}</Link>
         ) : (
-          <button type="button" className="route-status__link route-status__link--secondary" onClick={() => window.location.reload()}>
+          <button type="button" className="button button--quiet" onClick={() => window.location.reload()}>
             {t('common.retry')}
           </button>
         )}

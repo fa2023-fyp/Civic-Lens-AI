@@ -7,6 +7,17 @@
   }
 }
 
+@keyframes pageFade {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes fadeUp {
   from {
     transform: translateY(12px);
@@ -137,7 +148,7 @@
 
 /* Use for page or route transitions */
 .page-fade {
-  animation: fadeIn var(--dur-fast) var(--ease-out) both;
+  animation: pageFade 180ms var(--ease-out) both;
 }
 
 /* Use for standard fade-in */

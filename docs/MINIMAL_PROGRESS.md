@@ -16,7 +16,7 @@
 12. [x] Item 12
 13. [x] Item 13
 14. [x] Item 14
-15. [ ] Item 15
+15. [x] Item 15
 16. [ ] Item 16
 17. [ ] Item 17
 18. [ ] Item 18

@@ -1,17 +1,19 @@
 .route-status {
-  display: grid;
-  min-block-size: min(60vh, 42rem);
-  align-content: center;
-  justify-items: center;
-  gap: var(--space-3);
-  padding-block: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  max-inline-size: 480px;
+  margin-inline: auto;
+  padding-block: var(--space-12);
+  padding-inline: var(--space-4);
+  gap: var(--space-4);
 }
 
-.route-status__illustration {
-  inline-size: min(18rem, 70vw);
-  block-size: auto;
-  margin-block-end: var(--space-2);
+.route-status__icon {
+  inline-size: 48px;
+  block-size: 48px;
+  color: var(--text-muted);
 }
 
 .route-status__code {
@@ -23,30 +25,35 @@
   line-height: 1;
 }
 
-.route-status h1,
+.route-status h1 {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
 .route-status p {
   margin: 0;
+  color: var(--text-muted);
+  max-inline-size: 60ch;
 }
 
 .route-status__copy {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--space-3);
 }
 
-.route-status > p:not(.route-status__code) {
-  max-inline-size: 55ch;
-  color: var(--text-muted);
-}
-
-.route-status__link {
-  border: 0;
-  border-radius: var(--radius-pill);
-  padding: var(--space-3) var(--space-5);
-  background: var(--brand-500);
-  color: var(--ink-900);
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
+.route-status__reference code {
+  border-radius: var(--radius-1);
+  padding-inline: var(--space-2);
+  background: var(--surface-muted);
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
 }
 
 .route-status__actions {
@@ -55,22 +62,6 @@
   justify-content: center;
   margin-block-start: var(--space-2);
   gap: var(--space-3);
-}
-
-.route-status__link--secondary {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-family: inherit;
-  font-size: inherit;
-}
-
-.route-status__reference code {
-  border-radius: var(--radius-sm);
-  padding-inline: var(--space-2);
-  background: var(--surface-muted);
-  color: var(--text);
-  font-weight: 800;
 }
 
 .offline-notice {
