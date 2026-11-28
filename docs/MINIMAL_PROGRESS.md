@@ -10,7 +10,7 @@
 6. [x] Item 6
 7. [x] Item 7
 8. [x] Item 8
-9. [ ] Item 9
+9. [x] Item 9
 10. [ ] Item 10
 11. [x] Item 11
 12. [ ] Item 12

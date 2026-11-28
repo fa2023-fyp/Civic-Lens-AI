@@ -1,4 +1,4 @@
-import { Reveal } from './Reveal.jsx';
+import { Reveal, stagger } from './Reveal.jsx';
 import './marketing-showcase.css';
 
 export function StepCard({ number, title, description }) {
@@ -21,18 +21,17 @@ export function StepsRail({ steps = [], label, id, className = '' }) {
       id={id}
       className={`marketing-steps-rail${className ? ` ${className}` : ''}`}
     >
-      <Reveal className="marketing-steps-rail__reveal">
-        <ol className="marketing-steps-rail__list" aria-label={label}>
-          {steps.map((step, index) => (
+      <ol className="marketing-steps-rail__list" aria-label={label}>
+        {stagger(steps, (step, index, delay) => (
+          <Reveal key={step.id ?? index} variant="fade-up" delay={delay}>
             <StepCard
-              key={step.id ?? index}
               number={index + 1}
               title={step.title}
               description={step.description}
             />
-          ))}
-        </ol>
-      </Reveal>
+          </Reveal>
+        ))}
+      </ol>
     </div>
   );
 }

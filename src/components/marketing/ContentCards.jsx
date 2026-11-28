@@ -20,7 +20,6 @@ function MarketingContentCard({
       <Card
         as="article"
         variant={onDark ? 'dark' : 'outlined'}
-        hoverLift
         className={`marketing-content-card marketing-content-card--${kind}${onDark ? ' marketing-content-card--dark' : ''}${className ? ` ${className}` : ''}`}
       >
         <span className="marketing-content-card__icon-tile">

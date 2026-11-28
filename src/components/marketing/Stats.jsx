@@ -9,7 +9,7 @@ export function StatNumber({
   prefix = '',
   suffix = '',
   decimals = 0,
-  duration = 1400,
+  duration = 1200,
   className = '',
 }) {
   const { ref, formattedValue } = useCountUp(value, {
@@ -42,7 +42,6 @@ export function StatCard({
       <Card
         as="article"
         variant={onDark ? 'dark' : 'outlined'}
-        hoverLift
         className={`marketing-stat-card${onDark ? ' marketing-stat-card--dark' : ''}${className ? ` ${className}` : ''}`}
       >
         <StatNumber value={value} prefix={prefix} suffix={suffix} decimals={decimals} />

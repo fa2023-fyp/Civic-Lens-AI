@@ -30,6 +30,6 @@ export function Reveal({
   );
 }
 
-export function stagger(items, renderItem, step = 80, initialDelay = 0) {
+export function stagger(items, renderItem, step = 60, initialDelay = 0) {
   return items.map((item, index) => renderItem(item, index, initialDelay + index * step));
 }
