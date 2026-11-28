@@ -15,7 +15,7 @@
   grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1fr);
   gap: var(--space-4);
   border-block-end: var(--border-width) solid var(--border);
-  padding-block: var(--space-3);
+  padding-block: var(--space-4);
 }
 
 .ui-key-value-list__item:first-child,
@@ -37,7 +37,7 @@
   min-inline-size: 0;
   margin: 0;
   color: var(--text);
-  font-weight: 700;
+  font-weight: 600;
   overflow-wrap: anywhere;
 }
 
@@ -60,7 +60,7 @@
 
   .ui-key-value-list--2-column .ui-key-value-list__item {
     border-block-end: var(--border-width) solid var(--border);
-    padding-block: var(--space-3);
+    padding-block: var(--space-4);
   }
 
   .ui-key-value-list--2-column .ui-key-value-list__item:first-child {

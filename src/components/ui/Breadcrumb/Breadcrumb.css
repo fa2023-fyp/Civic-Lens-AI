@@ -23,14 +23,12 @@
 
 .ui-breadcrumb__item a {
   color: var(--brand);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
 }
 
 .ui-breadcrumb__item [aria-current='page'] {
   overflow: hidden;
   color: var(--text);
-  font-weight: 700;
+  font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

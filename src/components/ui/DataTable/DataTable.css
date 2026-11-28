@@ -32,11 +32,11 @@
   color: var(--text);
   cursor: pointer;
   font-size: var(--text-sm);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .ui-data-table__column-menu summary:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .ui-data-table__scroll:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
@@ -95,9 +95,9 @@
 .ui-data-table th {
   border-block-end: var(--border-width) solid var(--border);
   padding: var(--space-2) var(--space-3);
-  background: var(--surface-muted);
   color: var(--text);
   font-size: var(--text-sm);
+  font-weight: 600;
   text-align: start;
   white-space: nowrap;
 }
@@ -106,13 +106,13 @@
   justify-content: flex-start;
   padding: var(--space-1);
   font: inherit;
-  font-weight: 700;
+  font-weight: 600;
   text-align: start;
 }
 
 .ui-data-table td {
   border-block-end: var(--border-width) solid var(--border);
-  padding: var(--space-3);
+  padding: var(--space-4);
   color: var(--text);
   line-height: 1.45;
 }
@@ -126,7 +126,7 @@
 }
 
 .ui-data-table tbody tr:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--brand);
   outline-offset: -2px;
 }
 
@@ -240,7 +240,7 @@
     color: var(--text-muted);
     content: attr(data-label);
     font-size: var(--text-sm);
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .ui-data-table tbody tr td:last-child {

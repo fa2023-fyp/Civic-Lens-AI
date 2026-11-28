@@ -6,7 +6,7 @@
 .ui-accordion__item {
   overflow: hidden;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-1);
   background: var(--surface);
 }
 
@@ -28,7 +28,7 @@
 }
 
 .ui-accordion__title {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .ui-accordion__icon {

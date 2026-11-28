@@ -24,20 +24,23 @@
   white-space: nowrap;
 }
 
-.ui-tabs__tab:hover,
-.ui-tabs__tab.is-selected {
+.ui-tabs__tab:hover {
   color: var(--text);
 }
 
+.ui-tabs__tab.is-selected {
+  color: var(--brand);
+}
+
 .ui-tabs__tab:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--brand);
   outline-offset: -2px;
 }
 
 .ui-tabs__underline {
   position: absolute;
   inset-block-end: -1px;
-  block-size: 3px;
+  block-size: 2px;
   border-radius: var(--radius-pill);
   background: var(--brand);
   pointer-events: none;
@@ -55,7 +58,7 @@
 }
 
 .ui-tabs__panel:focus-visible {
-  outline: 2px solid var(--focus-ring);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
