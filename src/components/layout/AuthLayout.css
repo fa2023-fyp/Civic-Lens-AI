@@ -8,7 +8,7 @@
 
 .auth-layout__topbar {
   display: flex;
-  min-block-size: 4.5rem;
+  min-block-size: 4rem;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
@@ -22,7 +22,7 @@
   align-items: center;
   gap: var(--space-2);
   color: var(--text);
-  font-weight: 800;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -32,33 +32,29 @@
 
 .auth-layout__mark {
   color: var(--brand);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
 }
 
 .auth-layout__preferences {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .auth-layout__content {
   display: grid;
   flex: 1;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  min-block-size: calc(100vh - 4.5rem);
+  min-block-size: calc(100vh - 4rem);
 }
 
 .auth-layout__brand-panel {
-  min-inline-size: 0;
-  background: linear-gradient(135deg, var(--emerald-900), var(--emerald-700));
-  color: var(--emerald-50);
-}
-
-.auth-layout__orbs {
   display: grid;
-  min-block-size: 100%;
+  min-inline-size: 0;
   align-items: center;
   padding: clamp(var(--space-8), 8vw, var(--space-16));
+  background: var(--tint, var(--grey-page-alt));
+  color: var(--text);
 }
 
 .auth-layout__brand-copy {
@@ -67,28 +63,27 @@
 
 .auth-layout__brand-copy > p:first-child {
   margin-block-end: var(--space-4);
-  color: var(--emerald-100);
+  color: var(--brand);
   font-size: var(--text-xs);
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .auth-layout__brand-copy h1 {
   margin-block: 0 var(--space-4);
   font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
-  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .auth-layout__brand-copy > p:last-child {
   max-inline-size: 42ch;
   margin: 0;
-  color: var(--emerald-50);
+  color: var(--text-muted);
   font-size: var(--text-lg);
-  line-height: 1.7;
-}
-
-.auth-layout__orbs .marketing-orbs__orb {
-  opacity: 0.3;
+  line-height: 1.6;
 }
 
 .auth-layout__form-panel {
@@ -100,7 +95,7 @@
 }
 
 .auth-layout__form-card {
-  inline-size: min(100%, 34rem);
+  inline-size: min(100%, var(--container-auth));
 }
 
 @media (max-width: 48rem) {

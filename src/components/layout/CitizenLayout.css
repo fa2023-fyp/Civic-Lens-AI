@@ -9,14 +9,13 @@
   z-index: var(--z-header);
   inset-block-start: 0;
   display: flex;
-  min-block-size: 4.5rem;
+  min-block-size: 4rem;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding-inline: max(var(--space-4), calc((100% - 75rem) / 2));
+  padding-inline: max(var(--space-4), calc((100% - 79rem) / 2));
   border-block-end: var(--border-width) solid var(--border);
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  backdrop-filter: blur(var(--space-3));
+  background: var(--surface);
 }
 
 .citizen-layout__brand {
@@ -24,7 +23,7 @@
   align-items: center;
   gap: var(--space-2);
   color: var(--text);
-  font-weight: 800;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -34,19 +33,19 @@
 
 .citizen-layout__mark {
   color: var(--brand);
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
 }
 
 .citizen-layout__preferences {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .citizen-layout__body {
   display: grid;
   max-inline-size: 79rem;
-  min-block-size: calc(100vh - 4.5rem);
+  min-block-size: calc(100vh - 4rem);
   grid-template-columns: 15rem minmax(0, 1fr);
   margin-inline: auto;
   padding-inline: var(--space-4);
@@ -54,37 +53,56 @@
 
 .citizen-layout__rail {
   position: sticky;
-  inset-block-start: 4.5rem;
+  inset-block-start: 4rem;
   align-self: start;
   padding-block: var(--space-6);
 }
 
 .citizen-layout__rail-nav {
   display: grid;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .citizen-layout__nav-link {
+  position: relative;
   display: flex;
   min-inline-size: 0;
   align-items: center;
   gap: var(--space-3);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-1);
   padding-block: var(--space-3);
   padding-inline: var(--space-3);
   color: var(--text-muted);
   font-size: var(--text-sm);
-  font-weight: 650;
+  font-weight: 500;
   text-decoration: none;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
 }
 
 .citizen-layout__nav-link::after {
   display: none;
 }
 
-.citizen-layout__nav-link.is-active {
-  background: var(--brand-soft);
+.citizen-layout__nav-link:hover {
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
   color: var(--brand-strong);
+}
+
+.citizen-layout__nav-link.is-active {
+  color: var(--brand-strong);
+  font-weight: 600;
+}
+
+.citizen-layout__nav-link.is-active::before {
+  position: absolute;
+  inset-block: var(--space-2);
+  inset-inline-start: 0;
+  inline-size: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+  content: '';
 }
 
 .citizen-layout__nav-link svg {
@@ -126,11 +144,9 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
     padding-block: var(--space-2) max(var(--space-2), env(safe-area-inset-bottom));
-    padding-inline: max(var(--space-2), calc((100% - 75rem) / 2));
+    padding-inline: max(var(--space-2), calc((100% - 79rem) / 2));
     border-block-start: var(--border-width) solid var(--border);
-    background: color-mix(in srgb, var(--surface) 96%, transparent);
-    box-shadow: var(--shadow-md);
-    backdrop-filter: blur(var(--space-3));
+    background: var(--surface);
   }
 
   .citizen-layout__active-indicator {
@@ -138,7 +154,7 @@
     inset-block-start: 0;
     inset-inline-start: 0;
     inline-size: 20%;
-    block-size: 3px;
+    block-size: 2px;
     border-radius: 0 0 var(--radius-pill) var(--radius-pill);
     background: var(--brand);
     transform: translateX(calc(var(--active-index) * 100%));
@@ -152,12 +168,16 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--space-1);
-    border-radius: var(--radius-2);
+    border-radius: var(--radius-1);
     padding-block: var(--space-2);
     padding-inline: var(--space-1);
     font-size: var(--text-xs);
     line-height: 1.15;
     text-align: center;
+  }
+
+  .citizen-layout__bottom-nav .citizen-layout__nav-link.is-active::before {
+    display: none;
   }
 
   .citizen-layout__bottom-nav .citizen-layout__nav-link span {

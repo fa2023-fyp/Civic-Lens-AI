@@ -1,8 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useI18n } from '../../i18n/I18nContext.jsx';
 import { Icon } from '../ui/Icon/Icon.jsx';
-import { LanguageSwitch } from '../ui/LanguageSwitch/LanguageSwitch.jsx';
-import { ThemeToggle } from '../ui/ThemeToggle/ThemeToggle.jsx';
+import { PreferencesMenu } from './PreferencesMenu.jsx';
 import './CitizenLayout.css';
 
 const navigationItems = [
@@ -73,8 +72,7 @@ export function CitizenLayout({ children }) {
           <span>{t('app.name')}</span>
         </Link>
         <div className="citizen-layout__preferences">
-          <LanguageSwitch />
-          <ThemeToggle />
+          <PreferencesMenu />
         </div>
       </header>
       <div className="citizen-layout__body">

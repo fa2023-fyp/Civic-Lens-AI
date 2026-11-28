@@ -1,0 +1,55 @@
+.preferences-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.preferences-menu__trigger {
+  display: inline-flex;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  cursor: pointer;
+  list-style: none;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.preferences-menu__trigger::-webkit-details-marker {
+  display: none;
+}
+
+.preferences-menu__trigger:hover {
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
+  color: var(--brand-strong);
+}
+
+.preferences-menu__trigger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.preferences-menu__panel {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  display: grid;
+  min-inline-size: 12rem;
+  gap: var(--space-2);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-2);
+  padding: var(--space-3);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.preferences-menu__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
