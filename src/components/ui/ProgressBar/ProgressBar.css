@@ -38,3 +38,11 @@
 [dir='rtl'] .ui-progress__fill {
   transform-origin: right center;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-progress__track.is-indeterminate .ui-progress__fill {
+    animation: none;
+    inline-size: 100%;
+    transform: scaleX(1);
+  }
+}

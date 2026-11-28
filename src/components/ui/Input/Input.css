@@ -3,21 +3,27 @@
   min-inline-size: 0;
   align-items: center;
   gap: var(--space-2);
+  min-block-size: 44px;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-1);
   background: var(--surface);
   padding-inline: var(--space-3);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.ui-input-wrap:hover {
+  border-color: color-mix(in srgb, var(--border) 80%, var(--text-muted));
 }
 
 .ui-input-wrap:focus-within {
   border-color: var(--brand);
-  box-shadow: var(--shadow-focus-glow);
+  box-shadow: 0 0 0 2px rgb(16 185 129 / 30%);
 }
 
 .ui-input {
   inline-size: 100%;
   min-inline-size: 0;
-  min-block-size: var(--space-12);
+  min-block-size: 44px;
   border: 0;
   outline: 0;
   background: transparent;

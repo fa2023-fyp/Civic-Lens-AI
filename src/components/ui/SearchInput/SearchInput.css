@@ -2,8 +2,11 @@
   inline-size: var(--space-8);
   border: 0;
   box-shadow: none;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
 .ui-search-input__clear:hover {
   box-shadow: none;
+  color: var(--text);
 }

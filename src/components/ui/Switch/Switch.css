@@ -1,6 +1,6 @@
 .ui-switch {
   display: inline-flex;
-  min-block-size: var(--space-8);
+  min-block-size: 44px;
   align-items: center;
   gap: var(--space-3);
   border: 0;
@@ -21,6 +21,9 @@
   border-radius: var(--radius-pill);
   padding: var(--space-1);
   background: var(--grey-page-alt);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
 }
 
 .ui-switch__thumb {

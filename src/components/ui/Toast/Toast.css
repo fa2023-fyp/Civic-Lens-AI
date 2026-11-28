@@ -6,14 +6,13 @@
   align-items: center;
   gap: var(--space-3);
   overflow: hidden;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-width) solid var(--hairline);
   border-inline-start-width: var(--border-width);
   border-radius: var(--radius-3);
   padding-block: var(--space-3);
   padding-inline: var(--space-4);
   background: var(--surface);
   color: var(--text);
-  box-shadow: var(--shadow-lg);
 }
 
 .ui-toast--success {

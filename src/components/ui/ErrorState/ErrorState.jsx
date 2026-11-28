@@ -10,7 +10,7 @@ export function ErrorState({ title, message, referenceCode, onRetry, className =
   const reference = referenceCode || `UI-${id}`;
   return (
     <section className={`ui-error-state${className ? ` ${className}` : ''}`} role="alert">
-      <Icon name="alert-circle" size={32} />
+      <Icon name="alert-circle" size={24} aria-hidden="true" />
       <h2>{title || t('common.errorTitle')}</h2>
       <p>{message || t('ui.errorMessage')}</p>
       <p className="ui-error-state__reference">

@@ -6,20 +6,25 @@
 
 .ui-otp__digit {
   inline-size: var(--space-12);
-  block-size: var(--space-16);
+  block-size: 44px;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-1);
   background: var(--surface);
   color: var(--text);
   font: inherit;
   font-size: var(--text-xl);
   font-variant-numeric: tabular-nums;
   text-align: center;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.ui-otp__digit:hover {
+  border-color: color-mix(in srgb, var(--border) 80%, var(--text-muted));
 }
 
 .ui-otp__digit:focus {
   border-color: var(--brand);
-  box-shadow: var(--shadow-focus-glow);
+  box-shadow: 0 0 0 2px rgb(16 185 129 / 30%);
 }
 
 .ui-otp__digit:disabled {

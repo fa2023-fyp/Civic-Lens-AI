@@ -2,17 +2,17 @@
 
 ## Checklist
 
-1. [ ] Item 1
-2. [ ] Item 2
-3. [ ] Item 3
-4. [ ] Item 4
-5. [ ] Item 5
-6. [ ] Item 6
-7. [ ] Item 7
+1. [x] Item 1
+2. [x] Item 2
+3. [x] Item 3
+4. [x] Item 4
+5. [x] Item 5
+6. [x] Item 6
+7. [x] Item 7
 8. [ ] Item 8
 9. [ ] Item 9
 10. [ ] Item 10
-11. [ ] Item 11
+11. [x] Item 11
 12. [ ] Item 12
 13. [ ] Item 13
 14. [ ] Item 14

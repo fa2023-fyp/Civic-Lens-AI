@@ -1,15 +1,16 @@
 .ui-chip {
   display: inline-flex;
-  min-block-size: var(--space-8);
+  min-block-size: var(--space-6);
   align-items: center;
   gap: var(--space-2);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-width) solid transparent;
   border-radius: var(--radius-pill);
-  padding-block: var(--space-1);
-  padding-inline: var(--space-3);
-  background: var(--surface);
+  padding-block: var(--space-0-5);
+  padding-inline: var(--space-2);
+  background: var(--grey-page-alt);
   color: var(--text);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
 }
 
 .ui-chip--brand {
@@ -44,8 +45,17 @@
 }
 
 .ui-chip__remove {
-  inline-size: var(--space-6);
+  inline-size: var(--space-5);
+  block-size: var(--space-5);
   border: 0;
+  border-radius: var(--radius-pill);
   background: transparent;
   box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-chip__remove:hover {
+  background: var(--hairline);
 }

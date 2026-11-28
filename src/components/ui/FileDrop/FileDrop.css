@@ -22,6 +22,7 @@
 }
 
 .ui-file-drop.is-dragging .ui-file-drop__zone {
+  border-style: solid;
   border-color: var(--brand);
   background: var(--brand-soft);
 }
@@ -52,14 +53,20 @@
   align-items: center;
   gap: var(--space-3);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-1);
   padding: var(--space-2);
   background: var(--surface);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.ui-file-drop__item:hover {
+  border-color: color-mix(in srgb, var(--border) 80%, var(--text-muted));
 }
 
 .ui-file-drop__thumbnail {
   inline-size: var(--space-12);
   block-size: var(--space-12);
+  border: var(--border-width) solid var(--border);
   border-radius: var(--radius-1);
   object-fit: cover;
 }

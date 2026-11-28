@@ -1,19 +1,24 @@
 .ui-textarea {
   inline-size: 100%;
-  min-block-size: var(--space-32);
+  min-block-size: 44px;
   resize: vertical;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-1);
   padding-block: var(--space-3);
   padding-inline: var(--space-3);
   background: var(--surface);
   color: var(--text);
   font: inherit;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.ui-textarea:hover {
+  border-color: color-mix(in srgb, var(--border) 80%, var(--text-muted));
 }
 
 .ui-textarea:focus {
   border-color: var(--brand);
-  box-shadow: var(--shadow-focus-glow);
+  box-shadow: 0 0 0 2px rgb(16 185 129 / 30%);
 }
 
 .ui-textarea:disabled {

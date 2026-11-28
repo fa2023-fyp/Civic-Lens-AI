@@ -24,4 +24,7 @@
   .ui-skeleton.anim-shimmer::after {
     display: none;
   }
+  .anim-shimmer {
+    animation: none;
+  }
 }

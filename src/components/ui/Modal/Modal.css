@@ -13,11 +13,10 @@
   inline-size: min(100%, 38rem);
   max-block-size: min(90vh, 60rem);
   overflow: auto;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-width) solid var(--hairline);
   border-radius: var(--radius-4);
   background: var(--surface);
   color: var(--text);
-  box-shadow: var(--shadow-xl);
 }
 
 .ui-modal__header {

@@ -15,3 +15,10 @@
   background: var(--brand);
   animation: progressIndeterminate 1.4s var(--ease-in-out) infinite;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-top-loading-bar span {
+    animation: none;
+    inline-size: 100%;
+  }
+}

@@ -1,18 +1,35 @@
 .ui-icon-button {
+  position: relative;
   display: inline-grid;
-  inline-size: var(--space-12);
+  inline-size: 40px;
   aspect-ratio: 1;
   place-items: center;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-pill);
   background: var(--surface);
   color: var(--text);
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.ui-icon-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
 }
 
 .ui-icon-button:hover:not(:disabled) {
   transform: translateY(calc(-1 * var(--button-lift)));
-  box-shadow: var(--shadow-md);
+  border-color: var(--brand);
+}
+
+.ui-icon-button:hover:not(:disabled)::before {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .ui-icon-button:active:not(:disabled) {
@@ -21,5 +38,6 @@
 
 .ui-icon-button:disabled {
   cursor: not-allowed;
-  opacity: 0.58;
+  color: var(--text-muted);
+  background: var(--grey-page-alt);
 }

@@ -9,44 +9,11 @@
 
 @keyframes fadeUp {
   from {
-    transform: translateY(var(--space-6));
+    transform: translateY(12px);
     opacity: 0;
   }
   to {
     transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeDown {
-  from {
-    transform: translateY(calc(-1 * var(--space-6)));
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInStart {
-  from {
-    transform: translateX(calc(var(--slide-start-factor) * var(--space-6)));
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInEnd {
-  from {
-    transform: translateX(calc(var(--slide-start-factor) * -1 * var(--space-6)));
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
     opacity: 1;
   }
 }
@@ -74,37 +41,6 @@
 @keyframes spin {
   to {
     transform: rotate(1turn);
-  }
-}
-
-@keyframes pulse {
-  50% {
-    transform: scale(1.06);
-    opacity: 0.72;
-  }
-}
-
-@keyframes ping {
-  75%,
-  100% {
-    transform: scale(1.7);
-    opacity: 0;
-  }
-}
-
-@keyframes float {
-  50% {
-    transform: translateY(calc(-1 * var(--space-3)));
-  }
-}
-
-@keyframes shake {
-  25%,
-  75% {
-    transform: translateX(calc(var(--slide-start-factor) * var(--space-1)));
-  }
-  50% {
-    transform: translateX(calc(var(--slide-start-factor) * -1 * var(--space-1)));
   }
 }
 
@@ -141,31 +77,86 @@
   }
 }
 
+/* Use on interactive links to reveal a brand-coloured underline */
+.hover-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.hover-underline::after {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: var(--border-width);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: currentColor;
+  content: '';
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.hover-underline:hover::after,
+.hover-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Use on cards or panels that should lift slightly on hover */
+.hover-lift {
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(calc(-1 * var(--button-lift)));
+  border-color: var(--emerald-200);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Use on rows or list items containing a child .arrow */
+.hover-arrow {
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.hover-arrow:hover .arrow {
+  transform: translateX(var(--space-1));
+}
+
+/* Use on surfaces that should receive a faint brand tint on hover */
+.hover-tint {
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.hover-tint:hover {
+  background: color-mix(in srgb, var(--brand) 4%, var(--surface));
+}
+
+/* Use on clickable elements to give tactile feedback */
+.press:active {
+  transform: scale(0.98);
+}
+
+/* Use for page or route transitions */
+.page-fade {
+  animation: fadeIn var(--dur-fast) var(--ease-out) both;
+}
+
+/* Use for standard fade-in */
 .anim-fade-in {
   animation: fadeIn var(--dur-base) var(--ease-out) both;
 }
 
+/* Use for 12 px fade-up content reveals */
 .anim-fade-up {
   animation: fadeUp var(--dur-slow) var(--ease-out) both;
   animation-delay: var(--delay, 0ms);
 }
 
-.anim-fade-down {
-  animation: fadeDown var(--dur-base) var(--ease-out) both;
-}
-
-.anim-slide-in-start {
-  animation: slideInStart var(--dur-base) var(--ease-out) both;
-}
-
-.anim-slide-in-end {
-  animation: slideInEnd var(--dur-base) var(--ease-out) both;
-}
-
+/* Use for scale-in modals and popovers */
 .anim-scale-in {
-  animation: scaleIn var(--dur-base) var(--ease-spring) both;
+  animation: scaleIn var(--dur-base) var(--ease-out) both;
 }
 
+/* Use for loading shimmer skeletons */
 .anim-shimmer {
   position: relative;
   overflow: hidden;
@@ -183,48 +174,52 @@
   animation: shimmer 1.6s var(--ease-in-out) infinite;
 }
 
+/* Use for spinners */
 .anim-spin {
   animation: spin 1s linear infinite;
 }
 
+/* Use for neutralised decorative pulse */
 .anim-pulse {
-  animation: pulse 1.8s var(--ease-in-out) infinite;
+  animation: fadeIn var(--dur-fast) var(--ease-out) both;
 }
 
+/* Use for neutralised decorative ping */
 .anim-ping {
-  animation: ping 1.5s var(--ease-out) infinite;
+  animation: fadeIn var(--dur-fast) var(--ease-out) both;
 }
 
+/* Use for neutralised decorative float */
 .anim-float {
-  animation: float 4s var(--ease-in-out) infinite;
+  animation: fadeIn var(--dur-fast) var(--ease-out) both;
 }
 
-.anim-shake {
-  animation: shake var(--dur-slow) var(--ease-in-out) both;
-}
-
+/* Use for draw-on strokes */
 .anim-draw-stroke {
   transform: scaleX(0);
   transform-origin: left center;
   animation: drawStroke var(--dur-slow) var(--ease-out) forwards;
 }
 
+/* Use for typing indicator dots */
 .anim-typing-dots {
   animation: typingDots 1.2s var(--ease-in-out) infinite;
 }
 
+/* Use for indeterminate progress bars */
 .anim-progress-indeterminate {
   transform-origin: 0 50%;
   animation: progressIndeterminate 1.4s var(--ease-in-out) infinite;
 }
 
+/* Use on scroll-triggered content */
 .reveal {
-  transform: translateY(var(--space-6));
+  transform: translateY(12px);
   opacity: 0;
   transition:
     transform var(--dur-slow) var(--ease-out),
     opacity var(--dur-slow) var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 80ms);
+  transition-delay: calc(var(--i, 0) * 60ms);
 }
 
 .reveal.is-visible {
@@ -246,5 +241,13 @@
   .reveal {
     transform: none;
     opacity: 1;
+  }
+
+  .anim-scale-in,
+  .anim-slide-in-end,
+  .anim-fade-up {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }

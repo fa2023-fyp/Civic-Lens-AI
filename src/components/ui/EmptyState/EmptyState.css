@@ -8,15 +8,6 @@
   text-align: center;
 }
 
-.ui-empty-state__illustration {
-  inline-size: min(100%, var(--space-32));
-  fill: none;
-  stroke: var(--brand);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
-}
-
 .ui-empty-state h2 {
   margin: 0;
   color: var(--text);

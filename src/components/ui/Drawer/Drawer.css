@@ -12,10 +12,9 @@
   inline-size: min(100%, 32rem);
   block-size: 100%;
   flex-direction: column;
-  border-inline-start: var(--border-width) solid var(--border);
+  border-inline-start: var(--border-width) solid var(--hairline);
   background: var(--surface);
   color: var(--text);
-  box-shadow: var(--shadow-xl);
 }
 
 .ui-drawer__header {
