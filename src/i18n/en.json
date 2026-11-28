@@ -771,6 +771,7 @@
     "dismissBanner": "Dismiss prototype notice",
     "primaryNavigation": "Main navigation",
     "openNavigation": "Open navigation",
+    "prototypePillTooltip": "Academic prototype — not an official government portal.",
     "drawerTitle": "Navigation",
     "profileMenu": "Profile menu for {{name}}",
     "nav": {

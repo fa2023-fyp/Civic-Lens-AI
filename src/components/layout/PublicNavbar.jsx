@@ -12,7 +12,6 @@ import { ThemeToggle } from '../ui/ThemeToggle/ThemeToggle.jsx';
 import './PublicNavbar.css';
 
 const navigationItems = [
-  { to: '/', labelKey: 'common.navigation.home' },
   { to: '/features', labelKey: 'publicPages.features.kicker' },
   { to: '/technology', labelKey: 'publicPages.technology.kicker' },
   { to: '/how-it-works', labelKey: 'routes.pages.howItWorks' },
@@ -133,6 +132,9 @@ export function PublicNavbar() {
               ◉
             </span>
             <span>{t('app.name')}</span>
+            <span className="public-navbar__prototype" title={t('publicLayout.prototypePillTooltip')}>
+              Prototype
+            </span>
           </Link>
 
           <NavigationLinks />
