@@ -15,8 +15,7 @@
   z-index: var(--z-header);
   inset-block-start: 0;
   border-block-end: var(--border-width) solid var(--border);
-  background: color-mix(in srgb, var(--surface) 96%, transparent);
-  backdrop-filter: blur(var(--space-3));
+  background: var(--surface);
 }
 
 .staff-layout__topbar-inner {
@@ -24,9 +23,9 @@
   min-block-size: 4.5rem;
   align-items: center;
   gap: var(--space-4);
-  max-inline-size: 100rem;
+  max-inline-size: var(--container-staff);
   margin-inline: auto;
-  padding-inline: var(--space-4);
+  padding-inline: var(--gutter);
 }
 
 .staff-layout__brand {
@@ -35,7 +34,7 @@
   align-items: center;
   gap: var(--space-2);
   color: var(--text);
-  font-weight: 800;
+  font-weight: var(--weight-semibold);
   text-decoration: none;
 }
 
@@ -103,7 +102,7 @@
   padding: var(--space-4);
   background: var(--surface);
   color: var(--text);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 .staff-layout__notification-panel h2 {
@@ -135,7 +134,7 @@
   color: var(--text);
   cursor: pointer;
   font-size: var(--text-sm);
-  font-weight: 700;
+  font-weight: var(--weight-semibold);
   list-style: none;
 }
 
@@ -153,11 +152,16 @@
   border-radius: var(--radius-1);
   padding-block: var(--space-2);
   padding-inline: var(--space-3);
-  background: var(--brand-soft);
-  color: var(--brand-strong);
+  background: transparent;
+  color: var(--text);
   cursor: pointer;
   font: inherit;
   text-align: start;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.staff-layout__profile-menu button:hover {
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
 }
 
 .staff-layout__collapse-toggle {
@@ -181,7 +185,7 @@
   block-size: calc(100vh - 4.5rem);
   overflow: auto;
   border-inline-end: var(--border-width) solid var(--border);
-  padding-block: var(--space-5);
+  padding-block: var(--space-6);
   padding-inline: var(--space-3);
   background: var(--surface);
 }
@@ -190,11 +194,11 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding-block: var(--space-2) var(--space-5);
+  padding-block: var(--space-2) var(--space-6);
   padding-inline: var(--space-3);
   color: var(--text-muted);
   font-size: var(--text-sm);
-  font-weight: 750;
+  font-weight: var(--weight-semibold);
 }
 
 .staff-layout__navigation {
@@ -213,13 +217,21 @@
   padding-inline: var(--space-3);
   color: var(--text-muted);
   font-size: var(--text-sm);
-  font-weight: 650;
+  font-weight: var(--weight-medium);
   text-decoration: none;
   white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
 }
 
 .staff-layout__nav-link::after {
   display: none;
+}
+
+.staff-layout__nav-link:hover {
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
+  color: var(--text);
 }
 
 .staff-layout__nav-link.is-active {
@@ -250,11 +262,11 @@
 .staff-layout__main {
   min-inline-size: 0;
   padding-block: var(--space-6) var(--space-12);
-  padding-inline: clamp(var(--space-4), 3vw, var(--space-8));
+  padding-inline: var(--gutter);
 }
 
 .staff-layout__breadcrumb {
-  margin-block-end: var(--space-5);
+  margin-block-end: var(--space-6);
 }
 
 .staff-layout__backdrop {
@@ -389,7 +401,7 @@
   }
 
   .staff-layout__main {
-    padding-block-start: var(--space-5);
+    padding-block-start: var(--space-4);
   }
 }
 

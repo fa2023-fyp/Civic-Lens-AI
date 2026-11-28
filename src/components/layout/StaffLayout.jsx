@@ -9,11 +9,10 @@ import { Breadcrumb } from '../ui/Breadcrumb/Breadcrumb.jsx';
 import { Icon } from '../ui/Icon/Icon.jsx';
 import { IconButton } from '../ui/IconButton/IconButton.jsx';
 import { Kbd } from '../ui/Kbd/Kbd.jsx';
-import { LanguageSwitch } from '../ui/LanguageSwitch/LanguageSwitch.jsx';
 import { Modal } from '../ui/Modal/Modal.jsx';
 import { SearchInput } from '../ui/SearchInput/SearchInput.jsx';
-import { ThemeToggle } from '../ui/ThemeToggle/ThemeToggle.jsx';
 import { useToast } from '../ui/ToastProvider/ToastProvider.jsx';
+import { PreferencesMenu } from './PreferencesMenu.jsx';
 import './StaffLayout.css';
 
 const navigationByRole = {
@@ -250,8 +249,7 @@ export function StaffLayout({ children, role }) {
             />
           </div>
           <div className="staff-layout__preferences">
-            <LanguageSwitch />
-            <ThemeToggle />
+            <PreferencesMenu />
           </div>
         </div>
       </header>
